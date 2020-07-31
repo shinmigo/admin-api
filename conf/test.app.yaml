@@ -19,5 +19,7 @@ grpc:
   name:
     pms: project/product
     oms: project/order
-    mms: project/marking
+    mms: project/promotion
+    crm: project/member
+    shop: project/shop
   host: xxx

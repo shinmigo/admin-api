@@ -5,6 +5,7 @@ import (
 	"goshop/api/pkg/grpc/etcd3"
 	"goshop/api/pkg/utils"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/shinmigo/pb/productpb"
@@ -25,6 +26,7 @@ func DialGrpcService() {
 	if err != nil {
 		log.Panicf("grpc没有连接上%s, err: %v \n", utils.C.Grpc.Name["pms"], err)
 	}
+	fmt.Printf("连接成功：%s, host分别为: %s \n", utils.C.Grpc.Name["pms"], strings.Join(utils.C.Etcd.Host, ","))
 	Hello = productpb.NewHelloServiceClient(conn)
 
 	for {
