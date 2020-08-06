@@ -279,6 +279,10 @@ github.com/shinmigo/pb v0.0.0-20200722094908-f64657fd83fd h1:8/pwdFEVLyb6BDRdjTf
 github.com/shinmigo/pb v0.0.0-20200722094908-f64657fd83fd/go.mod h1:UYGDfX6q55shSf95Mn1LE5C/rKde0su7DBf0W7QKeaY=
 github.com/shinmigo/pb v0.0.0-20200722100848-43efafe8fa47 h1:HrRNK3fdWUJG/n1nAp/36feRV4TEap4KvFG/r/oJy2s=
 github.com/shinmigo/pb v0.0.0-20200722100848-43efafe8fa47/go.mod h1:UYGDfX6q55shSf95Mn1LE5C/rKde0su7DBf0W7QKeaY=
+github.com/shinmigo/pb v0.0.0-20200804095423-a19ec5972088 h1:2hJjfxilhQmgIVZzDbTQcX5slSeTslBikQyFvGqn72I=
+github.com/shinmigo/pb v0.0.0-20200804095423-a19ec5972088/go.mod h1:sE6q+pYXPmwYntosms0U/zV12SDdDiOhJTFyJRl4bTE=
+github.com/shinmigo/pb v0.0.0-20200806054325-61bd6a71ffcd h1:LP2ZHaTuOtThwLat/iKri64hgle+Z5DvXvsYg7xc8s4=
+github.com/shinmigo/pb v0.0.0-20200806054325-61bd6a71ffcd/go.mod h1:sE6q+pYXPmwYntosms0U/zV12SDdDiOhJTFyJRl4bTE=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/sirupsen/logrus v1.4.2 h1:SPIRibHv4MatM3XXNO2BJeFLZwZ2LvZgfQ5+UNI2im4=
 github.com/sirupsen/logrus v1.4.2/go.mod h1:tLMulIdttU9McNUspp0xgXVQah82FyeX6MwdIuYE2rE=
