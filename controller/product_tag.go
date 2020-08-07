@@ -25,12 +25,11 @@ func (m *ProductTag) Index() {
 }
 
 func (m *User) Add() {
-	str, err := userFilter.Test()
+	err := productTagFilter.Add()
 	if err != nil {
-		//m.SetResponse(str, err, -110010) 也可以重写接受过来的错误码，自己定义
-		m.SetResponse(str, err)
+		m.SetResponse(nil, err)
 		return
 	}
 
-	m.SetResponse(str)
+	m.SetResponse()
 }

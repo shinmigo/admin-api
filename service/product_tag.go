@@ -43,3 +43,26 @@ func (m *ProductTag) Index(pNumber, pSize uint64) (*productpb.ListTagRes, error)
 
 	return resp, nil
 }
+
+func (m *ProductTag) Add() error {
+	storeId := m.DefaultQuery("store_id", "0")
+	sId, _ := strconv.ParseUint(storeId, 10, 64)
+
+	req := &productpb.Tag{
+		StoreId: sId,
+		Name:    m.Query("name"),
+		AdminId: 0,
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductTag.AddTag(ctx, req)
+	cancel()
+	if err != nil {
+		return fmt.Errorf("添加标签失败")
+	}
+
+	if resp.State == 0 {
+		return fmt.Errorf("添加失败")
+	}
+
+	return nil
+}

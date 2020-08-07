@@ -38,3 +38,18 @@ func (m *ProdcutTag) Index() (*productpb.ListTagRes, error) {
 
 	return list, nil
 }
+
+func (m *ProdcutTag) Add() error {
+	valid := validation.Validation{}
+	name := m.Query("name")
+	valid.Required(name).Message("名称不能为空")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	if err := service.NewProductTag(m.Context).Add(); err != nil {
+		return err
+	}
+
+	return nil
+}
