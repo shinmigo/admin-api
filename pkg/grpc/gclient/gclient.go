@@ -14,6 +14,7 @@ import (
 )
 
 var ProductTag productpb.TagServiceClient
+var ProductParam productpb.ParamServiceClient
 
 func DialGrpcService() {
 	r := etcd3.NewResolver(utils.C.Etcd.Host)
@@ -26,6 +27,7 @@ func DialGrpcService() {
 	}
 	fmt.Printf("连接成功：%s, host分别为: %s \n", utils.C.Grpc.Name["pms"], strings.Join(utils.C.Etcd.Host, ","))
 	ProductTag = productpb.NewTagServiceClient(conn)
+	ProductParam = productpb.NewParamServiceClient(conn)
 
 	//for {
 	//	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
