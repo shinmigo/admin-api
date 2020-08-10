@@ -13,3 +13,5 @@ debug
 .classpath
 .project
 .settings
+
+conf/local.app.yaml
