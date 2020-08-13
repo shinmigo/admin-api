@@ -16,6 +16,7 @@ func (m *Member) Initialise() {
 	MemberFilter = filter.NewMember(m.Context)
 }
 
+// 会员列表
 func (m *Member) Index() {
 	str, err := MemberFilter.Index()
 	if err != nil {
@@ -24,4 +25,15 @@ func (m *Member) Index() {
 	}
 	
 	m.SetResponse(str)
+}
+
+// 添加会员
+func (m *Member) Add() {
+	err := MemberFilter.Add()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
 }

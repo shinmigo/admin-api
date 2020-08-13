@@ -19,6 +19,7 @@ func NewMember(c *gin.Context) *Member {
 	return &Member{Context: c}
 }
 
+// 会员列表
 func (m *Member) Index(pNumber, pSize uint64) (*memberpb.ListRes, error) {
 	req := &memberpb.ListReq{
 		Page:     pNumber,
@@ -47,4 +48,42 @@ func (m *Member) Index(pNumber, pSize uint64) (*memberpb.ListRes, error) {
 	}
 	
 	return resp, nil
+}
+
+// 添加会员
+func (m *Member) Add() error {
+	nickname := m.Query("nickname")
+	mobile := m.Query("mobile")
+	statusParam := m.Query("status")
+	genderParam := m.DefaultQuery("gender","0")
+	birthday := m.Query("birthday")
+	memberLevelId := m.Query("member_level_id")
+	password := m.Query("password")
+	operator := m.Query("operator")
+	status,_ := strconv.ParseUint(statusParam,10,32)
+	gender,_ := strconv.ParseUint(genderParam,10,32)
+
+	req := &memberpb.AddReq{
+		Nickname: nickname,
+		Mobile: mobile,
+		Status: uint32(status),
+		Gender: uint32(gender),
+		Birthday: birthday,
+		MemberLevelId: memberLevelId,
+		Password: password,
+		Operator: operator,
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.Member.Add(ctx,req)
+	cancel()
+	if err!= nil {
+		return fmt.Errorf("添加会员失败")
+	}
+
+	if resp.State == 0 {
+		return fmt.Errorf("添加失败")
+	}
+
+	return nil
 }
