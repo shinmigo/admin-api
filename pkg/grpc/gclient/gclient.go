@@ -17,6 +17,7 @@ import (
 
 var ProductTag productpb.TagServiceClient
 var ProductParam productpb.ParamServiceClient
+var ProductKind  productpb.KindServiceClient
 var Member memberpb.MemberServiceClient
 
 func DialGrpcService() {
@@ -47,4 +48,5 @@ func pms() {
 	fmt.Printf("连接成功：%s, host分别为: %s \n", utils.C.Grpc.Name["pms"], strings.Join(utils.C.Etcd.Host, ","))
 	ProductTag = productpb.NewTagServiceClient(conn)
 	ProductParam = productpb.NewParamServiceClient(conn)
+	ProductKind = productpb.NewKindServiceClient(conn)
 }
