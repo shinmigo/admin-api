@@ -79,3 +79,18 @@ func (m *ProdcutParam) Edit() error {
 	}
 	return nil
 }
+
+func (m *ProdcutParam) Del() error {
+	paramId := m.Query("param_id")
+	
+	m.validation.Required(paramId).Message("paramId不能为空！")
+	
+	if m.validation.HasError() {
+		return m.validation.GetError()
+	}
+	
+	if err := service.NewProductParam(m.Context).Del(); err != nil {
+		return err
+	}
+	return nil
+}

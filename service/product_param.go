@@ -107,3 +107,26 @@ func (m *ProductParam) Edit() error {
 	
 	return nil
 }
+
+func (m *ProductParam) Del() error {
+	paramId := m.Query("param_id")
+	paramIdNumber, _ := strconv.ParseUint(paramId, 10, 64)
+	
+	req := &productpb.DelParamReq{
+		ParamId: paramIdNumber,
+	}
+	
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductParam.DelParam(ctx, req)
+	cancel()
+	
+	if err != nil {
+		return fmt.Errorf("删除失败, err: %v", err)
+	}
+	
+	if resp.State == 0 {
+		return fmt.Errorf("删除失败")
+	}
+	
+	return nil
+}

@@ -14,5 +14,6 @@ func init() {
 		g.Get("/index")
 		g.Post("/add")
 		g.Post("/edit")
+		g.Get("/del")
 	})
 }

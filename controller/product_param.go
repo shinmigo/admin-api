@@ -42,3 +42,12 @@ func (m *ProductParam) Edit() {
 	}
 	m.SetResponse()
 }
+
+// 删除商品参数
+func (m *ProductParam) Del() {
+	if err := productParamFilter.Del(); err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+	m.SetResponse()
+}
