@@ -12,6 +12,7 @@ import (
 )
 
 type ProdcutParam struct {
+	validation validation.Validation
 	*gin.Context
 }
 
@@ -20,13 +21,12 @@ func NewProductParam(c *gin.Context) *ProdcutParam {
 }
 
 func (m *ProdcutParam) Index() (*productpb.ListParamRes, error) {
-	valid := validation.Validation{}
 	page := m.DefaultQuery("page", "1")
 	pageSize := m.DefaultQuery("page_size", "10")
-	valid.Match(page, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的编号 不正确")
-	valid.Match(pageSize, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的数量 不正确")
-	if valid.HasError() {
-		return nil, valid.GetError()
+	m.validation.Match(page, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的编号 不正确")
+	m.validation.Match(pageSize, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的数量 不正确")
+	if m.validation.HasError() {
+		return nil, m.validation.GetError()
 	}
 	
 	pNumber, _ := strconv.ParseUint(page, 10, 16)
@@ -37,4 +37,45 @@ func (m *ProdcutParam) Index() (*productpb.ListParamRes, error) {
 	}
 	
 	return list, nil
+}
+
+func (m *ProdcutParam) Add() error {
+	name := m.PostForm("name")
+	typeStr := m.PostForm("type")
+	contents := m.PostForm("contents")
+	
+	m.validation.Required(name).Message("参数名称不能为空！")
+	m.validation.Match(typeStr, regexp.MustCompile(`^[0-3]{1}$`)).Message("参数类型不正确")
+	m.validation.Required(contents).Message("参数值不能为空！")
+	
+	if m.validation.HasError() {
+		return m.validation.GetError()
+	}
+	
+	if err := service.NewProductParam(m.Context).Add(); err != nil {
+		return err
+	}
+	
+	return nil
+}
+
+func (m *ProdcutParam) Edit() error {
+	paramId := m.PostForm("param_id")
+	name := m.PostForm("name")
+	typeStr := m.PostForm("type")
+	contents := m.PostForm("contents")
+	
+	m.validation.Required(paramId).Message("paramId不能为空！")
+	m.validation.Required(name).Message("参数名称不能为空！")
+	m.validation.Match(typeStr, regexp.MustCompile(`^[0-3]{1}$`)).Message("参数类型不正确")
+	m.validation.Required(contents).Message("参数值不能为空！")
+	
+	if m.validation.HasError() {
+		return m.validation.GetError()
+	}
+	
+	if err := service.NewProductParam(m.Context).Edit(); err != nil {
+		return err
+	}
+	return nil
 }

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"goshop/api/pkg/grpc/gclient"
 	"strconv"
@@ -42,4 +43,67 @@ func (m *ProductParam) Index(pNumber, pSize uint64) (*productpb.ListParamRes, er
 	}
 	
 	return resp, nil
+}
+
+func (m *ProductParam) Add() error {
+	contents := m.PostForm("contents")
+	typeNumber, _ := strconv.ParseInt(m.PostForm("type"), 10, 32)
+	contentsList := make([]string, 0, 32)
+	if err := json.Unmarshal([]byte(contents), &contentsList); err != nil {
+		return fmt.Errorf("参数值解析失败, err: %v", err)
+	}
+	
+	req := &productpb.Param{
+		Name:     m.PostForm("name"),
+		Type:     productpb.ParamType(typeNumber),
+		Contents: contentsList,
+	}
+	
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductParam.AddParam(ctx, req)
+	cancel()
+	
+	if err != nil {
+		return fmt.Errorf("添加失败, err: %v", err)
+	}
+	
+	if resp.State == 0 {
+		return fmt.Errorf("添加失败")
+	}
+	
+	return nil
+}
+
+func (m *ProductParam) Edit() error {
+	paramId := m.PostForm("param_id")
+	typeStr := m.PostForm("type")
+	contents := m.PostForm("contents")
+	
+	paramIdNumber, _ := strconv.ParseUint(paramId, 10, 64)
+	typeNumber, _ := strconv.ParseInt(typeStr, 10, 32)
+	contentsList := make([]string, 0, 32)
+	if err := json.Unmarshal([]byte(contents), &contentsList); err != nil {
+		return fmt.Errorf("参数值解析失败, err: %v", err)
+	}
+	
+	req := &productpb.Param{
+		ParamId:  paramIdNumber,
+		Name:     m.PostForm("name"),
+		Type:     productpb.ParamType(typeNumber),
+		Contents: contentsList,
+	}
+	
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductParam.EditParam(ctx, req)
+	cancel()
+	
+	if err != nil {
+		return fmt.Errorf("编辑失败, err: %v", err)
+	}
+	
+	if resp.State == 0 {
+		return fmt.Errorf("编辑失败")
+	}
+	
+	return nil
 }
