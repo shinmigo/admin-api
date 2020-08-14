@@ -37,3 +37,14 @@ func (m *Member) Add() {
 
 	m.SetResponse()
 }
+
+// 会员编辑
+func (m *Member) Edit() {
+	err := MemberFilter.Edit()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}

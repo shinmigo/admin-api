@@ -65,3 +65,27 @@ func (m *Member) Add() error {
 
 	return nil
 }
+
+// 会员编辑
+func (m *Member) Edit() error {
+	nickname := m.Query("nickname")
+	mobile := m.Query("mobile")
+	memberId := m.Query("member_id")
+	gender := m.DefaultQuery("gender","0")
+	birthday := m.Query("birthday")
+	memberLevelId := m.Query("member_level_id")
+	operator := m.Query("operator")
+
+	m.validation.Required(nickname).Message("昵称不能为空！")
+	m.validation.Required(mobile).Message("手机号不能为空！")
+	m.validation.Required(gender).Message("性别不能为空！")
+	m.validation.Required(birthday).Message("生日不能为空！")
+	m.validation.Required(memberLevelId).Message("会员等级不能为空！")
+	m.validation.Required(operator).Message("操作人不能为空！")
+	m.validation.Required(memberId).Message("MemberId不能为空！")
+	if err:= service.NewMember(m.Context).Edit(); err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -13,5 +13,6 @@ func init() {
 		g := routerhelper.NewGroupRouter("member", new(controller.Member), r, middleware.Cors())
 		g.Get("/index")
 		g.Get("/add")
+		g.Get("/edit")
 	})
 }

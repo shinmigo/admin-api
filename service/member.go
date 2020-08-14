@@ -78,7 +78,42 @@ func (m *Member) Add() error {
 	resp, err := gclient.Member.Add(ctx,req)
 	cancel()
 	if err!= nil {
-		return fmt.Errorf("添加会员失败")
+		return fmt.Errorf("添加会员失败, err:%v", err)
+	}
+
+	if resp.State == 0 {
+		return fmt.Errorf("添加失败")
+	}
+
+	return nil
+}
+
+// 会员编辑
+func (m *Member) Edit() error {
+	nickname := m.Query("nickname")
+	mobile := m.Query("mobile")
+	memberIdParam := m.Query("member_id")
+	genderParam := m.DefaultQuery("gender","0")
+	birthday := m.Query("birthday")
+	memberLevelId := m.Query("member_level_id")
+	operator := m.Query("operator")
+	gender,_ := strconv.ParseUint(genderParam,10,32)
+	memberId,_ := strconv.ParseUint(memberIdParam,10,32)
+
+	req := &memberpb.EditReq{
+		Nickname: nickname,
+		Mobile: mobile,
+		Gender: uint32(gender),
+		Birthday: birthday,
+		MemberLevelId: memberLevelId,
+		Operator: operator,
+		MemberId: memberId,
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.Member.Edit(ctx,req)
+	cancel()
+	if err!= nil {
+		return fmt.Errorf("添加会员失败, err:%v",err)
 	}
 
 	if resp.State == 0 {
