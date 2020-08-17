@@ -130,3 +130,25 @@ func (m *ProductParam) Del() error {
 	
 	return nil
 }
+
+func (m *ProductParam) Detail(paramId uint64) (*productpb.ParamDetail, error) {
+	req := &productpb.ListParamReq{
+		Id:       paramId,
+		Page:     1,
+		PageSize: 1,
+	}
+	
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductParam.GetParamList(ctx, req)
+	cancel()
+	
+	if err != nil {
+		return nil, fmt.Errorf("获取商品参数失败")
+	}
+	
+	if len(resp.Params) > 0 {
+		return resp.Params[0], nil
+	}
+	
+	return nil, fmt.Errorf("获取不到商品参数")
+}

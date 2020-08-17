@@ -94,3 +94,21 @@ func (m *ProdcutParam) Del() error {
 	}
 	return nil
 }
+
+func (m *ProdcutParam) Detail() (*productpb.ParamDetail, error) {
+	paramId := m.Query("param_id")
+	m.validation.Required(paramId).Message("paramId不能为空！")
+	
+	if m.validation.HasError() {
+		return nil, m.validation.GetError()
+	}
+	
+	paramIdNumber, _ := strconv.ParseUint(paramId, 10, 64)
+	res, err := service.NewProductParam(m.Context).Detail(paramIdNumber)
+	
+	if err != nil {
+		return nil, err
+	}
+	
+	return res, nil
+}

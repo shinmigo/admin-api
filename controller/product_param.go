@@ -51,3 +51,14 @@ func (m *ProductParam) Del() {
 	}
 	m.SetResponse()
 }
+
+// 获取商品参数详情
+func (m *ProductParam) Detail() {
+	str, err := productParamFilter.Detail()
+	if err != nil {
+		m.SetResponse(str, err)
+		return
+	}
+	
+	m.SetResponse(str)
+}
