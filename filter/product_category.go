@@ -25,11 +25,14 @@ func (m *ProductCategory) Index() (*productpb.ListCategoryRes, error) {
 	pageSize := m.DefaultQuery("page_size", "10")
 	name := m.DefaultQuery("category_name", "")
 	status := m.Query("status")
+	storeId := m.Query("store_id")
 
 	var idNum uint64
 	idLen := len(id)
 	statusLen := len(status)
 	valid := validation.Validation{}
+	valid.Required(storeId).Message("请提交所在店铺信息")
+	valid.Match(storeId, regexp.MustCompile(`^[1-9][0-9]*`)).Message("店铺信息格式错误")
 	valid.Match(page, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的编号 不正确")
 	valid.Match(pageSize, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的数量 不正确")
 	if idLen > 0 {
@@ -50,11 +53,13 @@ func (m *ProductCategory) Index() (*productpb.ListCategoryRes, error) {
 	}
 	pageNum, _ := strconv.ParseInt(page, 10, 64)
 	pageSizeNum, _ := strconv.ParseInt(pageSize, 10, 64)
+	storeIdNum, _ := strconv.ParseUint(storeId, 10, 64)
 	listCategoryReq := &productpb.ListCategoryReq{
 		Page:     pageNum,
 		PageSize: pageSizeNum,
 		Name:     name,
 		Id:       idNum,
+		StoreId:  storeIdNum,
 	}
 	if statusLen > 0 {
 		var statusNum productpb.CategoryStatus
