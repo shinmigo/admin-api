@@ -1,8 +1,9 @@
 package controller
 
 import (
-	"github.com/davecgh/go-spew/spew"
 	"goshop/api/filter"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 var MemberFilter *filter.Member
@@ -18,13 +19,13 @@ func (m *Member) Initialise() {
 
 // 会员列表
 func (m *Member) Index() {
-	str, err := MemberFilter.Index()
+	result, err := MemberFilter.Index()
 	if err != nil {
-		m.SetResponse(str, err)
+		m.SetResponse(result, err)
 		return
 	}
-	
-	m.SetResponse(str)
+
+	m.SetResponse(result)
 }
 
 // 添加会员
@@ -41,6 +42,28 @@ func (m *Member) Add() {
 // 会员编辑
 func (m *Member) Edit() {
 	err := MemberFilter.Edit()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}
+
+// 会员详情
+func (m *Member) Info() {
+	result, err := MemberFilter.Info()
+	if err != nil {
+		m.SetResponse(result, err)
+		return
+	}
+
+	m.SetResponse(result)
+}
+
+// 更新会员状态
+func (m *Member) EditStatus() {
+	err := MemberFilter.EditStatus()
 	if err != nil {
 		m.SetResponse(nil, err)
 		return
