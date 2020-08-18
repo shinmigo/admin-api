@@ -21,6 +21,7 @@ var (
 	ProductKind           productpb.KindServiceClient
 	Member                memberpb.MemberServiceClient
 	ProductCategoryClient productpb.CategoryServiceClient
+	ProductSpecClient     productpb.SpecServiceClient
 )
 
 func DialGrpcService() {
@@ -53,4 +54,5 @@ func pms() {
 	ProductParam = productpb.NewParamServiceClient(conn)
 	ProductCategoryClient = productpb.NewCategoryServiceClient(conn)
 	ProductKind = productpb.NewKindServiceClient(conn)
+	ProductSpecClient = productpb.NewSpecServiceClient(conn)
 }
