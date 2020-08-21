@@ -33,3 +33,23 @@ func (m *ProductKind) Add()  {
 
 	m.SetResponse()
 }
+
+func (m *ProductKind) Delete()  {
+	err := productKindFilter.Delete()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}
+
+func (m *ProductKind) Edit()  {
+	err := productKindFilter.Edit()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}

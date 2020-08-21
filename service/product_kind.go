@@ -66,3 +66,55 @@ func (m *ProductKind) Add() error {
 
 	return nil
 }
+
+func (m *ProductKind) Delete() error  {
+	kindId := m.PostForm("kind_id")
+	kingIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
+
+	req := &productpb.DelKindReq{
+		KindId:               kingIdNumber,
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductKind.DelKind(ctx, req)
+	cancel()
+
+	if err != nil {
+		return fmt.Errorf("删除失败, err: %v", err)
+	}
+
+	if resp.State == 0 {
+		return fmt.Errorf("删除失败")
+	}
+
+	return nil
+}
+
+func (m *ProductKind) Edit() error  {
+	storeId := m.PostForm("store_id")
+	name := m.PostForm("name")
+	kindId := m.PostForm("kind_id")
+
+	kindIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
+	storeIdNumber, _ := strconv.ParseUint(storeId, 10, 64)
+
+	req := &productpb.Kind{
+		KindId:               kindIdNumber,
+		StoreId:              storeIdNumber,
+		Name:                 name,
+		AdminId:              0,
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductKind.EditKind(ctx, req)
+	cancel()
+
+	if err != nil {
+		return fmt.Errorf("编辑失败, err: %v", err)
+	}
+
+	if resp.State == 0 {
+		return fmt.Errorf("编辑失败")
+	}
+
+	return nil
+}

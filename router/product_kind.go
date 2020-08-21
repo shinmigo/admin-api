@@ -12,5 +12,7 @@ func init()  {
 		g := routerhelper.NewGroupRouter("product-kind", new(controller.ProductKind), r, middleware.Cors())
 		g.Get("/index")
 		g.Post("/add")
+		g.Post("/delete")
+		g.Post("/edit")
 	})
 }

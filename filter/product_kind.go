@@ -53,3 +53,42 @@ func (m *ProductKind) Add() error  {
 
 	return nil
 }
+
+func (m *ProductKind) Delete() error  {
+	id := m.PostForm("kind_id")
+
+	valid := validation.Validation{}
+	valid.Required(id).Message("请选择要删除的商品类型！")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	if err := service.NewProductKind(m.Context).Delete(); err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func (m *ProductKind) Edit() error  {
+	storeId := m.PostForm("store_id")
+	name := m.PostForm("name")
+	kindId := m.PostForm("kind_id")
+
+	valid := validation.Validation{}
+	valid.Required(kindId).Message("请提交要编辑的商品类型")
+	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型数据格式错误")
+	valid.Required(storeId).Message("请提交商品类型所属门店！")
+	valid.Match(storeId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型门店数据格式错误！")
+	valid.Required(name).Message("请提交商品类型名称")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	if err := service.NewProductKind(m.Context).Edit(); err != nil {
+		return err
+	}
+
+	return nil
+}
