@@ -12,9 +12,9 @@ func init() {
 	routerhelper.Use(func(r *gin.Engine) {
 		g := routerhelper.NewGroupRouter("member", new(controller.Member), r, middleware.Cors())
 		g.Get("/index")
-		g.Get("/add")
-		g.Get("/edit")
+		g.Post("/add")
+		g.Post("/edit")
 		g.Get("/info")
-		g.Get("/edit-status")
+		g.Post("/edit-status")
 	})
 }

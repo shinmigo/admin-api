@@ -1,13 +1,14 @@
 package filter
 
 import (
-	"goshop/api/pkg/validation"
-	"goshop/api/service"
 	"regexp"
 	"strconv"
-
+	
+	"goshop/api/pkg/validation"
+	"goshop/api/service"
+	
 	"github.com/shinmigo/pb/memberpb"
-
+	
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +22,7 @@ func NewMember(c *gin.Context) *Member {
 }
 
 // 会员列表
-func (m *Member) Index() (*memberpb.ListRes, error) {
+func (m *Member) Index() (*memberpb.ListMemberRes, error) {
 	page := m.DefaultQuery("page", "1")
 	pageSize := m.DefaultQuery("page_size", "10")
 	m.validation.Match(page, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的编号 不正确")
@@ -29,27 +30,28 @@ func (m *Member) Index() (*memberpb.ListRes, error) {
 	if m.validation.HasError() {
 		return nil, m.validation.GetError()
 	}
-
+	
 	pNumber, _ := strconv.ParseUint(page, 10, 32)
 	pSize, _ := strconv.ParseUint(pageSize, 10, 32)
 	list, err := service.NewMember(m.Context).Index(pNumber, pSize)
 	if err != nil {
 		return nil, err
 	}
-
+	
 	return list, nil
 }
 
 // 添加会员
 func (m *Member) Add() error {
-	nickname := m.Query("nickname")
-	mobile := m.Query("mobile")
-	status := m.Query("status")
-	gender := m.Query("gender")
-	birthday := m.Query("birthday")
-	memberLevelId := m.Query("member_level_id")
-	password := m.Query("password")
-	operator := m.Query("operator")
+	nickname := m.PostForm("nickname")
+	mobile := m.PostForm("mobile")
+	status := m.PostForm("status")
+	gender := m.PostForm("gender")
+	birthday := m.PostForm("birthday")
+	memberLevelId := m.PostForm("member_level_id")
+	password := m.PostForm("password")
+	operator := m.PostForm("operator")
+	
 	m.validation.Required(nickname).Message("昵称不能为空！")
 	m.validation.Mobile(mobile).Message("手机号格式不正确！")
 	m.validation.Required(status).Message("状态不能为空！")
@@ -58,28 +60,28 @@ func (m *Member) Add() error {
 	m.validation.Required(memberLevelId).Message("会员等级不能为空！")
 	m.validation.Required(password).Message("密码不能为空！")
 	m.validation.Required(operator).Message("操作人不能为空！")
-
+	
 	if m.validation.HasError() {
 		return m.validation.GetError()
 	}
-
+	
 	if err := service.NewMember(m.Context).Add(); err != nil {
 		return err
 	}
-
+	
 	return nil
 }
 
 // 会员编辑
 func (m *Member) Edit() error {
-	nickname := m.Query("nickname")
-	mobile := m.Query("mobile")
-	memberId := m.Query("member_id")
-	gender := m.DefaultQuery("gender", "0")
-	birthday := m.Query("birthday")
-	memberLevelId := m.Query("member_level_id")
-	operator := m.Query("operator")
-
+	nickname := m.PostForm("nickname")
+	mobile := m.PostForm("mobile")
+	memberId := m.PostForm("member_id")
+	gender := m.PostForm("gender")
+	birthday := m.PostForm("birthday")
+	memberLevelId := m.PostForm("member_level_id")
+	operator := m.PostForm("operator")
+	
 	m.validation.Required(nickname).Message("昵称不能为空！")
 	m.validation.Mobile(mobile).Message("手机号格式不正确！")
 	m.validation.Required(gender).Message("性别不能为空！")
@@ -87,52 +89,54 @@ func (m *Member) Edit() error {
 	m.validation.Required(memberLevelId).Message("会员等级不能为空！")
 	m.validation.Required(operator).Message("操作人不能为空！")
 	m.validation.Required(memberId).Message("member_id不能为空！")
-
+	
 	if m.validation.HasError() {
 		return m.validation.GetError()
 	}
-
+	
 	if err := service.NewMember(m.Context).Edit(); err != nil {
 		return err
 	}
-
+	
 	return nil
 }
 
 // 会员详情
-func (m *Member) Info() (*memberpb.Member, error) {
-	memberId := m.Query("member_id")
-	m.validation.Required(memberId).Message("MemberId不能为空！")
-
+func (m *Member) Info() (*memberpb.MemberDetail, error) {
+	memberIdParam := m.Query("member_id")
+	m.validation.Required(memberIdParam).Message("MemberId不能为空！")
+	
 	if m.validation.HasError() {
 		return nil, m.validation.GetError()
 	}
-
-	req, err := service.NewMember(m.Context).Info()
+	
+	memberId, _ := strconv.ParseUint(memberIdParam, 10, 64)
+	req, err := service.NewMember(m.Context).Info(memberId)
 	if err != nil {
 		return nil, err
 	}
-
+	
 	return req, nil
 }
 
 // 更新会员状态
 func (m *Member) EditStatus() error {
-	status := m.Query("status")
-	memberId := m.Query("member_id")
-	operator := m.Query("operator")
-
-	m.validation.Required(operator).Message("操作人不能为空！")
-	m.validation.Required(memberId).Message("member_id不能为空！")
-	m.validation.Required(status).Message("状态不能为空！")
-
+	statusParam := m.PostForm("status")
+	memberIdParam := m.PostForm("member_id")
+	
+	m.validation.Required(statusParam).Message("状态不能为空！")
+	m.validation.Required(memberIdParam).Message("member_id不能为空！")
+	
 	if m.validation.HasError() {
 		return m.validation.GetError()
 	}
-
-	if err := service.NewMember(m.Context).EditStatus(); err != nil {
+	
+	status, _ := strconv.ParseInt(statusParam, 10, 32)
+	memberId, _ := strconv.ParseUint(memberIdParam, 10, 64)
+	
+	if err := service.NewMember(m.Context).EditStatus(memberId, int32(status)); err != nil {
 		return err
 	}
-
+	
 	return nil
 }

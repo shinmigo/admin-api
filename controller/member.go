@@ -2,8 +2,6 @@ package controller
 
 import (
 	"goshop/api/filter"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
 var MemberFilter *filter.Member
@@ -13,7 +11,6 @@ type Member struct {
 }
 
 func (m *Member) Initialise() {
-	spew.Dump(111111)
 	MemberFilter = filter.NewMember(m.Context)
 }
 
@@ -24,7 +21,7 @@ func (m *Member) Index() {
 		m.SetResponse(result, err)
 		return
 	}
-
+	
 	m.SetResponse(result)
 }
 
@@ -35,7 +32,7 @@ func (m *Member) Add() {
 		m.SetResponse(nil, err)
 		return
 	}
-
+	
 	m.SetResponse()
 }
 
@@ -46,7 +43,7 @@ func (m *Member) Edit() {
 		m.SetResponse(nil, err)
 		return
 	}
-
+	
 	m.SetResponse()
 }
 
@@ -57,7 +54,7 @@ func (m *Member) Info() {
 		m.SetResponse(result, err)
 		return
 	}
-
+	
 	m.SetResponse(result)
 }
 
@@ -68,6 +65,6 @@ func (m *Member) EditStatus() {
 		m.SetResponse(nil, err)
 		return
 	}
-
+	
 	m.SetResponse()
 }

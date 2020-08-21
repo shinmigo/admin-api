@@ -3,12 +3,14 @@ package service
 import (
 	"context"
 	"fmt"
-	"goshop/api/pkg/grpc/gclient"
 	"strconv"
 	"time"
-
+	
+	"github.com/shinmigo/pb/basepb"
+	"goshop/api/pkg/grpc/gclient"
+	
 	"github.com/shinmigo/pb/memberpb"
-
+	
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,151 +23,146 @@ func NewMember(c *gin.Context) *Member {
 }
 
 // 会员列表
-func (m *Member) Index(pNumber, pSize uint64) (*memberpb.ListRes, error) {
-	req := &memberpb.ListReq{
+func (m *Member) Index(pNumber, pSize uint64) (*memberpb.ListMemberRes, error) {
+	req := &memberpb.GetMemberReq{
 		Page:     pNumber,
 		PageSize: pSize,
 	}
-
+	
 	if len(m.Query("mobile")) > 0 {
 		req.Mobile = m.Query("mobile")
 	}
-
+	
 	if len(m.Query("member_id")) > 0 {
 		id, _ := strconv.ParseUint(m.Query("member_id"), 10, 64)
 		req.MemberId = id
 	}
-
+	
 	if len(m.Query("status")) > 0 {
-		status, _ := strconv.ParseUint(m.Query("status"), 10, 32)
-		req.Status = uint32(status)
+		status, _ := strconv.ParseInt(m.Query("status"), 10, 32)
+		req.Status = int32(status)
 	}
-
+	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	resp, err := gclient.Member.GetList(ctx, req)
+	resp, err := gclient.Member.GetMemberList(ctx, req)
 	cancel()
 	if err != nil {
 		return nil, fmt.Errorf("获取会员列表失败， err：%v", err)
 	}
-
+	
 	return resp, nil
 }
 
 // 添加会员
 func (m *Member) Add() error {
-	nickname := m.Query("nickname")
-	mobile := m.Query("mobile")
-	statusParam := m.Query("status")
-	genderParam := m.DefaultQuery("gender", "0")
-	birthday := m.Query("birthday")
-	memberLevelId := m.Query("member_level_id")
-	password := m.Query("password")
-	operator := m.Query("operator")
-	status, _ := strconv.ParseUint(statusParam, 10, 32)
-	gender, _ := strconv.ParseUint(genderParam, 10, 32)
-
-	req := &memberpb.AddReq{
+	nickname := m.PostForm("nickname")
+	mobile := m.PostForm("mobile")
+	statusParam := m.PostForm("status")
+	genderParam := m.PostForm("gender")
+	birthday := m.PostForm("birthday")
+	memberLevelIdParam := m.PostForm("member_level_id")
+	status, _ := strconv.ParseInt(statusParam, 10, 32)
+	gender, _ := strconv.ParseInt(genderParam, 10, 32)
+	memberLevelId, _ := strconv.ParseUint(memberLevelIdParam, 10, 64)
+	
+	req := &memberpb.Member{
 		Nickname:      nickname,
 		Mobile:        mobile,
-		Status:        uint32(status),
-		Gender:        uint32(gender),
+		Status:        memberpb.MemberStatus(status),
+		Gender:        memberpb.MemberGender(gender),
 		Birthday:      birthday,
 		MemberLevelId: memberLevelId,
-		Password:      password,
-		Operator:      operator,
 	}
-
+	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	resp, err := gclient.Member.Add(ctx, req)
+	resp, err := gclient.Member.AddMember(ctx, req)
 	cancel()
 	if err != nil {
 		return fmt.Errorf("添加会员失败, err:%v", err)
 	}
-
+	
 	if resp.State == 0 {
 		return fmt.Errorf("添加失败")
 	}
-
+	
 	return nil
 }
 
 // 会员编辑
 func (m *Member) Edit() error {
-	nickname := m.Query("nickname")
-	mobile := m.Query("mobile")
-	memberIdParam := m.Query("member_id")
-	genderParam := m.DefaultQuery("gender", "0")
-	birthday := m.Query("birthday")
-	memberLevelId := m.Query("member_level_id")
-	operator := m.Query("operator")
-	gender, _ := strconv.ParseUint(genderParam, 10, 32)
+	nickname := m.PostForm("nickname")
+	mobile := m.PostForm("mobile")
+	memberIdParam := m.PostForm("member_id")
+	genderParam := m.PostForm("gender")
+	birthday := m.PostForm("birthday")
+	memberLevelIdParam := m.PostForm("member_level_id")
+	gender, _ := strconv.ParseInt(genderParam, 10, 32)
 	memberId, _ := strconv.ParseUint(memberIdParam, 10, 32)
-
-	req := &memberpb.EditReq{
+	memberLevelId, _ := strconv.ParseUint(memberLevelIdParam, 10, 64)
+	
+	req := &memberpb.Member{
 		Nickname:      nickname,
 		Mobile:        mobile,
-		Gender:        uint32(gender),
+		Gender:        memberpb.MemberGender(gender),
 		Birthday:      birthday,
 		MemberLevelId: memberLevelId,
-		Operator:      operator,
 		MemberId:      memberId,
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	resp, err := gclient.Member.Edit(ctx, req)
+	resp, err := gclient.Member.EditMember(ctx, req)
 	cancel()
 	if err != nil {
 		return fmt.Errorf("更新会员失败, err:%v", err)
 	}
-
+	
 	if resp.State == 0 {
 		return fmt.Errorf("更新失败")
 	}
-
+	
 	return nil
 }
 
 // 会员详情
-func (m *Member) Info() (*memberpb.Member, error) {
-	memberIdParam := m.Query("member_id")
-	memberId, _ := strconv.ParseUint(memberIdParam, 10, 32)
-
-	req := &memberpb.InfoReq{
+func (m *Member) Info(memberId uint64) (*memberpb.MemberDetail, error) {
+	req := &memberpb.GetMemberReq{
 		MemberId: memberId,
+		Page:     1,
+		PageSize: 1,
 	}
+	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	resp, err := gclient.Member.GetInfo(ctx, req)
+	resp, err := gclient.Member.GetMemberList(ctx, req)
 	cancel()
+	
 	if err != nil {
-		return nil, fmt.Errorf("获取会员失败, err:%v", err)
+		return nil, fmt.Errorf("获取会员失败")
 	}
-
-	return resp, nil
+	
+	if len(resp.Members) > 0 {
+		return resp.Members[0], nil
+	}
+	
+	return nil, fmt.Errorf("获取不到会员")
 }
 
 // 更新会员状态
-func (m *Member) EditStatus() error {
-	statusParam := m.Query("status")
-	memberIdParam := m.Query("member_id")
-	operator := m.Query("operator")
-	status, _ := strconv.ParseUint(statusParam, 10, 32)
-	memberId, _ := strconv.ParseUint(memberIdParam, 10, 32)
-
-	req := &memberpb.EditStatusReq{
-		MemberId: memberId,
-		Status:   uint32(status),
-		Operator: operator,
+func (m *Member) EditStatus(memberId uint64, status int32) error {
+	req := &basepb.EditStatusReq{
+		Id:     memberId,
+		Status: status,
 	}
-
+	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	resp, err := gclient.Member.EditStatus(ctx, req)
+	resp, err := gclient.Member.EditMemberStatus(ctx, req)
 	cancel()
+	
 	if err != nil {
 		return fmt.Errorf("更新会员状态失败, err:%v", err)
 	}
-
+	
 	if resp.State == 0 {
 		return fmt.Errorf("更新失败")
 	}
-
+	
 	return nil
 }
