@@ -21,3 +21,13 @@ func (m *Product) Add() {
 
 	m.SetResponse()
 }
+
+func (m *Product) Edit() {
+	err := ProductFilter.Edit()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}

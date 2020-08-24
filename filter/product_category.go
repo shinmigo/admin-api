@@ -25,14 +25,11 @@ func (m *ProductCategory) Index() (*productpb.ListCategoryRes, error) {
 	pageSize := m.DefaultQuery("page_size", "10")
 	name := m.DefaultQuery("category_name", "")
 	status := m.Query("status")
-	storeId := m.Query("store_id")
 
 	var idNum uint64
 	idLen := len(id)
 	statusLen := len(status)
 	valid := validation.Validation{}
-	valid.Required(storeId).Message("请提交所在店铺信息")
-	valid.Match(storeId, regexp.MustCompile(`^[1-9][0-9]*`)).Message("店铺信息格式错误")
 	valid.Match(page, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的编号 不正确")
 	valid.Match(pageSize, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的数量 不正确")
 	if idLen > 0 {
@@ -53,13 +50,11 @@ func (m *ProductCategory) Index() (*productpb.ListCategoryRes, error) {
 	}
 	pageNum, _ := strconv.ParseInt(page, 10, 64)
 	pageSizeNum, _ := strconv.ParseInt(pageSize, 10, 64)
-	storeIdNum, _ := strconv.ParseUint(storeId, 10, 64)
 	listCategoryReq := &productpb.ListCategoryReq{
 		Page:     pageNum,
 		PageSize: pageSizeNum,
 		Name:     name,
 		Id:       idNum,
-		StoreId:  storeIdNum,
 	}
 	if statusLen > 0 {
 		var statusNum productpb.CategoryStatus
@@ -75,7 +70,6 @@ func (m *ProductCategory) Index() (*productpb.ListCategoryRes, error) {
 }
 
 func (m *ProductCategory) Add() error {
-	storeId := m.PostForm("store_id")
 	parentId := m.PostForm("parent_id")
 	name := m.PostForm("name")
 	sort := m.PostForm("sort")
@@ -85,8 +79,6 @@ func (m *ProductCategory) Add() error {
 	var parentIdNum uint64
 	parentIdLen := len(parentId)
 	valid := validation.Validation{}
-	valid.Required(storeId).Message("请提交商品分类所属门店！")
-	valid.Match(storeId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类门店数据格式错误！")
 	if parentIdLen > 0 {
 		valid.Match(parentId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("上级分类数据格式错误！")
 	}
@@ -101,7 +93,6 @@ func (m *ProductCategory) Add() error {
 	}
 
 	var statusNum productpb.CategoryStatus
-	storeIdNum, _ := strconv.ParseUint(storeId, 10, 64)
 	if parentIdLen > 0 {
 		parentIdNum, _ = strconv.ParseUint(parentId, 10, 64)
 	}
@@ -112,7 +103,6 @@ func (m *ProductCategory) Add() error {
 		statusNum = productpb.CategoryStatus_InActive
 	}
 	reqProductCategoryParam := &productpb.Category{
-		StoreId:  storeIdNum,
 		ParentId: parentIdNum,
 		Name:     name,
 		Icon:     icon,
@@ -125,7 +115,6 @@ func (m *ProductCategory) Add() error {
 
 func (m *ProductCategory) Edit() error {
 	categoryId := m.PostForm("id")
-	storeId := m.PostForm("store_id")
 	parentId := m.PostForm("parent_id")
 	name := m.PostForm("name")
 	sort := m.PostForm("sort")
@@ -137,8 +126,6 @@ func (m *ProductCategory) Edit() error {
 	valid := validation.Validation{}
 	valid.Required(categoryId).Message("请提交要编辑的商品分类！")
 	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类数据格式错误！")
-	valid.Required(storeId).Message("请提交商品分类所属门店！")
-	valid.Match(storeId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类门店数据格式错误！")
 	if parentIdLen > 0 {
 		valid.Match(parentId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("上级分类数据格式错误！")
 	}
@@ -153,7 +140,6 @@ func (m *ProductCategory) Edit() error {
 	}
 
 	var statusNum productpb.CategoryStatus
-	storeIdNum, _ := strconv.ParseUint(storeId, 10, 64)
 	if parentIdLen > 0 {
 		parentIdNum, _ = strconv.ParseUint(parentId, 10, 64)
 	}
@@ -166,7 +152,6 @@ func (m *ProductCategory) Edit() error {
 	}
 	reqProductCategoryParam := &productpb.Category{
 		CategoryId: categoryIdNum,
-		StoreId:    storeIdNum,
 		ParentId:   parentIdNum,
 		Name:       name,
 		Icon:       icon,
