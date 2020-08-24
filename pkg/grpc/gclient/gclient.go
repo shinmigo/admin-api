@@ -2,15 +2,17 @@ package gclient
 
 import (
 	"fmt"
-	"goshop/api/pkg/grpc/etcd3"
-	"goshop/api/pkg/utils"
 	"log"
 	"strings"
-
+	
+	"github.com/shinmigo/pb/shoppb"
+	"goshop/api/pkg/grpc/etcd3"
+	"goshop/api/pkg/utils"
+	
 	"github.com/shinmigo/pb/memberpb"
-
+	
 	"github.com/shinmigo/pb/productpb"
-
+	
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/resolver"
 )
@@ -23,11 +25,24 @@ var (
 	ProductCategoryClient productpb.CategoryServiceClient
 	ProductSpecClient     productpb.SpecServiceClient
 	ProductClient         productpb.ProductServiceClient
+	ShopUser              shoppb.UserServiceClient
 )
 
 func DialGrpcService() {
+	shop()
 	pms()
 	crm()
+}
+
+func shop()  {
+	r := etcd3.NewResolver(utils.C.Etcd.Host)
+	resolver.Register(r)
+	conn, err := grpc.Dial(r.Scheme()+"://author/"+utils.C.Grpc.Name["shop"], grpc.WithBalancerName("round_robin"), grpc.WithInsecure())
+	if err != nil {
+		log.Panicf("grpc没有连接上%s, err: %v \n", utils.C.Grpc.Name["shop"], err)
+	}
+	fmt.Printf("连接成功：%s, host分别为: %s \n", utils.C.Grpc.Name["shop"], strings.Join(utils.C.Etcd.Host, ","))
+	ShopUser = shoppb.NewUserServiceClient(conn)
 }
 
 func crm() {
