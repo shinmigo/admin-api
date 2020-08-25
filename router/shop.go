@@ -10,8 +10,12 @@ import (
 
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
-		g := routerhelper.NewGroupRouter("auth", new(controller.Auth), r, middleware.Cors(), middleware.VerifyToken())
+		// 非登录
+		g := routerhelper.NewGroupRouter("auth", new(controller.Auth), r, middleware.Cors())
 		g.Post("/login")
-		g.Get("/logout")
+		
+		// 必须登录
+		authLogin := routerhelper.NewGroupRouter("auth", new(controller.Auth), r, middleware.Cors(), middleware.VerifyToken())
+		authLogin.Get("/logout")
 	})
 }
