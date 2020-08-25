@@ -1,7 +1,8 @@
 package filter
 
 import (
-	"github.com/davecgh/go-spew/spew"
+	"strconv"
+	
 	"github.com/gin-gonic/gin"
 	"goshop/api/pkg/validation"
 	"goshop/api/service"
@@ -36,8 +37,9 @@ func (a *Auth) Login() (interface{}, error) {
 }
 
 func (a *Auth) Logout() error {
-	spew.Dump(123)
-	if err := service.NewAuth(a.Context).Logout(); err != nil {
+	userId := a.Writer.Header().Get("goshop_user_id")
+	uid, _ := strconv.ParseUint(userId, 10, 64)
+	if err := service.NewAuth(a.Context).Logout(uid); err != nil {
 		return err
 	}
 	return nil

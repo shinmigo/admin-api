@@ -4,7 +4,6 @@ import (
 	"context"
 	"time"
 	
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 	"github.com/shinmigo/pb/shoppb"
 	"goshop/api/pkg/db"
@@ -57,8 +56,7 @@ func (a *Auth) Login() (*UserLogin, error) {
 	}, nil
 }
 
-func (a *Auth) Logout() error {
-	userId := a.Request.Header.Get("goshop_user_id")
-	spew.Dump(userId)
+func (a *Auth) Logout(userId uint64) error {
+	db.Redis.Del(utils.UserTokenKey(userId))
 	return nil
 }

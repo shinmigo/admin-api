@@ -3,7 +3,6 @@ package middleware
 import (
 	"strconv"
 	
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 	"goshop/api/pkg/db"
 	"goshop/api/pkg/utils"
@@ -52,7 +51,6 @@ func VerifyToken() gin.HandlerFunc {
 		}
 		
 		idStr := strconv.FormatUint(u.UserId, 10)
-		spew.Dump(idStr)
 		c.Writer.Header().Set("goshop_user_id", idStr)
 	}
 }

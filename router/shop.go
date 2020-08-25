@@ -10,9 +10,8 @@ import (
 
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
-		g := routerhelper.NewGroupRouter("auth", new(controller.Auth), r, middleware.Cors())
+		g := routerhelper.NewGroupRouter("auth", new(controller.Auth), r, middleware.Cors(), middleware.VerifyToken())
 		g.Post("/login")
-		
-		g.Use(middleware.VerifyToken()).GET("/logout")
+		g.Get("/logout")
 	})
 }
