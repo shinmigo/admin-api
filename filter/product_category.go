@@ -3,12 +3,13 @@ package filter
 import (
 	"encoding/json"
 	"errors"
-	"github.com/gin-gonic/gin"
-	"github.com/shinmigo/pb/productpb"
 	"goshop/api/pkg/validation"
 	"goshop/api/service"
 	"regexp"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/shinmigo/pb/productpb"
 )
 
 type ProductCategory struct {
@@ -75,6 +76,8 @@ func (m *ProductCategory) Add() error {
 	sort := m.PostForm("sort")
 	status := m.PostForm("status")
 	icon := m.PostForm("icon")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	var parentIdNum uint64
 	parentIdLen := len(parentId)
@@ -102,13 +105,14 @@ func (m *ProductCategory) Add() error {
 	} else {
 		statusNum = productpb.CategoryStatus_InActive
 	}
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	reqProductCategoryParam := &productpb.Category{
 		ParentId: parentIdNum,
 		Name:     name,
 		Icon:     icon,
 		Status:   statusNum,
 		Sort:     sortNum,
-		AdminId:  0,
+		AdminId:  adminIdNum,
 	}
 	return service.NewProductCategory(m.Context).Add(reqProductCategoryParam)
 }
@@ -120,6 +124,8 @@ func (m *ProductCategory) Edit() error {
 	sort := m.PostForm("sort")
 	status := m.PostForm("status")
 	icon := m.PostForm("icon")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	var parentIdNum uint64
 	parentIdLen := len(parentId)
@@ -150,6 +156,7 @@ func (m *ProductCategory) Edit() error {
 	} else {
 		statusNum = productpb.CategoryStatus_InActive
 	}
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	reqProductCategoryParam := &productpb.Category{
 		CategoryId: categoryIdNum,
 		ParentId:   parentIdNum,
@@ -157,7 +164,7 @@ func (m *ProductCategory) Edit() error {
 		Icon:       icon,
 		Status:     statusNum,
 		Sort:       sortNum,
-		AdminId:    0,
+		AdminId:    adminIdNum,
 	}
 	return service.NewProductCategory(m.Context).Edit(reqProductCategoryParam)
 }
@@ -165,6 +172,8 @@ func (m *ProductCategory) Edit() error {
 func (m *ProductCategory) EditStatus() error {
 	categoryId := m.PostForm("id")
 	status := m.PostForm("status")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	valid := validation.Validation{}
 	valid.Required(categoryId).Message("请提交要编辑的商品分类！")
@@ -184,9 +193,11 @@ func (m *ProductCategory) EditStatus() error {
 	} else {
 		statusNum = productpb.CategoryStatus_InActive
 	}
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	param := &productpb.EditCategoryStatusReq{
 		CategoryId: idParam,
 		Status:     statusNum,
+		AdminId:    adminIdNum,
 	}
 	return service.NewProductCategory(m.Context).EditStatus(param)
 }

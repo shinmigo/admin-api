@@ -1,13 +1,14 @@
 package filter
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/shinmigo/pb/productpb"
 	"goshop/api/pkg/validation"
 	"goshop/api/service"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/shinmigo/pb/productpb"
 )
 
 type ProductSpec struct {
@@ -58,6 +59,8 @@ func (m *ProductSpec) Add() error {
 	name := m.PostForm("name")
 	sort := m.PostForm("sort")
 	values := m.PostForm("values")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	valid := validation.Validation{}
 	valid.Required(name).Message("请填写商品规格名称！")
@@ -70,11 +73,13 @@ func (m *ProductSpec) Add() error {
 	}
 
 	sortNum, _ := strconv.ParseUint(sort, 10, 64)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	valuesList := strings.Split(values, ",")
 	reqParam := &productpb.Spec{
 		Name:     name,
 		Sort:     sortNum,
 		Contents: valuesList,
+		AdminId:  adminIdNum,
 	}
 
 	return service.NewProductSpec(m.Context).Add(reqParam)
@@ -85,6 +90,8 @@ func (m *ProductSpec) Edit() error {
 	name := m.PostForm("name")
 	sort := m.PostForm("sort")
 	values := m.PostForm("values")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	valid := validation.Validation{}
 	valid.Required(specId).Message("请提交要编辑的商品规格！")
@@ -101,11 +108,13 @@ func (m *ProductSpec) Edit() error {
 	sortNum, _ := strconv.ParseUint(sort, 10, 64)
 	valuesList := strings.Split(values, ",")
 	specIdNum, _ := strconv.ParseUint(specId, 10, 64)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	reqParam := &productpb.Spec{
 		SpecId:   specIdNum,
 		Name:     name,
 		Sort:     sortNum,
 		Contents: valuesList,
+		AdminId:  adminIdNum,
 	}
 
 	return service.NewProductSpec(m.Context).Edit(reqParam)

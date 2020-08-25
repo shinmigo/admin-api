@@ -40,16 +40,62 @@ func (m *ProdcutTag) Index() (*productpb.ListTagRes, error) {
 }
 
 func (m *ProdcutTag) Add() error {
+	name := m.PostForm("name")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
+
 	valid := validation.Validation{}
-	name := m.Query("name")
 	valid.Required(name).Message("名称不能为空")
+	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品标签名称格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
 
-	if err := service.NewProductTag(m.Context).Add(); err != nil {
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
+	req := &productpb.Tag{
+		Name:    name,
+		AdminId: adminIdNum,
+	}
+	if err := service.NewProductTag(m.Context).Add(req); err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (m *ProdcutTag) Edit() error {
+	id := m.PostForm("id")
+	name := m.PostForm("name")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
+
+	valid := validation.Validation{}
+	valid.Required(id).Message("标签不能为空")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]+$`)).Message("要编辑的标签格式错误")
+	valid.Required(name).Message("名称不能为空")
+	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品标签名称格式错误")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
+	req := &productpb.Tag{
+		Name:    name,
+		AdminId: adminIdNum,
+	}
+	return service.NewProductTag(m.Context).Edit(req)
+}
+
+func (m *ProdcutTag) Delete() error {
+	id := m.PostForm("id")
+
+	valid := validation.Validation{}
+	valid.Required(id).Message("标签不能为空")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]+$`)).Message("要编辑的标签格式错误")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	idNum, _ := strconv.ParseUint(id, 10, 64)
+	return service.NewProductTag(m.Context).Delete(idNum)
 }
