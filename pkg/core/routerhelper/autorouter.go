@@ -22,5 +22,7 @@ func EntryRouterTree(e *gin.Engine) {
 
 func InitRouter() {
 	r := utils.NewGinDefault()
+
+	r.Static("/static", "./static")
 	EntryRouterTree(r)
 }
