@@ -44,15 +44,7 @@ func (m *ProductTag) Index(pNumber, pSize uint64) (*productpb.ListTagRes, error)
 	return resp, nil
 }
 
-func (m *ProductTag) Add() error {
-	storeId := m.DefaultQuery("store_id", "0")
-	sId, _ := strconv.ParseUint(storeId, 10, 64)
-
-	req := &productpb.Tag{
-		StoreId: sId,
-		Name:    m.Query("name"),
-		AdminId: 0,
-	}
+func (m *ProductTag) Add(req *productpb.Tag) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	resp, err := gclient.ProductTag.AddTag(ctx, req)
 	cancel()
@@ -65,4 +57,23 @@ func (m *ProductTag) Add() error {
 	}
 
 	return nil
+}
+
+func (m *ProductTag) Edit(req *productpb.Tag) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	_, err := gclient.ProductTag.EditTag(ctx, req)
+	cancel()
+
+	return err
+}
+
+func (m *ProductTag) Delete(id uint64) error {
+	req := &productpb.DelTagReq{
+		TagId: id,
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	_, err := gclient.ProductTag.DelTag(ctx, req)
+	cancel()
+
+	return err
 }

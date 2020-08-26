@@ -24,8 +24,28 @@ func (m *ProductTag) Index() {
 	m.SetResponse(str)
 }
 
-func (m *User) Add() {
+func (m *ProductTag) Add() {
 	err := productTagFilter.Add()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}
+
+func (m *ProductTag) Edit() {
+	err := productTagFilter.Edit()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}
+
+func (m *ProductTag) Delete() {
+	err := productTagFilter.Delete()
 	if err != nil {
 		m.SetResponse(nil, err)
 		return

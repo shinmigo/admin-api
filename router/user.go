@@ -10,7 +10,7 @@ import (
 
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
-		g := routerhelper.NewGroupRouter("user", new(controller.User), r, middleware.Cors(), middleware.Test())
+		g := routerhelper.NewGroupRouter("user", new(controller.User), r, middleware.Cors(), middleware.Test(), middleware.VerifyToken())
 		g.Get("/get-list-query", "GetListQuery")
 		g.Get("/test")
 	})

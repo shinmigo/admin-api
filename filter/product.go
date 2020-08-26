@@ -2,13 +2,14 @@ package filter
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
-	"github.com/shinmigo/pb/productpb"
 	"goshop/api/pkg/validation"
 	"goshop/api/service"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/shinmigo/pb/productpb"
 )
 
 type Product struct {
@@ -91,6 +92,8 @@ func (m *Product) Add() error {
 	tags := m.PostForm("tags")
 	param := m.PostForm("param")
 	description := m.PostForm("description")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	tagsList := make([]uint64, 0, 8)
 	valid := validation.Validation{}
@@ -140,6 +143,7 @@ func (m *Product) Add() error {
 	kindIdNum, _ := strconv.ParseUint(kindId, 10, 64)
 	imageList := strings.Split(images, ",")
 	specTypeNum, _ := strconv.Atoi(specType)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	if specTypeNum == 1 {
 		specTypeReq = 1
 	} else {
@@ -168,6 +172,7 @@ func (m *Product) Add() error {
 		Spec:             specParam,
 		Param:            paramList,
 		Description:      description,
+		AdminId:          adminIdNum,
 	}
 	return service.NewProduct(m.Context).Add(&productParam)
 }
@@ -186,6 +191,8 @@ func (m *Product) Edit() error {
 	tags := m.PostForm("tags")
 	param := m.PostForm("param")
 	description := m.PostForm("description")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	tagsList := make([]uint64, 0, 8)
 	valid := validation.Validation{}
@@ -238,6 +245,7 @@ func (m *Product) Edit() error {
 	kindIdNum, _ := strconv.ParseUint(kindId, 10, 64)
 	imageList := strings.Split(images, ",")
 	specTypeNum, _ := strconv.Atoi(specType)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	if specTypeNum == 1 {
 		specTypeReq = 1
 	} else {
@@ -267,12 +275,15 @@ func (m *Product) Edit() error {
 		Spec:             specParam,
 		Param:            paramList,
 		Description:      description,
+		AdminId:          adminIdNum,
 	}
 	return service.NewProduct(m.Context).Edit(&productParam)
 }
 
 func (m *Product) Delete() error {
 	id := m.PostForm("id")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要删除的商品！")
@@ -282,8 +293,10 @@ func (m *Product) Delete() error {
 	}
 
 	idNum, _ := strconv.ParseUint(id, 10, 64)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	delReq := &productpb.DelProductReq{
 		ProductId: idNum,
+		AdminId:   adminIdNum,
 	}
 	return service.NewProduct(m.Context).Delete(delReq)
 }

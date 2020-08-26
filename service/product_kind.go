@@ -2,19 +2,20 @@ package service
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/shinmigo/pb/productpb"
-	"golang.org/x/net/context"
 	"goshop/api/pkg/grpc/gclient"
 	"strconv"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/shinmigo/pb/productpb"
+	"golang.org/x/net/context"
 )
 
 type ProductKind struct {
 	*gin.Context
 }
 
-func NewProductKind(c *gin.Context)  *ProductKind {
+func NewProductKind(c *gin.Context) *ProductKind {
 	return &ProductKind{Context: c}
 }
 
@@ -45,12 +46,15 @@ func (m *ProductKind) Index(pNumber, pSize uint64) (*productpb.ListKindRes, erro
 
 func (m *ProductKind) Add() error {
 	storeId := m.DefaultPostForm("store_id", "0")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 	sId, _ := strconv.ParseUint(storeId, 10, 64)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 
 	req := &productpb.Kind{
-		StoreId:              sId,
-		Name:                 m.PostForm("name"),
-		AdminId:              0,
+		StoreId: sId,
+		Name:    m.PostForm("name"),
+		AdminId: adminIdNum,
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
@@ -67,12 +71,12 @@ func (m *ProductKind) Add() error {
 	return nil
 }
 
-func (m *ProductKind) Delete() error  {
+func (m *ProductKind) Delete() error {
 	kindId := m.PostForm("kind_id")
 	kingIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
 
 	req := &productpb.DelKindReq{
-		KindId:               kingIdNumber,
+		KindId: kingIdNumber,
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	resp, err := gclient.ProductKind.DelKind(ctx, req)
@@ -89,21 +93,23 @@ func (m *ProductKind) Delete() error  {
 	return nil
 }
 
-func (m *ProductKind) Edit() error  {
+func (m *ProductKind) Edit() error {
 	storeId := m.PostForm("store_id")
 	name := m.PostForm("name")
 	kindId := m.PostForm("kind_id")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 
 	kindIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
 	storeIdNumber, _ := strconv.ParseUint(storeId, 10, 64)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 
 	req := &productpb.Kind{
-		KindId:               kindIdNumber,
-		StoreId:              storeIdNumber,
-		Name:                 name,
-		AdminId:              0,
+		KindId:  kindIdNumber,
+		StoreId: storeIdNumber,
+		Name:    name,
+		AdminId: adminIdNum,
 	}
-
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	resp, err := gclient.ProductKind.EditKind(ctx, req)
 	cancel()

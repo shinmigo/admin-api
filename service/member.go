@@ -6,8 +6,9 @@ import (
 	"strconv"
 	"time"
 	
-	"github.com/shinmigo/pb/basepb"
 	"goshop/api/pkg/grpc/gclient"
+	
+	"github.com/shinmigo/pb/basepb"
 	
 	"github.com/shinmigo/pb/memberpb"
 	
@@ -60,10 +61,13 @@ func (m *Member) Add() error {
 	statusParam := m.PostForm("status")
 	genderParam := m.PostForm("gender")
 	birthday := m.PostForm("birthday")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 	memberLevelIdParam := m.PostForm("member_level_id")
 	status, _ := strconv.ParseInt(statusParam, 10, 32)
 	gender, _ := strconv.ParseInt(genderParam, 10, 32)
 	memberLevelId, _ := strconv.ParseUint(memberLevelIdParam, 10, 64)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	
 	req := &memberpb.Member{
 		Nickname:      nickname,
@@ -72,6 +76,7 @@ func (m *Member) Add() error {
 		Gender:        memberpb.MemberGender(gender),
 		Birthday:      birthday,
 		MemberLevelId: memberLevelId,
+		AdminId:       adminIdNum,
 	}
 	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
@@ -95,10 +100,13 @@ func (m *Member) Edit() error {
 	memberIdParam := m.PostForm("member_id")
 	genderParam := m.PostForm("gender")
 	birthday := m.PostForm("birthday")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
 	memberLevelIdParam := m.PostForm("member_level_id")
 	gender, _ := strconv.ParseInt(genderParam, 10, 32)
 	memberId, _ := strconv.ParseUint(memberIdParam, 10, 32)
 	memberLevelId, _ := strconv.ParseUint(memberLevelIdParam, 10, 64)
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	
 	req := &memberpb.Member{
 		Nickname:      nickname,
@@ -107,6 +115,7 @@ func (m *Member) Edit() error {
 		Birthday:      birthday,
 		MemberLevelId: memberLevelId,
 		MemberId:      memberId,
+		AdminId:       adminIdNum,
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	resp, err := gclient.Member.EditMember(ctx, req)
@@ -124,32 +133,27 @@ func (m *Member) Edit() error {
 
 // 会员详情
 func (m *Member) Info(memberId uint64) (*memberpb.MemberDetail, error) {
-	req := &memberpb.GetMemberReq{
-		MemberId: memberId,
-		Page:     1,
-		PageSize: 1,
+	req := &basepb.GetOneReq{
+		Id: memberId,
 	}
 	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	resp, err := gclient.Member.GetMemberList(ctx, req)
+	resp, err := gclient.Member.GetMemberDetail(ctx, req)
 	cancel()
 	
 	if err != nil {
-		return nil, fmt.Errorf("获取会员失败")
+		return nil, fmt.Errorf("获取会员失败, err: %v", err)
 	}
 	
-	if len(resp.Members) > 0 {
-		return resp.Members[0], nil
-	}
-	
-	return nil, fmt.Errorf("获取不到会员")
+	return resp, nil
 }
 
 // 更新会员状态
-func (m *Member) EditStatus(memberId uint64, status int32) error {
+func (m *Member) EditStatus(memberId, adminId uint64, status int32) error {
 	req := &basepb.EditStatusReq{
-		Id:     memberId,
-		Status: status,
+		Id:      memberId,
+		Status:  status,
+		AdminId: adminId,
 	}
 	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)

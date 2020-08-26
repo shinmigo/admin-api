@@ -5,5 +5,5 @@ import (
 )
 
 func UserTokenKey(userId uint64) string {
-	return fmt.Sprintf("goshop:user:token::%s", userId)
+	return fmt.Sprintf("goshop:user:token::%d", userId)
 }

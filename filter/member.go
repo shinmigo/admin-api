@@ -3,12 +3,12 @@ package filter
 import (
 	"regexp"
 	"strconv"
-	
+
 	"goshop/api/pkg/validation"
 	"goshop/api/service"
-	
+
 	"github.com/shinmigo/pb/memberpb"
-	
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,14 +30,14 @@ func (m *Member) Index() (*memberpb.ListMemberRes, error) {
 	if m.validation.HasError() {
 		return nil, m.validation.GetError()
 	}
-	
+
 	pNumber, _ := strconv.ParseUint(page, 10, 32)
 	pSize, _ := strconv.ParseUint(pageSize, 10, 32)
 	list, err := service.NewMember(m.Context).Index(pNumber, pSize)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return list, nil
 }
 
@@ -51,7 +51,7 @@ func (m *Member) Add() error {
 	memberLevelId := m.PostForm("member_level_id")
 	password := m.PostForm("password")
 	operator := m.PostForm("operator")
-	
+
 	m.validation.Required(nickname).Message("昵称不能为空！")
 	m.validation.Mobile(mobile).Message("手机号格式不正确！")
 	m.validation.Required(status).Message("状态不能为空！")
@@ -60,15 +60,15 @@ func (m *Member) Add() error {
 	m.validation.Required(memberLevelId).Message("会员等级不能为空！")
 	m.validation.Required(password).Message("密码不能为空！")
 	m.validation.Required(operator).Message("操作人不能为空！")
-	
+
 	if m.validation.HasError() {
 		return m.validation.GetError()
 	}
-	
+
 	if err := service.NewMember(m.Context).Add(); err != nil {
 		return err
 	}
-	
+
 	return nil
 }
 
@@ -81,7 +81,7 @@ func (m *Member) Edit() error {
 	birthday := m.PostForm("birthday")
 	memberLevelId := m.PostForm("member_level_id")
 	operator := m.PostForm("operator")
-	
+
 	m.validation.Required(nickname).Message("昵称不能为空！")
 	m.validation.Mobile(mobile).Message("手机号格式不正确！")
 	m.validation.Required(gender).Message("性别不能为空！")
@@ -89,15 +89,15 @@ func (m *Member) Edit() error {
 	m.validation.Required(memberLevelId).Message("会员等级不能为空！")
 	m.validation.Required(operator).Message("操作人不能为空！")
 	m.validation.Required(memberId).Message("member_id不能为空！")
-	
+
 	if m.validation.HasError() {
 		return m.validation.GetError()
 	}
-	
+
 	if err := service.NewMember(m.Context).Edit(); err != nil {
 		return err
 	}
-	
+
 	return nil
 }
 
@@ -105,17 +105,17 @@ func (m *Member) Edit() error {
 func (m *Member) Info() (*memberpb.MemberDetail, error) {
 	memberIdParam := m.Query("member_id")
 	m.validation.Required(memberIdParam).Message("MemberId不能为空！")
-	
+
 	if m.validation.HasError() {
 		return nil, m.validation.GetError()
 	}
-	
+
 	memberId, _ := strconv.ParseUint(memberIdParam, 10, 64)
 	req, err := service.NewMember(m.Context).Info(memberId)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return req, nil
 }
 
@@ -123,20 +123,23 @@ func (m *Member) Info() (*memberpb.MemberDetail, error) {
 func (m *Member) EditStatus() error {
 	statusParam := m.PostForm("status")
 	memberIdParam := m.PostForm("member_id")
-	
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
+
 	m.validation.Required(statusParam).Message("状态不能为空！")
 	m.validation.Required(memberIdParam).Message("member_id不能为空！")
-	
+
 	if m.validation.HasError() {
 		return m.validation.GetError()
 	}
-	
+
 	status, _ := strconv.ParseInt(statusParam, 10, 32)
 	memberId, _ := strconv.ParseUint(memberIdParam, 10, 64)
-	
-	if err := service.NewMember(m.Context).EditStatus(memberId, int32(status)); err != nil {
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
+
+	if err := service.NewMember(m.Context).EditStatus(memberId, adminIdNum, int32(status)); err != nil {
 		return err
 	}
-	
+
 	return nil
 }

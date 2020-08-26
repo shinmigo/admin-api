@@ -37,7 +37,7 @@ func (a *Auth) Login() (interface{}, error) {
 }
 
 func (a *Auth) Logout() error {
-	userId := a.Writer.Header().Get("goshop_user_id")
+	userId := a.GetString("goshop_user_id")
 	uid, _ := strconv.ParseUint(userId, 10, 64)
 	if err := service.NewAuth(a.Context).Logout(uid); err != nil {
 		return err

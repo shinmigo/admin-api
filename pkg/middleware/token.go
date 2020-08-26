@@ -51,6 +51,6 @@ func VerifyToken() gin.HandlerFunc {
 		}
 		
 		idStr := strconv.FormatUint(u.UserId, 10)
-		c.Writer.Header().Set("goshop_user_id", idStr)
+		c.Set("goshop_user_id", idStr)
 	}
 }
