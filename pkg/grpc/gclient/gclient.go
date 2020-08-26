@@ -4,15 +4,16 @@ import (
 	"fmt"
 	"log"
 	"strings"
-	
-	"github.com/shinmigo/pb/shoppb"
+
 	"goshop/api/pkg/grpc/etcd3"
 	"goshop/api/pkg/utils"
-	
+
+	"github.com/shinmigo/pb/shoppb"
+
 	"github.com/shinmigo/pb/memberpb"
-	
+
 	"github.com/shinmigo/pb/productpb"
-	
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/resolver"
 )
@@ -26,6 +27,7 @@ var (
 	ProductSpecClient     productpb.SpecServiceClient
 	ProductClient         productpb.ProductServiceClient
 	ShopUser              shoppb.UserServiceClient
+	ShopCarrier           shoppb.CarrierServiceClient
 )
 
 func DialGrpcService() {
@@ -34,7 +36,7 @@ func DialGrpcService() {
 	crm()
 }
 
-func shop()  {
+func shop() {
 	r := etcd3.NewResolver(utils.C.Etcd.Host)
 	resolver.Register(r)
 	conn, err := grpc.Dial(r.Scheme()+"://author/"+utils.C.Grpc.Name["shop"], grpc.WithBalancerName("round_robin"), grpc.WithInsecure())
@@ -43,6 +45,7 @@ func shop()  {
 	}
 	fmt.Printf("连接成功：%s, host分别为: %s \n", utils.C.Grpc.Name["shop"], strings.Join(utils.C.Etcd.Host, ","))
 	ShopUser = shoppb.NewUserServiceClient(conn)
+	ShopCarrier = shoppb.NewCarrierServiceClient(conn)
 }
 
 func crm() {
