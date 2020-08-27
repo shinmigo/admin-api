@@ -1,0 +1,32 @@
+/product-tag/index:
+  get:
+    summary: 商品标签列表
+    description: 商品标签列表
+    tags:
+      - 商品标签
+    parameters:
+      - name: name
+        in: query
+        description: 标签名称
+        required: false
+        type: string
+      - name: id
+        in: query
+        description: tag id
+        required: false
+        type: integer
+      - name: page_size
+        in: query
+        description: 页面大小
+        required: false
+        type: integer
+      - name: page
+        in: query
+        description: 页面编号
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
