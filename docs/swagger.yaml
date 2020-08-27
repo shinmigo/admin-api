@@ -20,12 +20,12 @@ paths:
        - 认证
      parameters:
        - name: username
-         in: body
+         in: formData
          description: 用户名
          required: true
          type: string
        - name: password
-         in: body
+         in: formData
          description: 密码
          required: true
          type: string
@@ -98,17 +98,17 @@ paths:
        - 物流公司
      parameters:
        - name: company_name
-         in: body
+         in: formData
          description: 物流公司名称
          required: true
          type: string
        - name: company_code
-         in: body
+         in: formData
          description: 物流公司编码
          required: true
          type: string
        - name: sort
-         in: body
+         in: formData
          description: 排序
          required: true
          type: integer
@@ -131,17 +131,17 @@ paths:
          required: false
          type: integer
        - name: company_name
-         in: body
+         in: formData
          description: 物流公司名称
          required: true
          type: string
        - name: company_code
-         in: body
+         in: formData
          description: 物流公司编码
          required: true
          type: string
        - name: sort
-         in: body
+         in: formData
          description: 排序
          required: true
          type: integer
@@ -199,37 +199,37 @@ paths:
        - 会员
      parameters:
        - name: nickname
-         in: body
+         in: formData
          description: 昵称
          required: true
          type: string
        - name: mobile
-         in: body
+         in: formData
          description: 手机
          required: true
          type: string
        - name: status
-         in: body
+         in: formData
          description: 状态
          required: true
          type: integer
        - name: gender
-         in: body
+         in: formData
          description: 性别
          required: true
          type: integer
        - name: birthday
-         in: body
+         in: formData
          description: 出生年月
          required: true
          type: string
        - name: member_level_id
-         in: body
+         in: formData
          description: 会员等级
          required: true
          type: integer
        - name: password
-         in: body
+         in: formData
          description: 密码
          required: true
          type: string
@@ -247,32 +247,32 @@ paths:
        - 会员
      parameters:
        - name: nickname
-         in: body
+         in: formData
          description: 昵称
          required: true
          type: string
        - name: mobile
-         in: body
+         in: formData
          description: 手机
          required: true
          type: string
        - name: gender
-         in: body
+         in: formData
          description: 性别
          required: true
          type: integer
        - name: birthday
-         in: body
+         in: formData
          description: 出生年月
          required: true
          type: string
        - name: member_level_id
-         in: body
+         in: formData
          description: 会员等级
          required: true
          type: integer
        - name: password
-         in: body
+         in: formData
          description: 密码
          required: true
          type: string
@@ -368,62 +368,62 @@ paths:
        - 商品
      parameters:
        - name: category_id
-         in: body
+         in: formData
          description: 商品分类
          required: true
          type: integer
        - name: kind_id
-         in: body
+         in: formData
          description: 商品类型
          required: true
          type: integer
        - name: name
-         in: body
+         in: formData
          description: 商品名称
          required: true
          type: string
        - name: short_description
-         in: body
+         in: formData
          description: 商品简介
          required: true
          type: string
        - name: unit
-         in: body
+         in: formData
          description: 商品单位
          required: true
          type: integer
        - name: images
-         in: body
+         in: formData
          description: 商品轮播图
          required: true
          type: string
        - name: spec_type
-         in: body
+         in: formData
          description: 商品规格种类
          required: true
          type: integer
        - name: spec
-         in: body
+         in: formData
          description: 商品规格
          required: true
          type: string
        - name: status
-         in: body
+         in: formData
          description: 商品状态
          required: true
          type: integer
        - name: tags
-         in: body
+         in: formData
          description: 商品标签
          required: true
          type: string
        - name: param
-         in: body
+         in: formData
          description: 商品参数
          required: true
          type: string
        - name: description
-         in: body
+         in: formData
          description: 商品描述
          required: true
          type: string
@@ -441,67 +441,67 @@ paths:
        - 商品
      parameters:
        - name: id
-         in: body
+         in: formData
          description: 商品编号
          required: true
          type: integer
        - name: category_id
-         in: body
+         in: formData
          description: 商品分类
          required: true
          type: integer
        - name: kind_id
-         in: body
+         in: formData
          description: 商品类型
          required: true
          type: integer
        - name: name
-         in: body
+         in: formData
          description: 商品名称
          required: true
          type: string
        - name: short_description
-         in: body
+         in: formData
          description: 商品简介
          required: true
          type: string
        - name: unit
-         in: body
+         in: formData
          description: 商品单位
          required: true
          type: integer
        - name: images
-         in: body
+         in: formData
          description: 商品轮播图
          required: true
          type: string
        - name: spec_type
-         in: body
+         in: formData
          description: 商品规格种类
          required: true
          type: integer
        - name: spec
-         in: body
+         in: formData
          description: 商品规格
          required: true
          type: string
        - name: status
-         in: body
+         in: formData
          description: 商品状态
          required: true
          type: integer
        - name: tags
-         in: body
+         in: formData
          description: 商品标签
          required: true
          type: string
        - name: param
-         in: body
+         in: formData
          description: 商品参数
          required: true
          type: string
        - name: description
-         in: body
+         in: formData
          description: 商品描述
          required: true
          type: string
@@ -519,7 +519,7 @@ paths:
        - 商品
      parameters:
        - name: id
-         in: body
+         in: formData
          description: 商品编号
          required: true
          type: integer
@@ -861,17 +861,17 @@ paths:
        - 商品参数
      parameters:
        - name: name
-         in: body
+         in: formData
          description: 商品参数名称
          required: true
          type: string
        - name: type
-         in: body
+         in: formData
          description: 商品参数类型
          required: true
          type: integer
        - name: contents
-         in: body
+         in: formData
          description: 商品参数值
          required: true
          type: string
@@ -889,22 +889,22 @@ paths:
        - 商品参数
      parameters:
        - name: param_id
-         in: body
+         in: formData
          description: 商品参数编号
          required: true
          type: integer
        - name: name
-         in: body
+         in: formData
          description: 商品参数名称
          required: true
          type: string
        - name: type
-         in: body
+         in: formData
          description: 商品参数类型
          required: true
          type: integer
        - name: contents
-         in: body
+         in: formData
          description: 商品参数值
          required: true
          type: string
@@ -922,7 +922,7 @@ paths:
        - 商品参数
      parameters:
        - name: param_id
-         in: body
+         in: formData
          description: 商品参数编号
          required: true
          type: integer
@@ -940,7 +940,7 @@ paths:
        - 商品参数
      parameters:
        - name: param_id
-         in: body
+         in: formData
          description: 商品参数编号
          required: true
          type: integer
@@ -990,17 +990,17 @@ paths:
        - 商品规格
      parameters:
        - name: name
-         in: body
+         in: formData
          description: 商品规格名称
          required: true
          type: string
        - name: sort
-         in: body
+         in: formData
          description: 商品规格排序
          required: true
          type: integer
        - name: values
-         in: body
+         in: formData
          description: 商品规格值
          required: true
          type: string
@@ -1018,22 +1018,22 @@ paths:
        - 商品规格
      parameters:
        - name: id
-         in: body
+         in: formData
          description: 商品规格编号
          required: true
          type: integer
        - name: name
-         in: body
+         in: formData
          description: 商品规格名称
          required: true
          type: string
        - name: sort
-         in: body
+         in: formData
          description: 商品规格排序
          required: true
          type: integer
        - name: values
-         in: body
+         in: formData
          description: 商品规格值
          required: true
          type: string
@@ -1051,7 +1051,7 @@ paths:
        - 商品规格
      parameters:
        - name: id
-         in: body
+         in: formData
          description: 商品规格编号
          required: true
          type: integer
@@ -1091,7 +1091,7 @@ paths:
        - 商品标签
      parameters:
        - name: name
-         in: body
+         in: formData
          description: 商品标签名
          required: true
          type: string
@@ -1109,12 +1109,12 @@ paths:
        - 商品标签
      parameters:
        - name: id
-         in: body
+         in: formData
          description: 编号
          required: true
          type: integer
        - name: name
-         in: body
+         in: formData
          description: 商品标签名
          required: true
          type: string
@@ -1132,12 +1132,12 @@ paths:
        - 商品标签
      parameters:
        - name: id
-         in: body
+         in: formData
          description: 编号
          required: true
          type: integer
        - name: name
-         in: body
+         in: formData
          description: 商品标签名
          required: true
          type: string

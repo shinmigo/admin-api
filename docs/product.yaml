@@ -44,62 +44,62 @@
       - 商品
     parameters:
       - name: category_id
-        in: body
+        in: formData
         description: 商品分类
         required: true
         type: integer
       - name: kind_id
-        in: body
+        in: formData
         description: 商品类型
         required: true
         type: integer
       - name: name
-        in: body
+        in: formData
         description: 商品名称
         required: true
         type: string
       - name: short_description
-        in: body
+        in: formData
         description: 商品简介
         required: true
         type: string
       - name: unit
-        in: body
+        in: formData
         description: 商品单位
         required: true
         type: integer
       - name: images
-        in: body
+        in: formData
         description: 商品轮播图
         required: true
         type: string
       - name: spec_type
-        in: body
+        in: formData
         description: 商品规格种类
         required: true
         type: integer
       - name: spec
-        in: body
+        in: formData
         description: 商品规格
         required: true
         type: string
       - name: status
-        in: body
+        in: formData
         description: 商品状态
         required: true
         type: integer
       - name: tags
-        in: body
+        in: formData
         description: 商品标签
         required: true
         type: string
       - name: param
-        in: body
+        in: formData
         description: 商品参数
         required: true
         type: string
       - name: description
-        in: body
+        in: formData
         description: 商品描述
         required: true
         type: string
@@ -117,67 +117,67 @@
       - 商品
     parameters:
       - name: id
-        in: body
+        in: formData
         description: 商品编号
         required: true
         type: integer
       - name: category_id
-        in: body
+        in: formData
         description: 商品分类
         required: true
         type: integer
       - name: kind_id
-        in: body
+        in: formData
         description: 商品类型
         required: true
         type: integer
       - name: name
-        in: body
+        in: formData
         description: 商品名称
         required: true
         type: string
       - name: short_description
-        in: body
+        in: formData
         description: 商品简介
         required: true
         type: string
       - name: unit
-        in: body
+        in: formData
         description: 商品单位
         required: true
         type: integer
       - name: images
-        in: body
+        in: formData
         description: 商品轮播图
         required: true
         type: string
       - name: spec_type
-        in: body
+        in: formData
         description: 商品规格种类
         required: true
         type: integer
       - name: spec
-        in: body
+        in: formData
         description: 商品规格
         required: true
         type: string
       - name: status
-        in: body
+        in: formData
         description: 商品状态
         required: true
         type: integer
       - name: tags
-        in: body
+        in: formData
         description: 商品标签
         required: true
         type: string
       - name: param
-        in: body
+        in: formData
         description: 商品参数
         required: true
         type: string
       - name: description
-        in: body
+        in: formData
         description: 商品描述
         required: true
         type: string
@@ -195,7 +195,7 @@
       - 商品
     parameters:
       - name: id
-        in: body
+        in: formData
         description: 商品编号
         required: true
         type: integer

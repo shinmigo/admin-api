@@ -6,12 +6,12 @@
       - 认证
     parameters:
       - name: username
-        in: body
+        in: formData
         description: 用户名
         required: true
         type: string
       - name: password
-        in: body
+        in: formData
         description: 密码
         required: true
         type: string

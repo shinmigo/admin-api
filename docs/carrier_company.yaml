@@ -49,17 +49,17 @@
       - 物流公司
     parameters:
       - name: company_name
-        in: body
+        in: formData
         description: 物流公司名称
         required: true
         type: string
       - name: company_code
-        in: body
+        in: formData
         description: 物流公司编码
         required: true
         type: string
       - name: sort
-        in: body
+        in: formData
         description: 排序
         required: true
         type: integer
@@ -82,17 +82,17 @@
         required: false
         type: integer
       - name: company_name
-        in: body
+        in: formData
         description: 物流公司名称
         required: true
         type: string
       - name: company_code
-        in: body
+        in: formData
         description: 物流公司编码
         required: true
         type: string
       - name: sort
-        in: body
+        in: formData
         description: 排序
         required: true
         type: integer

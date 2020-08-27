@@ -29,7 +29,7 @@
       - 商品标签
     parameters:
       - name: name
-        in: body
+        in: formData
         description: 商品标签名
         required: true
         type: string
@@ -47,12 +47,12 @@
       - 商品标签
     parameters:
       - name: id
-        in: body
+        in: formData
         description: 编号
         required: true
         type: integer
       - name: name
-        in: body
+        in: formData
         description: 商品标签名
         required: true
         type: string
@@ -70,12 +70,12 @@
       - 商品标签
     parameters:
       - name: id
-        in: body
+        in: formData
         description: 编号
         required: true
         type: integer
       - name: name
-        in: body
+        in: formData
         description: 商品标签名
         required: true
         type: string

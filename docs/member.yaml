@@ -29,37 +29,37 @@
       - 会员
     parameters:
       - name: nickname
-        in: body
+        in: formData
         description: 昵称
         required: true
         type: string
       - name: mobile
-        in: body
+        in: formData
         description: 手机
         required: true
         type: string
       - name: status
-        in: body
+        in: formData
         description: 状态
         required: true
         type: integer
       - name: gender
-        in: body
+        in: formData
         description: 性别
         required: true
         type: integer
       - name: birthday
-        in: body
+        in: formData
         description: 出生年月
         required: true
         type: string
       - name: member_level_id
-        in: body
+        in: formData
         description: 会员等级
         required: true
         type: integer
       - name: password
-        in: body
+        in: formData
         description: 密码
         required: true
         type: string
@@ -77,32 +77,32 @@
       - 会员
     parameters:
       - name: nickname
-        in: body
+        in: formData
         description: 昵称
         required: true
         type: string
       - name: mobile
-        in: body
+        in: formData
         description: 手机
         required: true
         type: string
       - name: gender
-        in: body
+        in: formData
         description: 性别
         required: true
         type: integer
       - name: birthday
-        in: body
+        in: formData
         description: 出生年月
         required: true
         type: string
       - name: member_level_id
-        in: body
+        in: formData
         description: 会员等级
         required: true
         type: integer
       - name: password
-        in: body
+        in: formData
         description: 密码
         required: true
         type: string

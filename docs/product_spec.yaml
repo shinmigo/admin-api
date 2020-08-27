@@ -39,17 +39,17 @@ product-spec/index:
       - 商品规格
     parameters:
       - name: name
-        in: body
+        in: formData
         description: 商品规格名称
         required: true
         type: string
       - name: sort
-        in: body
+        in: formData
         description: 商品规格排序
         required: true
         type: integer
       - name: values
-        in: body
+        in: formData
         description: 商品规格值
         required: true
         type: string
@@ -67,22 +67,22 @@ product-spec/index:
       - 商品规格
     parameters:
       - name: id
-        in: body
+        in: formData
         description: 商品规格编号
         required: true
         type: integer
       - name: name
-        in: body
+        in: formData
         description: 商品规格名称
         required: true
         type: string
       - name: sort
-        in: body
+        in: formData
         description: 商品规格排序
         required: true
         type: integer
       - name: values
-        in: body
+        in: formData
         description: 商品规格值
         required: true
         type: string
@@ -100,7 +100,7 @@ product-spec/index:
       - 商品规格
     parameters:
       - name: id
-        in: body
+        in: formData
         description: 商品规格编号
         required: true
         type: integer
