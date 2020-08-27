@@ -1,0 +1,15 @@
+definitions:
+  resp:
+    type: object
+    properties:
+      run_time:
+        type: integer
+        description: 运行时间
+      code:
+        type: integer
+        description: 提示码
+      message:
+        type: string
+        description: 消息
+      data:
+        type: object
