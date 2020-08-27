@@ -5,16 +5,6 @@
     tags:
       - 商品标签
     parameters:
-      - name: name
-        in: query
-        description: 标签名称
-        required: false
-        type: string
-      - name: id
-        in: query
-        description: tag id
-        required: false
-        type: integer
       - name: page_size
         in: query
         description: 页面大小
@@ -25,6 +15,70 @@
         description: 页面编号
         required: false
         type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-tag/add:
+  post:
+    summary: 添加商品标签
+    description: 添加商品标签
+    tags:
+      - 商品标签
+    parameters:
+      - name: name
+        in: body
+        description: 商品标签名
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-tag/edit:
+  post:
+    summary: 编辑商品标签
+    description: 编辑商品标签
+    tags:
+      - 商品标签
+    parameters:
+      - name: id
+        in: body
+        description: 编号
+        required: true
+        type: integer
+      - name: name
+        in: body
+        description: 商品标签名
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-tag/delete:
+  post:
+    summary: 删除商品标签
+    description: 删除商品标签
+    tags:
+      - 商品标签
+    parameters:
+      - name: id
+        in: body
+        description: 编号
+        required: true
+        type: integer
+      - name: name
+        in: body
+        description: 商品标签名
+        required: true
+        type: string
     responses:
       200:
         description: 成功

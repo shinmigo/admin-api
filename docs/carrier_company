@@ -1,0 +1,121 @@
+/carrier/index:
+  get:
+    summary: 物流公司列表
+    description: 物流公司列表
+    tags:
+      - 物流公司
+    parameters:
+      - name: id
+        in: query
+        description: 物流公司编号
+        required: false
+        type: integer
+      - name: status
+        in: query
+        description: 物流公司状态
+        required: false
+        type: integer
+      - name: company_code
+        in: query
+        description: 物流公司编码
+        required: false
+        type: string
+      - name: company_name
+        in: query
+        description: 物流公司名称
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: 页面编号
+        required: false
+        type: integer
+      - name: page_size
+        in: query
+        description: 页面大小
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/carrier/add:
+  post:
+    summary: 添加物流公司
+    description: 添加物流公司
+    tags:
+      - 物流公司
+    parameters:
+      - name: company_name
+        in: body
+        description: 物流公司名称
+        required: true
+        type: string
+      - name: company_code
+        in: body
+        description: 物流公司编码
+        required: true
+        type: string
+      - name: sort
+        in: body
+        description: 排序
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/carrier/edit:
+  post:
+    summary: 编辑物流公司
+    description: 编辑物流公司
+    tags:
+      - 物流公司
+    parameters:
+      - name: id
+        in: query
+        description: 物流公司编号
+        required: false
+        type: integer
+      - name: company_name
+        in: body
+        description: 物流公司名称
+        required: true
+        type: string
+      - name: company_code
+        in: body
+        description: 物流公司编码
+        required: true
+        type: string
+      - name: sort
+        in: body
+        description: 排序
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/carrier/delete:
+  post:
+    summary: 删除物流公司
+    description: 删除物流公司
+    tags:
+      - 物流公司
+    parameters:
+      - name: id
+        in: query
+        description: 物流公司编号
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
