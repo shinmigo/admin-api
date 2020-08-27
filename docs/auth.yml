@@ -1,0 +1,35 @@
+/auth/login:
+  post:
+    summary: 登陆
+    description: 登录认证
+    tags:
+      - 认证
+    parameters:
+      - name: username
+        in: body
+        description: 用户名
+        required: true
+        type: string
+      - name: password
+        in: body
+        description: 密码
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/auth/logout:
+  get:
+    summary: 登出
+    description: 登出
+    tags:
+      - 认证
+    parameters:
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'

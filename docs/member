@@ -1,0 +1,154 @@
+/member/index:
+  get:
+    summary: 会员列表
+    description: 会员列表
+    tags:
+      - 会员
+    parameters:
+      - name: page_size
+        in: query
+        description: 页面大小
+        required: false
+        type: integer
+      - name: page
+        in: query
+        description: 页面编号
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/member/add:
+  post:
+    summary: 添加会员
+    description: 添加会员
+    tags:
+      - 会员
+    parameters:
+      - name: nickname
+        in: body
+        description: 昵称
+        required: true
+        type: string
+      - name: mobile
+        in: body
+        description: 手机
+        required: true
+        type: string
+      - name: status
+        in: body
+        description: 状态
+        required: true
+        type: integer
+      - name: gender
+        in: body
+        description: 性别
+        required: true
+        type: integer
+      - name: birthday
+        in: body
+        description: 出生年月
+        required: true
+        type: string
+      - name: member_level_id
+        in: body
+        description: 会员等级
+        required: true
+        type: integer
+      - name: password
+        in: body
+        description: 密码
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/member/edit:
+  post:
+    summary: 编辑会员
+    description: 编辑会员
+    tags:
+      - 会员
+    parameters:
+      - name: nickname
+        in: body
+        description: 昵称
+        required: true
+        type: string
+      - name: mobile
+        in: body
+        description: 手机
+        required: true
+        type: string
+      - name: gender
+        in: body
+        description: 性别
+        required: true
+        type: integer
+      - name: birthday
+        in: body
+        description: 出生年月
+        required: true
+        type: string
+      - name: member_level_id
+        in: body
+        description: 会员等级
+        required: true
+        type: integer
+      - name: password
+        in: body
+        description: 密码
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/member/info:
+  get:
+    summary: 会员详情
+    description: 会员详情
+    tags:
+      - 会员
+    parameters:
+      - name: member_id
+        in: query
+        description: 会员编号
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/member/edit-status:
+  get:
+    summary: 修改会员状态
+    description: 修改会员状态
+    tags:
+      - 会员
+    parameters:
+      - name: member_id
+        in: query
+        description: 会员编号
+        required: true
+        type: integer
+      - name: status
+        in: query
+        description: 会员状态
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'

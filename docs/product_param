@@ -1,0 +1,119 @@
+/product-param/index:
+  get:
+    summary: 商品参数列表
+    description: 商品参数列表
+    tags:
+      - 商品参数
+    parameters:
+      - name: page_size
+        in: query
+        description: 页面大小
+        required: false
+        type: integer
+      - name: page
+        in: query
+        description: 页面编号
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-param/add:
+  post:
+    summary: 添加商品参数
+    description: 添加商品参数
+    tags:
+      - 商品参数
+    parameters:
+      - name: name
+        in: body
+        description: 商品参数名称
+        required: true
+        type: string
+      - name: type
+        in: body
+        description: 商品参数类型
+        required: true
+        type: integer
+      - name: contents
+        in: body
+        description: 商品参数值
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-param/edit:
+  post:
+    summary: 编辑商品参数
+    description: 编辑商品参数
+    tags:
+      - 商品参数
+    parameters:
+      - name: param_id
+        in: body
+        description: 商品参数编号
+        required: true
+        type: integer
+      - name: name
+        in: body
+        description: 商品参数名称
+        required: true
+        type: string
+      - name: type
+        in: body
+        description: 商品参数类型
+        required: true
+        type: integer
+      - name: contents
+        in: body
+        description: 商品参数值
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-param/detail:
+  get:
+    summary: 获取商品参数详情
+    description: 获取商品参数详情
+    tags:
+      - 商品参数
+    parameters:
+      - name: param_id
+        in: body
+        description: 商品参数编号
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-param/del:
+  get:
+    summary: 删除商品参数
+    description: 获取商品参数
+    tags:
+      - 商品参数
+    parameters:
+      - name: param_id
+        in: body
+        description: 商品参数编号
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
