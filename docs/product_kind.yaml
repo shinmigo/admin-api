@@ -1,0 +1,143 @@
+/product-kind/index:
+  get:
+    summary: 商品类型列表
+    description: 商品类型列表
+    tags:
+      - 商品类型
+    parameters:
+      - name: name
+        in: query
+        description: 类型名称
+        required: false
+        type: string
+      - name: id
+        in: query
+        description: kind ID
+        required: false
+        type: integer
+      - name: page_size
+        in: query
+        description: 页面大小
+        required: false
+        type: integer
+      - name: page
+        in: query
+        description: 页面编号
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-kind/add:
+  post:
+    summary: 商品类型添加
+    description: 商品类型添加
+    tags:
+      - 商品类型
+    parameters:
+      - name: store_id
+        in: query
+        description: 店铺ID
+        required: true
+        type: integer
+      - name: name
+        in: query
+        description: 类型名称
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-kind/delete:
+  post:
+    summary: 商品类型删除
+    description: 商品类型删除
+    tags:
+      - 商品类型
+    parameters:
+      - name: kind_id
+        in: query
+        description: 商品类型ID
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-kind/edit:
+  post:
+    summary: 商品类型编辑
+    description: 商品类型编辑
+    tags:
+      - 商品类型
+    parameters:
+      - name: kind_id
+        in: query
+        description: 商品类型ID
+        required: true
+        type: integer
+      - name: store_id
+        in: query
+        description: 店铺ID
+        required: false
+        type: integer
+      - name: name
+        in: query
+        description: 类型名称
+        required: false
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/product-kind/bind-param:
+  post:
+    summary: 绑定类型参数
+    description: 绑定类型参数
+    tags:
+      - 商品类型
+    parameters:
+      - name: kind_id
+        in: query
+        description: 商品类型ID
+        required: true
+        type: integer
+      - name: param_ids
+        in: query
+        description: 参数ID（逗号分隔）
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-kind/bind-spec:
+  post:
+    summary: 绑定规格参数
+    description: 绑定规格参数
+    tags:
+      - 商品类型
+    parameters:
+      - name: kind_id
+        in: query
+        description: 商品类型ID
+        required: true
+        type: integer
+      - name: spec_ids
+        in: query
+        description: 规格ID（逗号分隔）
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'

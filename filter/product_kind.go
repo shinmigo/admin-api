@@ -92,3 +92,45 @@ func (m *ProductKind) Edit() error  {
 
 	return nil
 }
+
+func (m *ProductKind) BindParam() error  {
+	kindId := m.PostForm("kind_id")
+	paramIds := m.PostForm("param_ids")
+
+	valid := validation.Validation{}
+	valid.Required(kindId).Message("请提交要编辑的商品类型")
+	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型数据格式错误")
+	valid.Required(paramIds).Message("请提交商品类型的参数数量")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	if err := service.NewProductKind(m.Context).BindParam(); err != nil {
+		return err
+	}
+
+	return nil
+
+	return nil
+}
+
+func (m *ProductKind) BindSpec() error  {
+	kindId := m.PostForm("kind_id")
+	specIds := m.PostForm("param_ids")
+
+	valid := validation.Validation{}
+	valid.Required(kindId).Message("请提交要编辑的商品类型")
+	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型数据格式错误")
+	valid.Required(specIds).Message("请提交商品类型的规格")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	if err := service.NewProductKind(m.Context).BindSpec(); err != nil {
+		return err
+	}
+
+	return nil
+
+	return nil
+}

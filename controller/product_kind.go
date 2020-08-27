@@ -53,3 +53,23 @@ func (m *ProductKind) Edit()  {
 
 	m.SetResponse()
 }
+
+func (m *ProductKind) BindParam()  {
+	err := productKindFilter.BindParam()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}
+
+func (m *ProductKind) BindSpec()  {
+	err := productKindFilter.BindSpec()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}

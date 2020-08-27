@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"goshop/api/pkg/grpc/gclient"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -120,6 +121,74 @@ func (m *ProductKind) Edit() error {
 
 	if resp.State == 0 {
 		return fmt.Errorf("编辑失败")
+	}
+
+	return nil
+}
+
+func (m *ProductKind) BindParam() error  {
+	kindId := m.PostForm("kind_id")
+	paramIds := m.PostForm("param_ids")
+
+	kindIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
+
+	paramIdArr := strings.Split(paramIds, ",")
+
+	var paramIdNums = []uint64{}
+	for _, i := range paramIdArr {
+		j, _ := strconv.ParseUint(i, 10, 64)
+		paramIdNums = append(paramIdNums, j)
+	}
+
+	req := &productpb.BindParamReq{
+		KindId: kindIdNumber,
+		ParamIds:paramIdNums,
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductKind.BindParam(ctx, req)
+	cancel()
+
+	if err != nil {
+		return fmt.Errorf("绑定参数失败, err: %v", err)
+	}
+
+	if resp.State == 0 {
+		return fmt.Errorf("绑定参数失败")
+	}
+
+	return nil
+}
+
+func (m *ProductKind) BindSpec() error  {
+	kindId := m.PostForm("kind_id")
+	paramIds := m.PostForm("spec_ids")
+
+	kindIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
+
+	specIdArr := strings.Split(paramIds, ",")
+
+	var specIdNums = []uint64{}
+	for _, i := range specIdArr {
+		j, _ := strconv.ParseUint(i, 10, 64)
+		specIdNums = append(specIdNums, j)
+	}
+
+	req := &productpb.BindSpecReq{
+		KindId: kindIdNumber,
+		SpecIds:specIdNums,
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductKind.BindSpec(ctx, req)
+	cancel()
+
+	if err != nil {
+		return fmt.Errorf("绑定规格失败, err: %v", err)
+	}
+
+	if resp.State == 0 {
+		return fmt.Errorf("绑定规格失败")
 	}
 
 	return nil

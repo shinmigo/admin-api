@@ -1,0 +1,161 @@
+/product-category/index:
+  get:
+    summary: 商品分类列表
+    description: 商品分类列表
+    tags:
+      - 商品分类
+    parameters:
+      - name: name
+        in: query
+        description: 分类名称
+        required: false
+        type: string
+      - name: id
+        in: query
+        description: category ID
+        required: false
+        type: integer
+      - name: page_size
+        in: query
+        description: 页面大小
+        required: false
+        type: integer
+      - name: page
+        in: query
+        description: 页面编号
+        required: false
+        type: integer
+      - name: status
+        in: query
+        description: 分类状态
+        required: false
+        type: integer
+      - name: store_id
+        in: query
+        description: 商铺ID
+        required: false
+        type: integer
+
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-category/add:
+  post:
+    summary: 商品分类添加
+    description: 商品分类添加
+    tags:
+      - 商品分类
+    parameters:
+      - name: parent_id
+        in: query
+        description: 上级分类ID
+        required: false
+        type: integer
+      - name: name
+        in: query
+        description: 分类名称
+        required: true
+        type: string
+      - name: sort
+        in: query
+        description: 分类排序
+        required: false
+        type: integer
+      -name: status
+        in: query
+        description: 分类状态（0|1）
+        required: false
+        type: integer
+      -name: icon
+        in: query
+        description: 分类图标
+        required: false
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-category/delete:
+  post:
+    summary: 商品分类删除
+    description: 商品分类删除
+    tags:
+      - 商品分类
+    parameters:
+      - name: id
+        in: query
+        description: 商品分类ID
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-category/edit:
+  post:
+    summary: 编辑商品分类
+    description: 编辑商品分类
+    tags:
+      - 商品分类
+    parameters:
+      - name: id
+        in: query
+        description: 商品类型ID
+        required: true
+        type: integer
+      - name: parent_id
+        in: query
+        description: 上级分类ID
+        required: false
+        type: integer
+      - name: name
+        in: query
+        description: 分类名称
+        required: true
+        type: string
+      - name: sort
+        in: query
+        description: 分类排序
+        required: false
+        type: integer
+      -name: status
+        in: query
+        description: 分类状态（0|1）
+        required: false
+        type: integer
+      -name: icon
+        in: query
+        description: 分类图标
+        required: false
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+/product-category/edit-status:
+  post:
+    summary: 编辑商品分类状态
+    description: 编辑商品分类状态
+    tags:
+      - 商品分类
+    parameters:
+      - name: id
+        in: query
+        description: 商品类型ID
+        required: true
+        type: integer
+      -name: status
+        in: query
+        description: 分类状态（0|1）
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'

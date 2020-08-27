@@ -1,11 +1,10 @@
 package router
 
 import (
+	"github.com/gin-gonic/gin"
 	"goshop/api/controller"
 	"goshop/api/pkg/core/routerhelper"
 	"goshop/api/pkg/middleware"
-
-	"github.com/gin-gonic/gin"
 )
 
 func init() {
@@ -15,5 +14,7 @@ func init() {
 		g.Post("/add")
 		g.Post("/delete")
 		g.Post("/edit")
+		g.Post("/bind-param")
+		g.Post("/bind-spec")
 	})
 }
