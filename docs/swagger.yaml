@@ -12,21 +12,697 @@ produces:
 
 
 paths:
- /product-tag/index:
-   get:
-     summary: 商品标签列表
-     description: 商品标签列表
+ /auth/login:
+   post:
+     summary: 登陆
+     description: 登录认证
      tags:
-       - 商品标签
+       - 认证
+     parameters:
+       - name: username
+         in: body
+         description: 用户名
+         required: true
+         type: string
+       - name: password
+         in: body
+         description: 密码
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /auth/logout:
+   get:
+     summary: 登出
+     description: 登出
+     tags:
+       - 认证
+     parameters:
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /carrier/index:
+   get:
+     summary: 物流公司列表
+     description: 物流公司列表
+     tags:
+       - 物流公司
+     parameters:
+       - name: id
+         in: query
+         description: 物流公司编号
+         required: false
+         type: integer
+       - name: status
+         in: query
+         description: 物流公司状态
+         required: false
+         type: integer
+       - name: company_code
+         in: query
+         description: 物流公司编码
+         required: false
+         type: string
+       - name: company_name
+         in: query
+         description: 物流公司名称
+         required: false
+         type: string
+       - name: page
+         in: query
+         description: 页面编号
+         required: false
+         type: integer
+       - name: page_size
+         in: query
+         description: 页面大小
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /carrier/add:
+   post:
+     summary: 添加物流公司
+     description: 添加物流公司
+     tags:
+       - 物流公司
+     parameters:
+       - name: company_name
+         in: body
+         description: 物流公司名称
+         required: true
+         type: string
+       - name: company_code
+         in: body
+         description: 物流公司编码
+         required: true
+         type: string
+       - name: sort
+         in: body
+         description: 排序
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /carrier/edit:
+   post:
+     summary: 编辑物流公司
+     description: 编辑物流公司
+     tags:
+       - 物流公司
+     parameters:
+       - name: id
+         in: query
+         description: 物流公司编号
+         required: false
+         type: integer
+       - name: company_name
+         in: body
+         description: 物流公司名称
+         required: true
+         type: string
+       - name: company_code
+         in: body
+         description: 物流公司编码
+         required: true
+         type: string
+       - name: sort
+         in: body
+         description: 排序
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /carrier/delete:
+   post:
+     summary: 删除物流公司
+     description: 删除物流公司
+     tags:
+       - 物流公司
+     parameters:
+       - name: id
+         in: query
+         description: 物流公司编号
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /member/index:
+   get:
+     summary: 会员列表
+     description: 会员列表
+     tags:
+       - 会员
+     parameters:
+       - name: page_size
+         in: query
+         description: 页面大小
+         required: false
+         type: integer
+       - name: page
+         in: query
+         description: 页面编号
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /member/add:
+   post:
+     summary: 添加会员
+     description: 添加会员
+     tags:
+       - 会员
+     parameters:
+       - name: nickname
+         in: body
+         description: 昵称
+         required: true
+         type: string
+       - name: mobile
+         in: body
+         description: 手机
+         required: true
+         type: string
+       - name: status
+         in: body
+         description: 状态
+         required: true
+         type: integer
+       - name: gender
+         in: body
+         description: 性别
+         required: true
+         type: integer
+       - name: birthday
+         in: body
+         description: 出生年月
+         required: true
+         type: string
+       - name: member_level_id
+         in: body
+         description: 会员等级
+         required: true
+         type: integer
+       - name: password
+         in: body
+         description: 密码
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /member/edit:
+   post:
+     summary: 编辑会员
+     description: 编辑会员
+     tags:
+       - 会员
+     parameters:
+       - name: nickname
+         in: body
+         description: 昵称
+         required: true
+         type: string
+       - name: mobile
+         in: body
+         description: 手机
+         required: true
+         type: string
+       - name: gender
+         in: body
+         description: 性别
+         required: true
+         type: integer
+       - name: birthday
+         in: body
+         description: 出生年月
+         required: true
+         type: string
+       - name: member_level_id
+         in: body
+         description: 会员等级
+         required: true
+         type: integer
+       - name: password
+         in: body
+         description: 密码
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /member/info:
+   get:
+     summary: 会员详情
+     description: 会员详情
+     tags:
+       - 会员
+     parameters:
+       - name: member_id
+         in: query
+         description: 会员编号
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /member/edit-status:
+   get:
+     summary: 修改会员状态
+     description: 修改会员状态
+     tags:
+       - 会员
+     parameters:
+       - name: member_id
+         in: query
+         description: 会员编号
+         required: true
+         type: integer
+       - name: status
+         in: query
+         description: 会员状态
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product/index:
+   get:
+     summary: 商品列表
+     description: 商品列表
+     tags:
+       - 商品
+     parameters:
+       - name: id
+         in: query
+         description: 商品编号
+         required: false
+         type: integer
+       - name: page_size
+         in: query
+         description: 页面大小
+         required: false
+         type: integer
+       - name: page
+         in: query
+         description: 页面编号
+         required: false
+         type: integer
+       - name: name
+         in: query
+         description: 商品名称
+         required: false
+         type: string
+       - name: category_id
+         in: query
+         description: 商品分类
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product/add:
+   post:
+     summary: 添加商品
+     description: 添加商品
+     tags:
+       - 商品
+     parameters:
+       - name: category_id
+         in: body
+         description: 商品分类
+         required: true
+         type: integer
+       - name: kind_id
+         in: body
+         description: 商品类型
+         required: true
+         type: integer
+       - name: name
+         in: body
+         description: 商品名称
+         required: true
+         type: string
+       - name: short_description
+         in: body
+         description: 商品简介
+         required: true
+         type: string
+       - name: unit
+         in: body
+         description: 商品单位
+         required: true
+         type: integer
+       - name: images
+         in: body
+         description: 商品轮播图
+         required: true
+         type: string
+       - name: spec_type
+         in: body
+         description: 商品规格种类
+         required: true
+         type: integer
+       - name: spec
+         in: body
+         description: 商品规格
+         required: true
+         type: string
+       - name: status
+         in: body
+         description: 商品状态
+         required: true
+         type: integer
+       - name: tags
+         in: body
+         description: 商品标签
+         required: true
+         type: string
+       - name: param
+         in: body
+         description: 商品参数
+         required: true
+         type: string
+       - name: description
+         in: body
+         description: 商品描述
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product/edit:
+   post:
+     summary: 编辑商品
+     description: 编辑商品
+     tags:
+       - 商品
+     parameters:
+       - name: id
+         in: body
+         description: 商品编号
+         required: true
+         type: integer
+       - name: category_id
+         in: body
+         description: 商品分类
+         required: true
+         type: integer
+       - name: kind_id
+         in: body
+         description: 商品类型
+         required: true
+         type: integer
+       - name: name
+         in: body
+         description: 商品名称
+         required: true
+         type: string
+       - name: short_description
+         in: body
+         description: 商品简介
+         required: true
+         type: string
+       - name: unit
+         in: body
+         description: 商品单位
+         required: true
+         type: integer
+       - name: images
+         in: body
+         description: 商品轮播图
+         required: true
+         type: string
+       - name: spec_type
+         in: body
+         description: 商品规格种类
+         required: true
+         type: integer
+       - name: spec
+         in: body
+         description: 商品规格
+         required: true
+         type: string
+       - name: status
+         in: body
+         description: 商品状态
+         required: true
+         type: integer
+       - name: tags
+         in: body
+         description: 商品标签
+         required: true
+         type: string
+       - name: param
+         in: body
+         description: 商品参数
+         required: true
+         type: string
+       - name: description
+         in: body
+         description: 商品描述
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product/delete:
+   post:
+     summary: 删除商品
+     description: 删除商品
+     tags:
+       - 商品
+     parameters:
+       - name: id
+         in: body
+         description: 商品编号
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-category/index:
+   get:
+     summary: 商品分类列表
+     description: 商品分类列表
+     tags:
+       - 商品分类
      parameters:
        - name: name
          in: query
-         description: 标签名称
+         description: 分类名称
          required: false
          type: string
        - name: id
          in: query
-         description: tag id
+         description: category ID
+         required: false
+         type: integer
+       - name: page_size
+         in: query
+         description: 页面大小
+         required: false
+         type: integer
+       - name: page
+         in: query
+         description: 页面编号
+         required: false
+         type: integer
+       - name: status
+         in: query
+         description: 分类状态
+         required: false
+         type: integer
+       - name: store_id
+         in: query
+         description: 商铺ID
+         required: false
+         type: integer
+ 
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-category/add:
+   post:
+     summary: 商品分类添加
+     description: 商品分类添加
+     tags:
+       - 商品分类
+     parameters:
+       - name: parent_id
+         in: query
+         description: 上级分类ID
+         required: false
+         type: integer
+       - name: name
+         in: query
+         description: 分类名称
+         required: true
+         type: string
+       - name: sort
+         in: query
+         description: 分类排序
+         required: false
+         type: integer
+       - name: status
+         in: query
+         description: 分类状态（0|1）
+         required: false
+         type: integer
+       - name: icon
+         in: query
+         description: 分类图标
+         required: false
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-category/delete:
+   post:
+     summary: 商品分类删除
+     description: 商品分类删除
+     tags:
+       - 商品分类
+     parameters:
+       - name: id
+         in: query
+         description: 商品分类ID
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-category/edit:
+   post:
+     summary: 编辑商品分类
+     description: 编辑商品分类
+     tags:
+       - 商品分类
+     parameters:
+       - name: id
+         in: query
+         description: 商品类型ID
+         required: true
+         type: integer
+       - name: parent_id
+         in: query
+         description: 上级分类ID
+         required: false
+         type: integer
+       - name: name
+         in: query
+         description: 分类名称
+         required: true
+         type: string
+       - name: sort
+         in: query
+         description: 分类排序
+         required: false
+         type: integer
+       - name: status
+         in: query
+         description: 分类状态（0|1）
+         required: false
+         type: integer
+       - name: icon
+         in: query
+         description: 分类图标
+         required: false
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-category/edit-status:
+   post:
+     summary: 编辑商品分类状态
+     description: 编辑商品分类状态
+     tags:
+       - 商品分类
+     parameters:
+       - name: id
+         in: query
+         description: 商品类型ID
+         required: true
+         type: integer
+       - name: status
+         in: query
+         description: 分类状态（0|1）
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+ /product-kind/index:
+   get:
+     summary: 商品类型列表
+     description: 商品类型列表
+     tags:
+       - 商品类型
+     parameters:
+       - name: name
+         in: query
+         description: 类型名称
+         required: false
+         type: string
+       - name: id
+         in: query
+         description: kind ID
          required: false
          type: integer
        - name: page_size
@@ -44,6 +720,433 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
+ /product-kind/add:
+   post:
+     summary: 商品类型添加
+     description: 商品类型添加
+     tags:
+       - 商品类型
+     parameters:
+       - name: store_id
+         in: query
+         description: 店铺ID
+         required: true
+         type: integer
+       - name: name
+         in: query
+         description: 类型名称
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-kind/delete:
+   post:
+     summary: 商品类型删除
+     description: 商品类型删除
+     tags:
+       - 商品类型
+     parameters:
+       - name: kind_id
+         in: query
+         description: 商品类型ID
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-kind/edit:
+   post:
+     summary: 商品类型编辑
+     description: 商品类型编辑
+     tags:
+       - 商品类型
+     parameters:
+       - name: kind_id
+         in: query
+         description: 商品类型ID
+         required: true
+         type: integer
+       - name: store_id
+         in: query
+         description: 店铺ID
+         required: false
+         type: integer
+       - name: name
+         in: query
+         description: 类型名称
+         required: false
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-kind/bind-param:
+   post:
+     summary: 绑定类型参数
+     description: 绑定类型参数
+     tags:
+       - 商品类型
+     parameters:
+       - name: kind_id
+         in: query
+         description: 商品类型ID
+         required: true
+         type: integer
+       - name: param_ids
+         in: query
+         description: 参数ID（逗号分隔）
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-kind/bind-spec:
+   post:
+     summary: 绑定规格参数
+     description: 绑定规格参数
+     tags:
+       - 商品类型
+     parameters:
+       - name: kind_id
+         in: query
+         description: 商品类型ID
+         required: true
+         type: integer
+       - name: spec_ids
+         in: query
+         description: 规格ID（逗号分隔）
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+ /product-param/index:
+   get:
+     summary: 商品参数列表
+     description: 商品参数列表
+     tags:
+       - 商品参数
+     parameters:
+       - name: page_size
+         in: query
+         description: 页面大小
+         required: false
+         type: integer
+       - name: page
+         in: query
+         description: 页面编号
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-param/add:
+   post:
+     summary: 添加商品参数
+     description: 添加商品参数
+     tags:
+       - 商品参数
+     parameters:
+       - name: name
+         in: body
+         description: 商品参数名称
+         required: true
+         type: string
+       - name: type
+         in: body
+         description: 商品参数类型
+         required: true
+         type: integer
+       - name: contents
+         in: body
+         description: 商品参数值
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-param/edit:
+   post:
+     summary: 编辑商品参数
+     description: 编辑商品参数
+     tags:
+       - 商品参数
+     parameters:
+       - name: param_id
+         in: body
+         description: 商品参数编号
+         required: true
+         type: integer
+       - name: name
+         in: body
+         description: 商品参数名称
+         required: true
+         type: string
+       - name: type
+         in: body
+         description: 商品参数类型
+         required: true
+         type: integer
+       - name: contents
+         in: body
+         description: 商品参数值
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-param/detail:
+   get:
+     summary: 获取商品参数详情
+     description: 获取商品参数详情
+     tags:
+       - 商品参数
+     parameters:
+       - name: param_id
+         in: body
+         description: 商品参数编号
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-param/del:
+   get:
+     summary: 删除商品参数
+     description: 获取商品参数
+     tags:
+       - 商品参数
+     parameters:
+       - name: param_id
+         in: body
+         description: 商品参数编号
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ product-spec/index:
+   get:
+     summary: 商品规格列表
+     description: 商品规格列表
+     tags:
+       - 商品规格
+     parameters:
+       - name: id
+         in: query
+         description: 编号
+         required: false
+         type: integer
+       - name: spec_name
+         in: query
+         description: 规格名称
+         required: false
+         type: string
+       - name: page_size
+         in: query
+         description: 页面大小
+         required: false
+         type: integer
+       - name: page
+         in: query
+         description: 页面编号
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-spec/add:
+   post:
+     summary: 添加商品规格
+     description: 添加商品规格
+     tags:
+       - 商品规格
+     parameters:
+       - name: name
+         in: body
+         description: 商品规格名称
+         required: true
+         type: string
+       - name: sort
+         in: body
+         description: 商品规格排序
+         required: true
+         type: integer
+       - name: values
+         in: body
+         description: 商品规格值
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-spec/edit:
+   post:
+     summary: 编辑商品规格
+     description: 编辑商品规格
+     tags:
+       - 商品规格
+     parameters:
+       - name: id
+         in: body
+         description: 商品规格编号
+         required: true
+         type: integer
+       - name: name
+         in: body
+         description: 商品规格名称
+         required: true
+         type: string
+       - name: sort
+         in: body
+         description: 商品规格排序
+         required: true
+         type: integer
+       - name: values
+         in: body
+         description: 商品规格值
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-spec/delete:
+   get:
+     summary: 删除商品规格
+     description: 获取商品规格
+     tags:
+       - 商品规格
+     parameters:
+       - name: id
+         in: body
+         description: 商品规格编号
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ /product-tag/index:
+   get:
+     summary: 商品标签列表
+     description: 商品标签列表
+     tags:
+       - 商品标签
+     parameters:
+       - name: page_size
+         in: query
+         description: 页面大小
+         required: false
+         type: integer
+       - name: page
+         in: query
+         description: 页面编号
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-tag/add:
+   post:
+     summary: 添加商品标签
+     description: 添加商品标签
+     tags:
+       - 商品标签
+     parameters:
+       - name: name
+         in: body
+         description: 商品标签名
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-tag/edit:
+   post:
+     summary: 编辑商品标签
+     description: 编辑商品标签
+     tags:
+       - 商品标签
+     parameters:
+       - name: id
+         in: body
+         description: 编号
+         required: true
+         type: integer
+       - name: name
+         in: body
+         description: 商品标签名
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-tag/delete:
+   post:
+     summary: 删除商品标签
+     description: 删除商品标签
+     tags:
+       - 商品标签
+     parameters:
+       - name: id
+         in: body
+         description: 编号
+         required: true
+         type: integer
+       - name: name
+         in: body
+         description: 商品标签名
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
 
 
 definitions:

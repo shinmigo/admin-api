@@ -63,12 +63,12 @@
         description: 分类排序
         required: false
         type: integer
-      -name: status
+      - name: status
         in: query
         description: 分类状态（0|1）
         required: false
         type: integer
-      -name: icon
+      - name: icon
         in: query
         description: 分类图标
         required: false
@@ -122,12 +122,12 @@
         description: 分类排序
         required: false
         type: integer
-      -name: status
+      - name: status
         in: query
         description: 分类状态（0|1）
         required: false
         type: integer
-      -name: icon
+      - name: icon
         in: query
         description: 分类图标
         required: false
@@ -149,7 +149,7 @@
         description: 商品类型ID
         required: true
         type: integer
-      -name: status
+      - name: status
         in: query
         description: 分类状态（0|1）
         required: false
