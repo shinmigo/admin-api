@@ -45,6 +45,6 @@ func main() {
 	}()
 
 	initService()
-	log.Fatal(utils.R.Run(utils.C.Base.Webhost))
+	log.Fatal(routerhelper.R.Run(utils.C.Base.Webhost))
 
 }

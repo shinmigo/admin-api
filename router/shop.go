@@ -11,11 +11,11 @@ import (
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
 		// 非登录
-		g := routerhelper.NewGroupRouter("auth", new(controller.Auth), r, middleware.Cors())
+		g := routerhelper.NewGroupRouter("auth", new(controller.Auth), r)
 		g.Post("/login")
 		
 		// 必须登录
-		authLogin := routerhelper.NewGroupRouter("auth", new(controller.Auth), r, middleware.Cors(), middleware.VerifyToken())
+		authLogin := routerhelper.NewGroupRouter("auth", new(controller.Auth), r,  middleware.VerifyToken())
 		authLogin.Get("/logout")
 	})
 }

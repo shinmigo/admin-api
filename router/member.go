@@ -1,16 +1,14 @@
 package router
 
 import (
+	"github.com/gin-gonic/gin"
 	"goshop/api/controller"
 	"goshop/api/pkg/core/routerhelper"
-	"goshop/api/pkg/middleware"
-
-	"github.com/gin-gonic/gin"
 )
 
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
-		g := routerhelper.NewGroupRouter("member", new(controller.Member), r, middleware.Cors())
+		g := routerhelper.NewGroupRouter("member", new(controller.Member), r)
 		g.Get("/index")
 		g.Post("/add")
 		g.Post("/edit")

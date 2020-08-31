@@ -10,7 +10,7 @@ import (
 
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
-		g := routerhelper.NewGroupRouter("product-spec", new(controller.ProductSpec), r, middleware.Cors(), middleware.VerifyToken())
+		g := routerhelper.NewGroupRouter("product-spec", new(controller.ProductSpec), r,  middleware.VerifyToken())
 		g.Get("/index")
 		g.Post("/add")
 		g.Post("/edit")

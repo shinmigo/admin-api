@@ -9,7 +9,7 @@ import (
 
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
-		g := routerhelper.NewGroupRouter("product-kind", new(controller.ProductKind), r, middleware.Cors(), middleware.VerifyToken())
+		g := routerhelper.NewGroupRouter("product-kind", new(controller.ProductKind), r,  middleware.VerifyToken())
 		g.Get("/index")
 		g.Post("/add")
 		g.Post("/delete")
