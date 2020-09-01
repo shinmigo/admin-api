@@ -10,6 +10,14 @@ schemes:
 produces:
   - application/json
 
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: Authorization
+
+security:
+  - APIKeyHeader: []
 
 paths:
  /auth/login:
