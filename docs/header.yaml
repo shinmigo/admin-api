@@ -3,7 +3,7 @@ info:
   title: goShop Api　
   description: goshop接口文档
   version: 1.0.0
-host: 127.0.0.1:8099
+host: 10.32.5.88:8099
 schemes:
   - http
   - https
