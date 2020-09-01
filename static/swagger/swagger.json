@@ -14,23 +14,620 @@
   },
   "host": "127.0.0.1:8099",
   "paths": {
-    "/product-tag/index": {
-      "get": {
-        "description": "商品标签列表",
+    "/auth/login": {
+      "post": {
+        "description": "登录认证",
         "tags": [
-          "商品标签"
+          "认证"
         ],
-        "summary": "商品标签列表",
+        "summary": "登陆",
         "parameters": [
           {
             "type": "string",
-            "description": "标签名称",
+            "description": "用户名",
+            "name": "username",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "密码",
+            "name": "password",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "description": "登出",
+        "tags": [
+          "认证"
+        ],
+        "summary": "登出",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/carrier/add": {
+      "post": {
+        "description": "添加物流公司",
+        "tags": [
+          "物流公司"
+        ],
+        "summary": "添加物流公司",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "物流公司名称",
+            "name": "company_name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "物流公司编码",
+            "name": "company_code",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "排序",
+            "name": "sort",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/carrier/delete": {
+      "post": {
+        "description": "删除物流公司",
+        "tags": [
+          "物流公司"
+        ],
+        "summary": "删除物流公司",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "物流公司编号",
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/carrier/edit": {
+      "post": {
+        "description": "编辑物流公司",
+        "tags": [
+          "物流公司"
+        ],
+        "summary": "编辑物流公司",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "物流公司编号",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "物流公司名称",
+            "name": "company_name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "物流公司编码",
+            "name": "company_code",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "排序",
+            "name": "sort",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/carrier/index": {
+      "get": {
+        "description": "物流公司列表",
+        "tags": [
+          "物流公司"
+        ],
+        "summary": "物流公司列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "物流公司编号",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "物流公司状态",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "物流公司编码",
+            "name": "company_code",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "物流公司名称",
+            "name": "company_name",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/member/add": {
+      "post": {
+        "description": "添加会员",
+        "tags": [
+          "会员"
+        ],
+        "summary": "添加会员",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "昵称",
+            "name": "nickname",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "手机",
+            "name": "mobile",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "状态",
+            "name": "status",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "性别",
+            "name": "gender",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "出生年月",
+            "name": "birthday",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "会员等级",
+            "name": "member_level_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "密码",
+            "name": "password",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/member/edit": {
+      "post": {
+        "description": "编辑会员",
+        "tags": [
+          "会员"
+        ],
+        "summary": "编辑会员",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "昵称",
+            "name": "nickname",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "手机",
+            "name": "mobile",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "性别",
+            "name": "gender",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "出生年月",
+            "name": "birthday",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "会员等级",
+            "name": "member_level_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "密码",
+            "name": "password",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/member/edit-status": {
+      "get": {
+        "description": "修改会员状态",
+        "tags": [
+          "会员"
+        ],
+        "summary": "修改会员状态",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "会员编号",
+            "name": "member_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "会员状态",
+            "name": "status",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/member/index": {
+      "get": {
+        "description": "会员列表",
+        "tags": [
+          "会员"
+        ],
+        "summary": "会员列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/member/info": {
+      "get": {
+        "description": "会员详情",
+        "tags": [
+          "会员"
+        ],
+        "summary": "会员详情",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "会员编号",
+            "name": "member_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-category/add": {
+      "post": {
+        "description": "商品分类添加",
+        "tags": [
+          "商品分类"
+        ],
+        "summary": "商品分类添加",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "上级分类ID",
+            "name": "parent_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "分类名称",
+            "name": "name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "分类排序",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "分类状态（0|1）",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "分类图标",
+            "name": "icon",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-category/delete": {
+      "post": {
+        "description": "商品分类删除",
+        "tags": [
+          "商品分类"
+        ],
+        "summary": "商品分类删除",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品分类ID",
+            "name": "id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-category/edit": {
+      "post": {
+        "description": "编辑商品分类",
+        "tags": [
+          "商品分类"
+        ],
+        "summary": "编辑商品分类",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品类型ID",
+            "name": "id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "上级分类ID",
+            "name": "parent_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "分类名称",
+            "name": "name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "分类排序",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "分类状态（0|1）",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "分类图标",
+            "name": "icon",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-category/edit-status": {
+      "post": {
+        "description": "编辑商品分类状态",
+        "tags": [
+          "商品分类"
+        ],
+        "summary": "编辑商品分类状态",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品类型ID",
+            "name": "id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "分类状态（0|1）",
+            "name": "status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/product-category/index": {
+      "get": {
+        "description": "商品分类列表",
+        "tags": [
+          "商品分类"
+        ],
+        "summary": "商品分类列表",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "分类名称",
             "name": "name",
             "in": "query"
           },
           {
             "type": "integer",
-            "description": "tag id",
+            "description": "category ID",
             "name": "id",
             "in": "query"
           },
@@ -44,6 +641,915 @@
             "type": "integer",
             "description": "页面编号",
             "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "分类状态",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "商铺ID",
+            "name": "store_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-kind/add": {
+      "post": {
+        "description": "商品类型添加",
+        "tags": [
+          "商品类型"
+        ],
+        "summary": "商品类型添加",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "店铺ID",
+            "name": "store_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "类型名称",
+            "name": "name",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-kind/bind-param": {
+      "post": {
+        "description": "绑定类型参数",
+        "tags": [
+          "商品类型"
+        ],
+        "summary": "绑定类型参数",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品类型ID",
+            "name": "kind_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "参数ID（逗号分隔）",
+            "name": "param_ids",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-kind/bind-spec": {
+      "post": {
+        "description": "绑定规格参数",
+        "tags": [
+          "商品类型"
+        ],
+        "summary": "绑定规格参数",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品类型ID",
+            "name": "kind_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "规格ID（逗号分隔）",
+            "name": "spec_ids",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/product-kind/delete": {
+      "post": {
+        "description": "商品类型删除",
+        "tags": [
+          "商品类型"
+        ],
+        "summary": "商品类型删除",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品类型ID",
+            "name": "kind_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-kind/edit": {
+      "post": {
+        "description": "商品类型编辑",
+        "tags": [
+          "商品类型"
+        ],
+        "summary": "商品类型编辑",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品类型ID",
+            "name": "kind_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "店铺ID",
+            "name": "store_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "类型名称",
+            "name": "name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-kind/index": {
+      "get": {
+        "description": "商品类型列表",
+        "tags": [
+          "商品类型"
+        ],
+        "summary": "商品类型列表",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "类型名称",
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "kind ID",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-param/add": {
+      "post": {
+        "description": "添加商品参数",
+        "tags": [
+          "商品参数"
+        ],
+        "summary": "添加商品参数",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "商品参数名称",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品参数类型",
+            "name": "type",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品参数值",
+            "name": "contents",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-param/del": {
+      "get": {
+        "description": "获取商品参数",
+        "tags": [
+          "商品参数"
+        ],
+        "summary": "删除商品参数",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品参数编号",
+            "name": "param_id",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-param/detail": {
+      "get": {
+        "description": "获取商品参数详情",
+        "tags": [
+          "商品参数"
+        ],
+        "summary": "获取商品参数详情",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品参数编号",
+            "name": "param_id",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-param/edit": {
+      "post": {
+        "description": "编辑商品参数",
+        "tags": [
+          "商品参数"
+        ],
+        "summary": "编辑商品参数",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品参数编号",
+            "name": "param_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品参数名称",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品参数类型",
+            "name": "type",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品参数值",
+            "name": "contents",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-param/index": {
+      "get": {
+        "description": "商品参数列表",
+        "tags": [
+          "商品参数"
+        ],
+        "summary": "商品参数列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-spec/add": {
+      "post": {
+        "description": "添加商品规格",
+        "tags": [
+          "商品规格"
+        ],
+        "summary": "添加商品规格",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "商品规格名称",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品规格排序",
+            "name": "sort",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品规格值",
+            "name": "values",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-spec/delete": {
+      "get": {
+        "description": "获取商品规格",
+        "tags": [
+          "商品规格"
+        ],
+        "summary": "删除商品规格",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品规格编号",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-spec/edit": {
+      "post": {
+        "description": "编辑商品规格",
+        "tags": [
+          "商品规格"
+        ],
+        "summary": "编辑商品规格",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品规格编号",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品规格名称",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品规格排序",
+            "name": "sort",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品规格值",
+            "name": "values",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-tag/add": {
+      "post": {
+        "description": "添加商品标签",
+        "tags": [
+          "商品标签"
+        ],
+        "summary": "添加商品标签",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "商品标签名",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-tag/delete": {
+      "post": {
+        "description": "删除商品标签",
+        "tags": [
+          "商品标签"
+        ],
+        "summary": "删除商品标签",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "编号",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品标签名",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-tag/edit": {
+      "post": {
+        "description": "编辑商品标签",
+        "tags": [
+          "商品标签"
+        ],
+        "summary": "编辑商品标签",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "编号",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品标签名",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-tag/index": {
+      "get": {
+        "description": "商品标签列表",
+        "tags": [
+          "商品标签"
+        ],
+        "summary": "商品标签列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product/add": {
+      "post": {
+        "description": "添加商品",
+        "tags": [
+          "商品"
+        ],
+        "summary": "添加商品",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品分类",
+            "name": "category_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品类型",
+            "name": "kind_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品名称",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品简介",
+            "name": "short_description",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品单位",
+            "name": "unit",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品轮播图",
+            "name": "images",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品规格种类",
+            "name": "spec_type",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品规格",
+            "name": "spec",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品状态",
+            "name": "status",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品标签",
+            "name": "tags",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品参数",
+            "name": "param",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品描述",
+            "name": "description",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product/delete": {
+      "post": {
+        "description": "删除商品",
+        "tags": [
+          "商品"
+        ],
+        "summary": "删除商品",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品编号",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product/edit": {
+      "post": {
+        "description": "编辑商品",
+        "tags": [
+          "商品"
+        ],
+        "summary": "编辑商品",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品编号",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品分类",
+            "name": "category_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品类型",
+            "name": "kind_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品名称",
+            "name": "name",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品简介",
+            "name": "short_description",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品单位",
+            "name": "unit",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品轮播图",
+            "name": "images",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品规格种类",
+            "name": "spec_type",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品规格",
+            "name": "spec",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "商品状态",
+            "name": "status",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品标签",
+            "name": "tags",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品参数",
+            "name": "param",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "商品描述",
+            "name": "description",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product/index": {
+      "get": {
+        "description": "商品列表",
+        "tags": [
+          "商品"
+        ],
+        "summary": "商品列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "商品编号",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "商品名称",
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "商品分类",
+            "name": "category_id",
             "in": "query"
           }
         ],
@@ -79,5 +1585,17 @@
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "APIKeyHeader": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "APIKeyHeader": []
+    }
+  ]
 }
