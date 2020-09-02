@@ -115,7 +115,7 @@ func (m *ProductParam) Edit() error {
 }
 
 func (m *ProductParam) Del() error {
-	paramId := m.Query("param_id")
+	paramId := m.PostForm("param_id")
 	paramIdNumber, _ := strconv.ParseUint(paramId, 10, 64)
 
 	req := &productpb.DelParamReq{

@@ -10,11 +10,11 @@ import (
 
 func init() {
 	routerhelper.Use(func(r *gin.Engine) {
-		g := routerhelper.NewGroupRouter("product-param", new(controller.ProductParam), r,  middleware.VerifyToken())
+		g := routerhelper.NewGroupRouter("product-param", new(controller.ProductParam), r, middleware.VerifyToken())
 		g.Get("/index")
 		g.Post("/add")
 		g.Post("/edit")
-		g.Get("/del")
+		g.Post("/del")
 		g.Get("/detail")
 	})
 }

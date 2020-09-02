@@ -49,27 +49,27 @@
       - 商品分类
     parameters:
       - name: parent_id
-        in: query
+        in: formData
         description: 上级分类ID
         required: false
         type: integer
       - name: name
-        in: query
+        in: formData
         description: 分类名称
         required: true
         type: string
       - name: sort
-        in: query
+        in: formData
         description: 分类排序
         required: false
         type: integer
       - name: status
-        in: query
+        in: formData
         description: 分类状态（0|1）
         required: false
         type: integer
       - name: icon
-        in: query
+        in: formData
         description: 分类图标
         required: false
         type: string
@@ -86,8 +86,8 @@
       - 商品分类
     parameters:
       - name: id
-        in: query
-        description: 商品分类ID
+        in: formData
+        description: 商品分类ID(传第数组ID)
         required: true
         type: integer
     responses:
@@ -103,32 +103,32 @@
       - 商品分类
     parameters:
       - name: id
-        in: query
+        in: formData
         description: 商品类型ID
         required: true
         type: integer
       - name: parent_id
-        in: query
+        in: formData
         description: 上级分类ID
         required: false
         type: integer
       - name: name
-        in: query
+        in: formData
         description: 分类名称
         required: true
         type: string
       - name: sort
-        in: query
+        in: formData
         description: 分类排序
         required: false
         type: integer
       - name: status
-        in: query
+        in: formData
         description: 分类状态（0|1）
         required: false
         type: integer
       - name: icon
-        in: query
+        in: formData
         description: 分类图标
         required: false
         type: string
@@ -145,12 +145,12 @@
       - 商品分类
     parameters:
       - name: id
-        in: query
-        description: 商品类型ID
+        in: formData
+        description: 商品类型ID(传第数组ID)
         required: true
         type: integer
       - name: status
-        in: query
+        in: formData
         description: 分类状态（0|1）
         required: false
         type: integer

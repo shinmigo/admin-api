@@ -95,19 +95,16 @@ func (m *ProductKind) Delete() error {
 }
 
 func (m *ProductKind) Edit() error {
-	storeId := m.PostForm("store_id")
 	name := m.PostForm("name")
 	kindId := m.PostForm("kind_id")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
 	kindIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
-	storeIdNumber, _ := strconv.ParseUint(storeId, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 
 	req := &productpb.Kind{
 		KindId:  kindIdNumber,
-		StoreId: storeIdNumber,
 		Name:    name,
 		AdminId: adminIdNum,
 	}
@@ -126,7 +123,7 @@ func (m *ProductKind) Edit() error {
 	return nil
 }
 
-func (m *ProductKind) BindParam() error  {
+func (m *ProductKind) BindParam() error {
 	kindId := m.PostForm("kind_id")
 	paramIds := m.PostForm("param_ids")
 
@@ -141,8 +138,8 @@ func (m *ProductKind) BindParam() error  {
 	}
 
 	req := &productpb.BindParamReq{
-		KindId: kindIdNumber,
-		ParamIds:paramIdNums,
+		KindId:   kindIdNumber,
+		ParamIds: paramIdNums,
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
@@ -160,7 +157,7 @@ func (m *ProductKind) BindParam() error  {
 	return nil
 }
 
-func (m *ProductKind) BindSpec() error  {
+func (m *ProductKind) BindSpec() error {
 	kindId := m.PostForm("kind_id")
 	paramIds := m.PostForm("spec_ids")
 
@@ -175,8 +172,8 @@ func (m *ProductKind) BindSpec() error  {
 	}
 
 	req := &productpb.BindSpecReq{
-		KindId: kindIdNumber,
-		SpecIds:specIdNums,
+		KindId:  kindIdNumber,
+		SpecIds: specIdNums,
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)

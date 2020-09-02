@@ -115,7 +115,7 @@ func (m *CarrierCompany) Edit() error {
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要编辑的数据！")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]+$`)).Message("物流公司数据格式错误")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("物流公司数据格式错误")
 	valid.Required(name).Message("请填写物流公司名称！")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("物流公司名称格式错误")
 	valid.Required(code).Message("请填写物流公司编码！")
@@ -142,8 +142,8 @@ func (m *CarrierCompany) Delete() error {
 	id := m.PostForm("id")
 
 	valid := validation.Validation{}
-	valid.Required(id).Message("请选择要编辑的数据！")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]+$`)).Message("物流公司数据格式错误")
+	valid.Required(id).Message("请选择要删除的数据！")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("物流公司数据格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}

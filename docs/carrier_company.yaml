@@ -77,7 +77,7 @@
       - 物流公司
     parameters:
       - name: id
-        in: query
+        in: formData
         description: 物流公司编号
         required: false
         type: integer
@@ -110,7 +110,7 @@
       - 物流公司
     parameters:
       - name: id
-        in: query
+        in: formData
         description: 物流公司编号
         required: false
         type: integer

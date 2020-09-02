@@ -74,11 +74,6 @@
         description: 编号
         required: true
         type: integer
-      - name: name
-        in: formData
-        description: 商品标签名
-        required: true
-        type: string
     responses:
       200:
         description: 成功

@@ -131,20 +131,20 @@
           $ref: '#/definitions/resp'
 
 /member/edit-status:
-  get:
+  post:
     summary: 修改会员状态
     description: 修改会员状态
     tags:
       - 会员
     parameters:
       - name: member_id
-        in: query
+        in: formData
         description: 会员编号
         required: true
         type: integer
       - name: status
-        in: query
-        description: 会员状态
+        in: formData
+        description: 会员状态（1|2）
         required: true
         type: integer
     responses:

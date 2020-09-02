@@ -1,23 +1,24 @@
 package filter
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/shinmigo/pb/productpb"
 	"goshop/api/pkg/validation"
 	"goshop/api/service"
 	"regexp"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/shinmigo/pb/productpb"
 )
 
 type ProductKind struct {
 	*gin.Context
 }
 
-func NewProductKind(c *gin.Context) *ProductKind  {
+func NewProductKind(c *gin.Context) *ProductKind {
 	return &ProductKind{Context: c}
 }
 
-func (m *ProductKind) Index() (*productpb.ListKindRes, error)  {
+func (m *ProductKind) Index() (*productpb.ListKindRes, error) {
 	valid := validation.Validation{}
 	page := m.DefaultQuery("page", "1")
 	pageSize := m.DefaultQuery("page_size", "10")
@@ -38,7 +39,7 @@ func (m *ProductKind) Index() (*productpb.ListKindRes, error)  {
 	return list, nil
 }
 
-func (m *ProductKind) Add() error  {
+func (m *ProductKind) Add() error {
 	valid := validation.Validation{}
 	name := m.PostForm("name")
 
@@ -54,7 +55,7 @@ func (m *ProductKind) Add() error  {
 	return nil
 }
 
-func (m *ProductKind) Delete() error  {
+func (m *ProductKind) Delete() error {
 	id := m.PostForm("kind_id")
 
 	valid := validation.Validation{}
@@ -71,16 +72,13 @@ func (m *ProductKind) Delete() error  {
 
 }
 
-func (m *ProductKind) Edit() error  {
-	storeId := m.PostForm("store_id")
+func (m *ProductKind) Edit() error {
 	name := m.PostForm("name")
 	kindId := m.PostForm("kind_id")
 
 	valid := validation.Validation{}
 	valid.Required(kindId).Message("请提交要编辑的商品类型")
 	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型数据格式错误")
-	valid.Required(storeId).Message("请提交商品类型所属门店！")
-	valid.Match(storeId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型门店数据格式错误！")
 	valid.Required(name).Message("请提交商品类型名称")
 	if valid.HasError() {
 		return valid.GetError()
@@ -93,7 +91,7 @@ func (m *ProductKind) Edit() error  {
 	return nil
 }
 
-func (m *ProductKind) BindParam() error  {
+func (m *ProductKind) BindParam() error {
 	kindId := m.PostForm("kind_id")
 	paramIds := m.PostForm("param_ids")
 
@@ -110,11 +108,9 @@ func (m *ProductKind) BindParam() error  {
 	}
 
 	return nil
-
-	return nil
 }
 
-func (m *ProductKind) BindSpec() error  {
+func (m *ProductKind) BindSpec() error {
 	kindId := m.PostForm("kind_id")
 	specIds := m.PostForm("param_ids")
 

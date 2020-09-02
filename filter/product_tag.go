@@ -71,7 +71,7 @@ func (m *ProdcutTag) Edit() error {
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("标签不能为空")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]+$`)).Message("要编辑的标签格式错误")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("要编辑的标签格式错误")
 	valid.Required(name).Message("名称不能为空")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品标签名称格式错误")
 	if valid.HasError() {
@@ -91,7 +91,7 @@ func (m *ProdcutTag) Delete() error {
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("标签不能为空")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]+$`)).Message("要编辑的标签格式错误")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("要删除的标签格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}

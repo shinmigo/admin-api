@@ -37,13 +37,8 @@
     tags:
       - 商品类型
     parameters:
-      - name: store_id
-        in: query
-        description: 店铺ID
-        required: true
-        type: integer
       - name: name
-        in: query
+        in: formData
         description: 类型名称
         required: true
         type: string
@@ -60,7 +55,7 @@
       - 商品类型
     parameters:
       - name: kind_id
-        in: query
+        in: formData
         description: 商品类型ID
         required: true
         type: integer
@@ -77,17 +72,12 @@
       - 商品类型
     parameters:
       - name: kind_id
-        in: query
+        in: formData
         description: 商品类型ID
         required: true
         type: integer
-      - name: store_id
-        in: query
-        description: 店铺ID
-        required: false
-        type: integer
       - name: name
-        in: query
+        in: formData
         description: 类型名称
         required: false
         type: string
@@ -105,12 +95,12 @@
       - 商品类型
     parameters:
       - name: kind_id
-        in: query
+        in: formData
         description: 商品类型ID
         required: true
         type: integer
       - name: param_ids
-        in: query
+        in: formData
         description: 参数ID（逗号分隔）
         required: true
         type: string
@@ -127,12 +117,12 @@
       - 商品类型
     parameters:
       - name: kind_id
-        in: query
+        in: formData
         description: 商品类型ID
         required: true
         type: integer
-      - name: spec_ids
-        in: query
+      - name: param_ids
+        in: formData
         description: 规格ID（逗号分隔）
         required: true
         type: string

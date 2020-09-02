@@ -90,7 +90,7 @@
       - 商品参数
     parameters:
       - name: param_id
-        in: formData
+        in: query
         description: 商品参数编号
         required: true
         type: integer
@@ -101,7 +101,7 @@
           $ref: '#/definitions/resp'
 
 /product-param/del:
-  get:
+  post:
     summary: 删除商品参数
     description: 获取商品参数
     tags:

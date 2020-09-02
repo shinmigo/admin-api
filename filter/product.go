@@ -98,9 +98,9 @@ func (m *Product) Add() error {
 	tagsList := make([]uint64, 0, 8)
 	valid := validation.Validation{}
 	valid.Required(categoryId).Message("请选择商品分类")
-	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]$`)).Message("商品分类格式错误")
+	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类格式错误")
 	valid.Required(kindId).Message("请选择商品类型")
-	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]$`)).Message("商品类型格式错误")
+	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型格式错误")
 	valid.Required(name).Message("请填写商品名称")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]{1,30}$`)).Message("商品名称格式错误")
 	valid.Required(shortDescription).Message("请填写商品简介")
@@ -197,11 +197,11 @@ func (m *Product) Edit() error {
 	tagsList := make([]uint64, 0, 8)
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要修改的商品")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]$`)).Message("商品数据格式错误")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品数据格式错误")
 	valid.Required(categoryId).Message("请选择商品分类")
-	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]$`)).Message("商品分类格式错误")
+	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类格式错误")
 	valid.Required(kindId).Message("请选择商品类型")
-	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]$`)).Message("商品类型格式错误")
+	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型格式错误")
 	valid.Required(name).Message("请填写商品名称")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]{1,30}$`)).Message("商品名称格式错误")
 	valid.Required(shortDescription).Message("请填写商品简介")
@@ -287,7 +287,7 @@ func (m *Product) Delete() error {
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要删除的商品！")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]+$`)).Message("要删除的商品格式错误")
+	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("要删除的商品格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
