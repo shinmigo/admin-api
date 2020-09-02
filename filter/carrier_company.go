@@ -126,14 +126,16 @@ func (m *CarrierCompany) Edit() error {
 		return valid.GetError()
 	}
 
+	idNum, _ := strconv.ParseUint(id, 10, 64)
 	sortNum, _ := strconv.ParseUint(sort, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	req := &shoppb.Carrier{
-		Name:    name,
-		Code:    code,
-		Sort:    uint32(sortNum),
-		Status:  2,
-		AdminId: adminIdNum,
+		CarrierId: idNum,
+		Name:      name,
+		Code:      code,
+		Sort:      uint32(sortNum),
+		Status:    2,
+		AdminId:   adminIdNum,
 	}
 	return service.NewCarrierCompany(m.Context).Edit(req)
 }
