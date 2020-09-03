@@ -10,11 +10,23 @@
         description: 页面大小
         required: false
         type: integer
+        default: 10
       - name: page
         in: query
         description: 页面编号
         required: false
         type: integer
+        default: 1
+      - name: id
+        in: query
+        description: 商品参数id
+        required: false
+        type: integer
+      - name: name
+        in: query
+        description: 商品参数名称
+        required: false
+        type: string
     responses:
       200:
         description: 成功

@@ -1005,14 +1005,28 @@
         "parameters": [
           {
             "type": "integer",
+            "default": 10,
             "description": "页面大小",
             "name": "page_size",
             "in": "query"
           },
           {
             "type": "integer",
+            "default": 1,
             "description": "页面编号",
             "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "商品参数id",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "商品参数名称",
+            "name": "name",
             "in": "query"
           }
         ],
