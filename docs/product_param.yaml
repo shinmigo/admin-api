@@ -35,12 +35,12 @@
         type: string
       - name: type
         in: formData
-        description: 商品参数类型
+        description: 商品参数类型[1=Text; 2=Radio; 3=Checkbox]
         required: true
         type: integer
       - name: contents
         in: formData
-        description: 商品参数值
+        description: 商品参数值[json字符串]
         required: true
         type: string
     responses:
@@ -68,12 +68,12 @@
         type: string
       - name: type
         in: formData
-        description: 商品参数类型
+        description: 商品参数类型[1=Text; 2=Radio; 3=Checkbox]
         required: true
         type: integer
       - name: contents
         in: formData
-        description: 商品参数值
+        description: 商品参数值[json字符串]
         required: true
         type: string
     responses:

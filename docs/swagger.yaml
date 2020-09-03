@@ -134,7 +134,7 @@ paths:
        - 物流公司
      parameters:
        - name: id
-         in: query
+         in: formData
          description: 物流公司编号
          required: false
          type: integer
@@ -167,7 +167,7 @@ paths:
        - 物流公司
      parameters:
        - name: id
-         in: query
+         in: formData
          description: 物流公司编号
          required: false
          type: integer
@@ -309,20 +309,20 @@ paths:
            $ref: '#/definitions/resp'
  
  /member/edit-status:
-   get:
+   post:
      summary: 修改会员状态
      description: 修改会员状态
      tags:
        - 会员
      parameters:
        - name: member_id
-         in: query
+         in: formData
          description: 会员编号
          required: true
          type: integer
        - name: status
-         in: query
-         description: 会员状态
+         in: formData
+         description: 会员状态（1|2）
          required: true
          type: integer
      responses:
@@ -587,27 +587,27 @@ paths:
        - 商品分类
      parameters:
        - name: parent_id
-         in: query
+         in: formData
          description: 上级分类ID
          required: false
          type: integer
        - name: name
-         in: query
+         in: formData
          description: 分类名称
          required: true
          type: string
        - name: sort
-         in: query
+         in: formData
          description: 分类排序
          required: false
          type: integer
        - name: status
-         in: query
+         in: formData
          description: 分类状态（0|1）
          required: false
          type: integer
        - name: icon
-         in: query
+         in: formData
          description: 分类图标
          required: false
          type: string
@@ -624,8 +624,8 @@ paths:
        - 商品分类
      parameters:
        - name: id
-         in: query
-         description: 商品分类ID
+         in: formData
+         description: 商品分类ID(传第数组ID)
          required: true
          type: integer
      responses:
@@ -641,32 +641,32 @@ paths:
        - 商品分类
      parameters:
        - name: id
-         in: query
+         in: formData
          description: 商品类型ID
          required: true
          type: integer
        - name: parent_id
-         in: query
+         in: formData
          description: 上级分类ID
          required: false
          type: integer
        - name: name
-         in: query
+         in: formData
          description: 分类名称
          required: true
          type: string
        - name: sort
-         in: query
+         in: formData
          description: 分类排序
          required: false
          type: integer
        - name: status
-         in: query
+         in: formData
          description: 分类状态（0|1）
          required: false
          type: integer
        - name: icon
-         in: query
+         in: formData
          description: 分类图标
          required: false
          type: string
@@ -683,12 +683,12 @@ paths:
        - 商品分类
      parameters:
        - name: id
-         in: query
-         description: 商品类型ID
+         in: formData
+         description: 商品类型ID(传第数组ID)
          required: true
          type: integer
        - name: status
-         in: query
+         in: formData
          description: 分类状态（0|1）
          required: false
          type: integer
@@ -735,13 +735,8 @@ paths:
      tags:
        - 商品类型
      parameters:
-       - name: store_id
-         in: query
-         description: 店铺ID
-         required: true
-         type: integer
        - name: name
-         in: query
+         in: formData
          description: 类型名称
          required: true
          type: string
@@ -758,7 +753,7 @@ paths:
        - 商品类型
      parameters:
        - name: kind_id
-         in: query
+         in: formData
          description: 商品类型ID
          required: true
          type: integer
@@ -775,17 +770,12 @@ paths:
        - 商品类型
      parameters:
        - name: kind_id
-         in: query
+         in: formData
          description: 商品类型ID
          required: true
          type: integer
-       - name: store_id
-         in: query
-         description: 店铺ID
-         required: false
-         type: integer
        - name: name
-         in: query
+         in: formData
          description: 类型名称
          required: false
          type: string
@@ -803,12 +793,12 @@ paths:
        - 商品类型
      parameters:
        - name: kind_id
-         in: query
+         in: formData
          description: 商品类型ID
          required: true
          type: integer
        - name: param_ids
-         in: query
+         in: formData
          description: 参数ID（逗号分隔）
          required: true
          type: string
@@ -825,12 +815,12 @@ paths:
        - 商品类型
      parameters:
        - name: kind_id
-         in: query
+         in: formData
          description: 商品类型ID
          required: true
          type: integer
-       - name: spec_ids
-         in: query
+       - name: param_ids
+         in: formData
          description: 规格ID（逗号分隔）
          required: true
          type: string
@@ -875,12 +865,12 @@ paths:
          type: string
        - name: type
          in: formData
-         description: 商品参数类型
+         description: 商品参数类型[1=Text; 2=Radio; 3=Checkbox]
          required: true
          type: integer
        - name: contents
          in: formData
-         description: 商品参数值
+         description: 商品参数值[json字符串]
          required: true
          type: string
      responses:
@@ -908,12 +898,12 @@ paths:
          type: string
        - name: type
          in: formData
-         description: 商品参数类型
+         description: 商品参数类型[1=Text; 2=Radio; 3=Checkbox]
          required: true
          type: integer
        - name: contents
          in: formData
-         description: 商品参数值
+         description: 商品参数值[json字符串]
          required: true
          type: string
      responses:
@@ -930,7 +920,7 @@ paths:
        - 商品参数
      parameters:
        - name: param_id
-         in: formData
+         in: query
          description: 商品参数编号
          required: true
          type: integer
@@ -941,7 +931,7 @@ paths:
            $ref: '#/definitions/resp'
  
  /product-param/del:
-   get:
+   post:
      summary: 删除商品参数
      description: 获取商品参数
      tags:
@@ -1144,11 +1134,6 @@ paths:
          description: 编号
          required: true
          type: integer
-       - name: name
-         in: formData
-         description: 商品标签名
-         required: true
-         type: string
      responses:
        200:
          description: 成功

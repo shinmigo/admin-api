@@ -116,7 +116,7 @@
             "type": "integer",
             "description": "物流公司编号",
             "name": "id",
-            "in": "query"
+            "in": "formData"
           }
         ],
         "responses": {
@@ -141,7 +141,7 @@
             "type": "integer",
             "description": "物流公司编号",
             "name": "id",
-            "in": "query"
+            "in": "formData"
           },
           {
             "type": "string",
@@ -360,7 +360,7 @@
       }
     },
     "/member/edit-status": {
-      "get": {
+      "post": {
         "description": "修改会员状态",
         "tags": [
           "会员"
@@ -371,14 +371,14 @@
             "type": "integer",
             "description": "会员编号",
             "name": "member_id",
-            "in": "query",
+            "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "会员状态",
+            "description": "会员状态（1|2）",
             "name": "status",
-            "in": "query",
+            "in": "formData",
             "required": true
           }
         ],
@@ -461,32 +461,32 @@
             "type": "integer",
             "description": "上级分类ID",
             "name": "parent_id",
-            "in": "query"
+            "in": "formData"
           },
           {
             "type": "string",
             "description": "分类名称",
             "name": "name",
-            "in": "query",
+            "in": "formData",
             "required": true
           },
           {
             "type": "integer",
             "description": "分类排序",
             "name": "sort",
-            "in": "query"
+            "in": "formData"
           },
           {
             "type": "integer",
             "description": "分类状态（0|1）",
             "name": "status",
-            "in": "query"
+            "in": "formData"
           },
           {
             "type": "string",
             "description": "分类图标",
             "name": "icon",
-            "in": "query"
+            "in": "formData"
           }
         ],
         "responses": {
@@ -509,9 +509,9 @@
         "parameters": [
           {
             "type": "integer",
-            "description": "商品分类ID",
+            "description": "商品分类ID(传第数组ID)",
             "name": "id",
-            "in": "query",
+            "in": "formData",
             "required": true
           }
         ],
@@ -537,39 +537,39 @@
             "type": "integer",
             "description": "商品类型ID",
             "name": "id",
-            "in": "query",
+            "in": "formData",
             "required": true
           },
           {
             "type": "integer",
             "description": "上级分类ID",
             "name": "parent_id",
-            "in": "query"
+            "in": "formData"
           },
           {
             "type": "string",
             "description": "分类名称",
             "name": "name",
-            "in": "query",
+            "in": "formData",
             "required": true
           },
           {
             "type": "integer",
             "description": "分类排序",
             "name": "sort",
-            "in": "query"
+            "in": "formData"
           },
           {
             "type": "integer",
             "description": "分类状态（0|1）",
             "name": "status",
-            "in": "query"
+            "in": "formData"
           },
           {
             "type": "string",
             "description": "分类图标",
             "name": "icon",
-            "in": "query"
+            "in": "formData"
           }
         ],
         "responses": {
@@ -592,16 +592,16 @@
         "parameters": [
           {
             "type": "integer",
-            "description": "商品类型ID",
+            "description": "商品类型ID(传第数组ID)",
             "name": "id",
-            "in": "query",
+            "in": "formData",
             "required": true
           },
           {
             "type": "integer",
             "description": "分类状态（0|1）",
             "name": "status",
-            "in": "query"
+            "in": "formData"
           }
         ],
         "responses": {
@@ -675,17 +675,10 @@
         "summary": "商品类型添加",
         "parameters": [
           {
-            "type": "integer",
-            "description": "店铺ID",
-            "name": "store_id",
-            "in": "query",
-            "required": true
-          },
-          {
             "type": "string",
             "description": "类型名称",
             "name": "name",
-            "in": "query",
+            "in": "formData",
             "required": true
           }
         ],
@@ -711,14 +704,14 @@
             "type": "integer",
             "description": "商品类型ID",
             "name": "kind_id",
-            "in": "query",
+            "in": "formData",
             "required": true
           },
           {
             "type": "string",
             "description": "参数ID（逗号分隔）",
             "name": "param_ids",
-            "in": "query",
+            "in": "formData",
             "required": true
           }
         ],
@@ -744,14 +737,14 @@
             "type": "integer",
             "description": "商品类型ID",
             "name": "kind_id",
-            "in": "query",
+            "in": "formData",
             "required": true
           },
           {
             "type": "string",
             "description": "规格ID（逗号分隔）",
-            "name": "spec_ids",
-            "in": "query",
+            "name": "param_ids",
+            "in": "formData",
             "required": true
           }
         ],
@@ -774,7 +767,7 @@
             "type": "integer",
             "description": "商品类型ID",
             "name": "kind_id",
-            "in": "query",
+            "in": "formData",
             "required": true
           }
         ],
@@ -800,20 +793,14 @@
             "type": "integer",
             "description": "商品类型ID",
             "name": "kind_id",
-            "in": "query",
+            "in": "formData",
             "required": true
-          },
-          {
-            "type": "integer",
-            "description": "店铺ID",
-            "name": "store_id",
-            "in": "query"
           },
           {
             "type": "string",
             "description": "类型名称",
             "name": "name",
-            "in": "query"
+            "in": "formData"
           }
         ],
         "responses": {
@@ -886,14 +873,14 @@
           },
           {
             "type": "integer",
-            "description": "商品参数类型",
+            "description": "商品参数类型[1=Text; 2=Radio; 3=Checkbox]",
             "name": "type",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品参数值",
+            "description": "商品参数值[json字符串]",
             "name": "contents",
             "in": "formData",
             "required": true
@@ -910,7 +897,7 @@
       }
     },
     "/product-param/del": {
-      "get": {
+      "post": {
         "description": "获取商品参数",
         "tags": [
           "商品参数"
@@ -947,7 +934,7 @@
             "type": "integer",
             "description": "商品参数编号",
             "name": "param_id",
-            "in": "formData",
+            "in": "query",
             "required": true
           }
         ],
@@ -985,14 +972,14 @@
           },
           {
             "type": "integer",
-            "description": "商品参数类型",
+            "description": "商品参数类型[1=Text; 2=Radio; 3=Checkbox]",
             "name": "type",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品参数值",
+            "description": "商品参数值[json字符串]",
             "name": "contents",
             "in": "formData",
             "required": true
@@ -1190,13 +1177,6 @@
             "type": "integer",
             "description": "编号",
             "name": "id",
-            "in": "formData",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "商品标签名",
-            "name": "name",
             "in": "formData",
             "required": true
           }
