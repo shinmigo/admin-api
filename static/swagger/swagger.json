@@ -1088,7 +1088,7 @@
       }
     },
     "/product-spec/delete": {
-      "get": {
+      "post": {
         "description": "获取商品规格",
         "tags": [
           "商品规格"
@@ -1148,6 +1148,49 @@
             "name": "values",
             "in": "formData",
             "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-spec/index": {
+      "get": {
+        "description": "商品规格列表",
+        "tags": [
+          "商品规格"
+        ],
+        "summary": "商品规格列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "编号",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "规格名称",
+            "name": "spec_name",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
           }
         ],
         "responses": {

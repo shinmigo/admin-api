@@ -964,7 +964,7 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
- product-spec/index:
+ /product-spec/index:
    get:
      summary: 商品规格列表
      description: 商品规格列表
@@ -1059,7 +1059,7 @@ paths:
            $ref: '#/definitions/resp'
  
  /product-spec/delete:
-   get:
+   post:
      summary: 删除商品规格
      description: 获取商品规格
      tags:
