@@ -163,6 +163,13 @@
             "name": "sort",
             "in": "formData",
             "required": true
+          },
+          {
+            "type": "integer",
+            "description": "状态(1启用|2禁用)",
+            "name": "status",
+            "in": "formData",
+            "required": true
           }
         ],
         "responses": {
