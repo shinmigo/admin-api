@@ -1,8 +1,8 @@
 package main
 
 import (
-	"goshop/api/command/user"
-	"goshop/api/pkg/grpc/gclient"
+	"goshop/admin-api/command/user"
+	"goshop/admin-api/pkg/grpc/gclient"
 )
 
 func initService() {

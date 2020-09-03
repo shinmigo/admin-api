@@ -1,6 +1,6 @@
 package controller
 
-import "goshop/api/filter"
+import "goshop/admin-api/filter"
 
 var productCategoryFilter *filter.ProductCategory
 

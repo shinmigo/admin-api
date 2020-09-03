@@ -3,7 +3,7 @@ package db
 import (
 	"flag"
 	"fmt"
-	"goshop/api/pkg/utils"
+	"goshop/admin-api/pkg/utils"
 	"net/url"
 
 	"github.com/gin-gonic/gin"

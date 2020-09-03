@@ -3,8 +3,8 @@ package filter
 import (
 	"encoding/json"
 	"errors"
-	"goshop/api/pkg/validation"
-	"goshop/api/service"
+	"goshop/admin-api/pkg/validation"
+	"goshop/admin-api/service"
 	"regexp"
 	"strconv"
 

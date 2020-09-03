@@ -1,8 +1,8 @@
 package routerhelper
 
 import (
-	"goshop/api/pkg/core/ctl"
-	"goshop/api/pkg/utils"
+	"goshop/admin-api/pkg/core/ctl"
+	"goshop/admin-api/pkg/utils"
 	"log"
 	"reflect"
 	"strings"

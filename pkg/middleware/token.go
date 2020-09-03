@@ -2,10 +2,11 @@ package middleware
 
 import (
 	"strconv"
-	
+
+	"goshop/admin-api/pkg/db"
+	"goshop/admin-api/pkg/utils"
+
 	"github.com/gin-gonic/gin"
-	"goshop/api/pkg/db"
-	"goshop/api/pkg/utils"
 )
 
 func VerifyToken() gin.HandlerFunc {
@@ -22,7 +23,7 @@ func VerifyToken() gin.HandlerFunc {
 			})
 			return
 		}
-		
+
 		u, err := utils.ValidateToken(token)
 		if err != nil || u == nil {
 			c.Abort()
@@ -35,7 +36,7 @@ func VerifyToken() gin.HandlerFunc {
 			})
 			return
 		}
-		
+
 		userTokenKey := utils.UserTokenKey(u.UserId)
 		uToken := db.Redis.Get(userTokenKey).Val()
 		if len(uToken) == 0 || uToken != token {
@@ -49,7 +50,7 @@ func VerifyToken() gin.HandlerFunc {
 			})
 			return
 		}
-		
+
 		idStr := strconv.FormatUint(u.UserId, 10)
 		c.Set("goshop_user_id", idStr)
 	}

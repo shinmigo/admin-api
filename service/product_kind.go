@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"goshop/api/pkg/grpc/gclient"
+	"goshop/admin-api/pkg/grpc/gclient"
 	"strconv"
 	"strings"
 	"time"

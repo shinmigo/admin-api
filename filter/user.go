@@ -1,9 +1,9 @@
 package filter
 
 import (
-	"goshop/api/pkg/utils"
-	"goshop/api/pkg/validation"
-	"goshop/api/service"
+	"goshop/admin-api/pkg/utils"
+	"goshop/admin-api/pkg/validation"
+	"goshop/admin-api/service"
 	"regexp"
 
 	"github.com/gin-gonic/gin"

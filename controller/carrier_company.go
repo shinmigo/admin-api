@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"goshop/api/filter"
+	"goshop/admin-api/filter"
 )
 
 var carrierCompany *filter.CarrierCompany

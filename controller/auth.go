@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"goshop/api/filter"
+	"goshop/admin-api/filter"
 )
 
 var AuthFilter *filter.Auth
@@ -20,7 +20,7 @@ func (a *Auth) Login() {
 		a.SetResponse(nil, err)
 		return
 	}
-	
+
 	a.SetResponse(res)
 }
 
@@ -29,6 +29,6 @@ func (a *Auth) Logout() {
 		a.SetResponse(nil, err)
 		return
 	}
-	
+
 	a.SetResponse()
 }

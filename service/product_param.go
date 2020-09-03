@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"goshop/api/pkg/grpc/gclient"
+	"goshop/admin-api/pkg/grpc/gclient"
 	"strconv"
 	"time"
 

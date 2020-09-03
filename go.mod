@@ -1,4 +1,4 @@
-module goshop/api
+module goshop/admin-api
 
 go 1.14
 

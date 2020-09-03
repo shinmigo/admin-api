@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"goshop/api/pkg/middleware"
+	"goshop/admin-api/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
 )

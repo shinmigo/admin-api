@@ -2,10 +2,11 @@ package service
 
 import (
 	"context"
+	"goshop/admin-api/pkg/grpc/gclient"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/shinmigo/pb/productpb"
-	"goshop/api/pkg/grpc/gclient"
-	"time"
 )
 
 type Product struct {

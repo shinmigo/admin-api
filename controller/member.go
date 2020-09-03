@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"goshop/api/filter"
+	"goshop/admin-api/filter"
 )
 
 var MemberFilter *filter.Member
@@ -21,7 +21,7 @@ func (m *Member) Index() {
 		m.SetResponse(result, err)
 		return
 	}
-	
+
 	m.SetResponse(result)
 }
 
@@ -32,7 +32,7 @@ func (m *Member) Add() {
 		m.SetResponse(nil, err)
 		return
 	}
-	
+
 	m.SetResponse()
 }
 
@@ -43,7 +43,7 @@ func (m *Member) Edit() {
 		m.SetResponse(nil, err)
 		return
 	}
-	
+
 	m.SetResponse()
 }
 
@@ -54,7 +54,7 @@ func (m *Member) Info() {
 		m.SetResponse(result, err)
 		return
 	}
-	
+
 	m.SetResponse(result)
 }
 
@@ -65,6 +65,6 @@ func (m *Member) EditStatus() {
 		m.SetResponse(nil, err)
 		return
 	}
-	
+
 	m.SetResponse()
 }

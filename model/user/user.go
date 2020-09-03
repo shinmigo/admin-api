@@ -1,6 +1,6 @@
 package user
 
-//"goshop/api/pkg/db"
+//"goshop/admin-api/pkg/db"
 
 type User struct {
 	UserId     uint64

@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strconv"
 
-	"goshop/api/pkg/validation"
-	"goshop/api/service"
+	"goshop/admin-api/pkg/validation"
+	"goshop/admin-api/service"
 
 	"github.com/shinmigo/pb/memberpb"
 

@@ -1,8 +1,8 @@
 package router
 
 import (
-	"goshop/api/controller"
-	"goshop/api/pkg/core/routerhelper"
+	"goshop/admin-api/controller"
+	"goshop/admin-api/pkg/core/routerhelper"
 
 	"github.com/gin-gonic/gin"
 )

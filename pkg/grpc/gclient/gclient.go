@@ -5,8 +5,8 @@ import (
 	"log"
 	"strings"
 
-	"goshop/api/pkg/grpc/etcd3"
-	"goshop/api/pkg/utils"
+	"goshop/admin-api/pkg/grpc/etcd3"
+	"goshop/admin-api/pkg/utils"
 
 	"github.com/shinmigo/pb/shoppb"
 

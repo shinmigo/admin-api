@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"goshop/api/pkg/utils"
+	"goshop/admin-api/pkg/utils"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"

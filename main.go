@@ -1,16 +1,16 @@
 package main
 
 import (
-	"goshop/api/pkg/core/engine"
-	"goshop/api/pkg/core/routerhelper"
+	"goshop/admin-api/pkg/core/engine"
+	"goshop/admin-api/pkg/core/routerhelper"
 	"log"
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
 
-	"goshop/api/pkg/db"
-	"goshop/api/pkg/utils"
-	_ "goshop/api/router"
+	"goshop/admin-api/pkg/db"
+	"goshop/admin-api/pkg/utils"
+	_ "goshop/admin-api/router"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )

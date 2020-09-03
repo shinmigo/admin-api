@@ -1,7 +1,7 @@
 package routerhelper
 
 import (
-	"goshop/api/pkg/core/engine"
+	"goshop/admin-api/pkg/core/engine"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,9 +2,9 @@ package controller
 
 import (
 	"fmt"
-	"goshop/api/pkg/core/ctl"
-	"goshop/api/pkg/myerror"
-	"goshop/api/pkg/utils"
+	"goshop/admin-api/pkg/core/ctl"
+	"goshop/admin-api/pkg/myerror"
+	"goshop/admin-api/pkg/utils"
 	"time"
 )
 

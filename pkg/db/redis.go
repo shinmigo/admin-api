@@ -1,7 +1,7 @@
 package db
 
 import (
-	"goshop/api/pkg/utils"
+	"goshop/admin-api/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"

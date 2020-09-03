@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"goshop/api/pkg/grpc/gclient"
+	"goshop/admin-api/pkg/grpc/gclient"
 	"time"
 
 	"github.com/gin-gonic/gin"

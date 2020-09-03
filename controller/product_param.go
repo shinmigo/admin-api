@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"goshop/api/filter"
+	"goshop/admin-api/filter"
 )
 
 var productParamFilter *filter.ProdcutParam
@@ -21,7 +21,7 @@ func (m *ProductParam) Index() {
 		m.SetResponse(str, err)
 		return
 	}
-	
+
 	m.SetResponse(str)
 }
 
@@ -59,6 +59,6 @@ func (m *ProductParam) Detail() {
 		m.SetResponse(str, err)
 		return
 	}
-	
+
 	m.SetResponse(str)
 }
