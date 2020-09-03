@@ -78,8 +78,10 @@ func (m *ProdcutTag) Edit() error {
 		return valid.GetError()
 	}
 
+	idNum, _ := strconv.ParseUint(id, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	req := &productpb.Tag{
+		TagId:   idNum,
 		Name:    name,
 		AdminId: adminIdNum,
 	}

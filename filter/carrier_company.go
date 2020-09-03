@@ -86,7 +86,7 @@ func (m *CarrierCompany) Add() error {
 	valid.Required(name).Message("请填写物流公司名称！")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("物流公司名称格式错误")
 	valid.Required(code).Message("请填写物流公司编码！")
-	valid.Match(code, regexp.MustCompile(`^[A-Za-z]{1,20}$`)).Message("物流编码格式不正确")
+	valid.Match(code, regexp.MustCompile(`^[A-Za-z0-9]{1,20}$`)).Message("物流编码格式不正确")
 	valid.Required(sort).Message("请填写物流公司排序！")
 	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("物流公司排序格式错误！")
 	if valid.HasError() {
@@ -108,20 +108,24 @@ func (m *CarrierCompany) Add() error {
 func (m *CarrierCompany) Edit() error {
 	id := m.PostForm("id")
 	sort := m.PostForm("sort")
+	status := m.PostForm("status")
 	code := m.PostForm("company_code")
 	name := m.PostForm("company_name")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
+	var statusNum shoppb.CarrierStatus
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要编辑的数据！")
 	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("物流公司数据格式错误")
 	valid.Required(name).Message("请填写物流公司名称！")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("物流公司名称格式错误")
 	valid.Required(code).Message("请填写物流公司编码！")
-	valid.Match(code, regexp.MustCompile(`^[A-Za-z]{1,20}$`)).Message("物流编码格式不正确")
+	valid.Match(code, regexp.MustCompile(`^[A-Za-z0-9]{1,20}$`)).Message("物流编码格式不正确")
 	valid.Required(sort).Message("请填写物流公司排序！")
 	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("物流公司排序格式错误！")
+	valid.Required(status).Message("请选择物流公司状态！")
+	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("物流公司状态格式错误！")
 	if valid.HasError() {
 		return valid.GetError()
 	}
@@ -129,12 +133,17 @@ func (m *CarrierCompany) Edit() error {
 	idNum, _ := strconv.ParseUint(id, 10, 64)
 	sortNum, _ := strconv.ParseUint(sort, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
+	if status == "1" {
+		statusNum = shoppb.CarrierStatus_Enabled
+	} else {
+		statusNum = shoppb.CarrierStatus_Disabled
+	}
 	req := &shoppb.Carrier{
 		CarrierId: idNum,
 		Name:      name,
 		Code:      code,
 		Sort:      uint32(sortNum),
-		Status:    2,
+		Status:    statusNum,
 		AdminId:   adminIdNum,
 	}
 	return service.NewCarrierCompany(m.Context).Edit(req)
