@@ -456,6 +456,58 @@
         }
       }
     },
+    "/order/index": {
+      "get": {
+        "description": "订单列表",
+        "tags": [
+          "订单"
+        ],
+        "summary": "订单列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "订单号",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页码",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "每页显示记录数",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "订单创建起始时间",
+            "name": "start_created_at",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "订单创建结束时间",
+            "name": "end_created_at",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "订单状态",
+            "name": "order_status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功"
+          }
+        }
+      }
+    },
     "/product-category/add": {
       "post": {
         "description": "商品分类添加",
@@ -1603,6 +1655,43 @@
             "schema": {
               "$ref": "#/definitions/resp"
             }
+          }
+        }
+      }
+    },
+    "/shipment/add": {
+      "post": {
+        "description": "订单发货",
+        "tags": [
+          "发货"
+        ],
+        "summary": "订单发货",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "订单号",
+            "name": "order_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "物流ID",
+            "name": "carrier_id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "运单号",
+            "name": "tracking_number",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功"
           }
         }
       }

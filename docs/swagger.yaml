@@ -335,6 +335,47 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
+ /order/index:
+   get:
+     summary: 订单列表
+     description: 订单列表
+     tags:
+       - 订单
+     parameters:
+       - name: id
+         in: query
+         description: 订单号
+         required: false
+         type: integer
+       - name: page
+         in: query
+         description: 页码
+         required: false
+         type: integer
+       - name: page_size
+         in: query
+         description: 每页显示记录数
+         required: false
+         type: integer
+       - name: start_created_at
+         in: query
+         description: 订单创建起始时间
+         required: false
+         type: string
+       - name: end_created_at
+         in: query
+         description: 订单创建结束时间
+         required: false
+         type: string
+       - name: order_status
+         in: query
+         description: 订单状态
+         required: false
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
  /product/index:
    get:
      summary: 商品列表
@@ -1157,6 +1198,32 @@ paths:
          schema:
            $ref: '#/definitions/resp'
  
+ /shipment/add:
+   post:
+     summary: 订单发货
+     description: 订单发货
+     tags:
+       - 发货
+     parameters:
+       - name: order_id
+         in: formData
+         description: 订单号
+         required: true
+         type: integer
+       - name: carrier_id
+         in: formData
+         description: 物流ID
+         required: true
+         type: integer
+       - name: tracking_number
+         in: formData
+         description: 运单号
+         required: true
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
 
 
 definitions:
