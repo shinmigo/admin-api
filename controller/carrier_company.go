@@ -53,3 +53,13 @@ func (m *CarrierCompany) Delete() {
 
 	m.SetResponse()
 }
+
+func (m *CarrierCompany) EditStatus() {
+	err := carrierCompany.EditStatus()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}

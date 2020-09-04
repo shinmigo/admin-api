@@ -5,6 +5,7 @@ import (
 	"goshop/admin-api/service"
 	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/shinmigo/pb/shoppb"
 
@@ -60,7 +61,7 @@ func (m *CarrierCompany) Index() (*shoppb.ListCarrierRes, error) {
 		Id:       idNum,
 		Name:     name,
 		Code:     code,
-		Status:   2,
+		Status:   0,
 	}
 	if statusLen > 0 {
 		var statusNum shoppb.CarrierStatus
@@ -164,4 +165,40 @@ func (m *CarrierCompany) Delete() error {
 		CarrierId: idNum,
 	}
 	return service.NewCarrierCompany(m.Context).Delete(req)
+}
+
+func (m *CarrierCompany) EditStatus() error  {
+	carrierId := m.PostForm("id")
+	status := m.PostForm("status")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
+
+	valid := validation.Validation{}
+	valid.Required(carrierId).Message("请提交要修改状态的物流公司")
+	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("物流状态格式错误")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	carrierIds := strings.Split(carrierId, ",")
+	var carrierIdNums = []uint64{}
+	for _, i := range carrierIds {
+		j, _ := strconv.ParseUint(i, 10, 64)
+		carrierIdNums = append(carrierIdNums, j)
+	}
+
+	var statusNum shoppb.CarrierStatus
+	if status == "1" {
+		statusNum = shoppb.CarrierStatus_Enabled
+	} else {
+		statusNum = shoppb.CarrierStatus_Disabled
+	}
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
+	param := &shoppb.EditCarrierStatusReq{
+		CarrierId: carrierIdNums,
+		Status:     statusNum,
+		AdminId:    adminIdNum,
+	}
+
+	return service.NewCarrierCompany(m.Context).EditStatus(param)
 }
