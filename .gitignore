@@ -1,6 +1,6 @@
-api.exe
-api.exe*
-api
+admin-api.exe
+admin-api.exe*
+admin-api
 publish.sh
 runtime/*
 debug
