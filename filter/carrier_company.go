@@ -1,6 +1,8 @@
 package filter
 
 import (
+	"encoding/json"
+	"errors"
 	"goshop/admin-api/pkg/validation"
 	"goshop/admin-api/service"
 	"regexp"
@@ -148,6 +150,40 @@ func (m *CarrierCompany) Edit() error {
 		AdminId:   adminIdNum,
 	}
 	return service.NewCarrierCompany(m.Context).Edit(req)
+}
+
+func (m *CarrierCompany) EditStatus() error {
+	id := m.PostForm("id")
+	status := m.PostForm("status")
+	adminId, _ := m.Get("goshop_user_id")
+	adminIdString, _ := adminId.(string)
+
+	var statusNum shoppb.CarrierStatus
+	valid := validation.Validation{}
+	valid.Required(id).Message("请选择要修改的物流公司！")
+	valid.Required(status).Message("请选择物流公司状态！")
+	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("物流公司状态格式错误！")
+	if valid.HasError() {
+		return valid.GetError()
+	}
+
+	idNum := make([]uint64, 0, 8)
+	err := json.Unmarshal([]byte(id), &idNum)
+	if err != nil {
+		return errors.New("物流公司数据格式错误")
+	}
+	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
+	if status == "1" {
+		statusNum = shoppb.CarrierStatus_Enabled
+	} else {
+		statusNum = shoppb.CarrierStatus_Disabled
+	}
+	req := &shoppb.EditCarrierStatusReq{
+		CarrierId: idNum,
+		Status:    statusNum,
+		AdminId:   adminIdNum,
+	}
+	return service.NewCarrierCompany(m.Context).EditStatus(req)
 }
 
 func (m *CarrierCompany) Delete() error {

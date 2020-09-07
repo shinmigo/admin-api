@@ -44,6 +44,16 @@ func (m *CarrierCompany) Edit() {
 	m.SetResponse()
 }
 
+func (m *CarrierCompany) EditStatus() {
+	err := carrierCompany.EditStatus()
+	if err != nil {
+		m.SetResponse(nil, err)
+		return
+	}
+
+	m.SetResponse()
+}
+
 func (m *CarrierCompany) Delete() {
 	err := carrierCompany.Delete()
 	if err != nil {

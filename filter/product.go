@@ -46,7 +46,7 @@ func (m *Product) Index() (*productpb.ListProductRes, error) {
 		valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("商品状态格式错误！")
 	}
 	if categoryIdLen > 0 {
-		valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类格式不正确")
+		valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类格式不正确")
 	}
 	if valid.HasError() {
 		return nil, valid.GetError()
@@ -98,7 +98,7 @@ func (m *Product) Add() error {
 	tagsList := make([]uint64, 0, 8)
 	valid := validation.Validation{}
 	valid.Required(categoryId).Message("请选择商品分类")
-	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类格式错误")
+	valid.Match(categoryId, regexp.MustCompile(`^[0-9]+$`)).Message("商品分类格式错误")
 	valid.Required(kindId).Message("请选择商品类型")
 	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型格式错误")
 	valid.Required(name).Message("请填写商品名称")
@@ -108,7 +108,7 @@ func (m *Product) Add() error {
 	valid.Required(unit).Message("请填写商品单位")
 	valid.Match(unit, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品单位格式错误")
 	valid.Required(images).Message("请上传商品轮播图")
-	valid.Match(images, regexp.MustCompile(`^(http://|https://)[a-zA-z0-9.,]+$`)).Message("商品轮播图格式错误")
+	valid.Match(images, regexp.MustCompile(`^[a-zA-z0-9,]+$`)).Message("商品轮播图格式错误")
 	valid.Required(specType).Message("请选择商品规格")
 	valid.Match(specType, regexp.MustCompile(`^1|2$`)).Message("商品规格格式错误")
 	valid.Required(spec).Message("请填写商品规格数据")
@@ -116,7 +116,7 @@ func (m *Product) Add() error {
 	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("商品上下架状态格式错误")
 	valid.Required(param).Message("请填写商品详情参数")
 	valid.Required(description).Message("请填写商品描述")
-	valid.Match(description, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品描述格式错误")
+	//valid.Match(description, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品描述格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
@@ -199,7 +199,7 @@ func (m *Product) Edit() error {
 	valid.Required(id).Message("请选择要修改的商品")
 	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品数据格式错误")
 	valid.Required(categoryId).Message("请选择商品分类")
-	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类格式错误")
+	valid.Match(categoryId, regexp.MustCompile(`^[0-9]+$`)).Message("商品分类格式错误")
 	valid.Required(kindId).Message("请选择商品类型")
 	valid.Match(kindId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品类型格式错误")
 	valid.Required(name).Message("请填写商品名称")
@@ -209,7 +209,7 @@ func (m *Product) Edit() error {
 	valid.Required(unit).Message("请填写商品单位")
 	valid.Match(unit, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品单位格式错误")
 	valid.Required(images).Message("请上传商品轮播图")
-	valid.Match(images, regexp.MustCompile(`^(http://|https://)[a-zA-z0-9.,]+$`)).Message("商品轮播图格式错误")
+	valid.Match(images, regexp.MustCompile(`^[a-zA-z0-9,]+$`)).Message("商品轮播图格式错误")
 	valid.Required(specType).Message("请选择商品规格")
 	valid.Match(specType, regexp.MustCompile(`^1|2$`)).Message("商品规格格式错误")
 	valid.Required(spec).Message("请填写商品规格数据")
@@ -217,7 +217,7 @@ func (m *Product) Edit() error {
 	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("商品上下架状态格式错误")
 	valid.Required(param).Message("请填写商品详情参数")
 	valid.Required(description).Message("请填写商品描述")
-	valid.Match(description, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品描述格式错误")
+	//valid.Match(description, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品描述格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}

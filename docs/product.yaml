@@ -30,6 +30,11 @@
         description: 商品分类
         required: false
         type: integer
+      - name: status
+        in: query
+        description: 商品状态(1下架|2上架)
+        required: false
+        type: integer
     responses:
       200:
         description: 成功
@@ -60,47 +65,47 @@
         type: string
       - name: short_description
         in: formData
-        description: 商品简介
+        description: 商品简介(中、英、数字)长度1-50
         required: true
         type: string
       - name: unit
         in: formData
-        description: 商品单位
+        description: 商品单位(中、英、数字)
         required: true
         type: integer
       - name: images
         in: formData
-        description: 商品轮播图
+        description: 商品轮播图(支持多个已英文逗号隔开,英、数字)
         required: true
         type: string
       - name: spec_type
         in: formData
-        description: 商品规格种类
+        description: 商品规格种类(1单规格|2多规格)
         required: true
         type: integer
       - name: spec
         in: formData
-        description: 商品规格
+        description: 商品规格(json 数组对象[{image:string,"price":double,"old_price":double,"cost_price":double,"stock":integer,"sku":string,"weight":double,"volume":double,"spec_value_id":[],"product_spec_id":integer}])
         required: true
         type: string
       - name: status
         in: formData
-        description: 商品状态
+        description: 商品状态(1下架|2上架)
         required: true
         type: integer
       - name: tags
         in: formData
-        description: 商品标签
-        required: true
+        description: 商品标签(传json数组，数组中值为数字)
+        required: false
         type: string
       - name: param
         in: formData
-        description: 商品参数
+        description: 商品参数(json数组对象[{"param_id":integer,"value":string}])
         required: true
         type: string
       - name: description
         in: formData
-        description: 商品描述
+        description: 商品描述(中文|英文|数字[{"images":"","text":""}])
         required: true
         type: string
     responses:
@@ -138,47 +143,47 @@
         type: string
       - name: short_description
         in: formData
-        description: 商品简介
+        description: 商品简介(中、英、数字)长度1-50
         required: true
         type: string
       - name: unit
         in: formData
-        description: 商品单位
+        description: 商品单位(中、英、数字)
         required: true
         type: integer
       - name: images
         in: formData
-        description: 商品轮播图
+        description: 商品轮播图(支持多个以英文逗号隔开,英、数字)
         required: true
         type: string
       - name: spec_type
         in: formData
-        description: 商品规格种类
+        description: 商品规格种类(1单规格|2多规格)
         required: true
         type: integer
       - name: spec
         in: formData
-        description: 商品规格
+        description: 商品规格(json 数组对象[{image:string,"price":double,"old_price":double,"cost_price":double,"stock":integer,"sku":string,"weight":double,"volume":double,"spec_value_id":[],"product_spec_id":integer}])
         required: true
         type: string
       - name: status
         in: formData
-        description: 商品状态
+        description: 商品状态(1下架|2上架)
         required: true
         type: integer
       - name: tags
         in: formData
-        description: 商品标签
+        description: 商品标签(传json数组，数组中值为数字)
         required: true
         type: string
       - name: param
         in: formData
-        description: 商品参数
+        description: 商品参数(json数组对象[{"param_id":integer,"value":string}])
         required: true
         type: string
       - name: description
         in: formData
-        description: 商品描述
+        description: 商品描述(中文|英文|数字[{"images":"","text":""}])
         required: true
         type: string
     responses:

@@ -41,6 +41,14 @@ func (m *CarrierCompany) Edit(carrier *shoppb.Carrier) error {
 	return err
 }
 
+func (m *CarrierCompany) EditStatus(carrier *shoppb.EditCarrierStatusReq) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	_, err := gclient.ShopCarrier.EditCarrierStatus(ctx, carrier)
+	cancel()
+
+	return err
+}
+
 func (m *CarrierCompany) Delete(carrier *shoppb.DelCarrierReq) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	_, err := gclient.ShopCarrier.DelCarrier(ctx, carrier)

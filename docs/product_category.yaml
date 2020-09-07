@@ -5,7 +5,7 @@
     tags:
       - 商品分类
     parameters:
-      - name: name
+      - name: category_name
         in: query
         description: 分类名称
         required: false
@@ -27,12 +27,7 @@
         type: integer
       - name: status
         in: query
-        description: 分类状态
-        required: false
-        type: integer
-      - name: store_id
-        in: query
-        description: 商铺ID
+        description: 分类状态（0停止|1启用）
         required: false
         type: integer
 
@@ -65,7 +60,7 @@
         type: integer
       - name: status
         in: formData
-        description: 分类状态（0|1）
+        description: 分类状态（0停止|1启用）
         required: false
         type: integer
       - name: icon

@@ -216,6 +216,38 @@
         }
       }
     },
+    "/carrier/edit-status": {
+      "post": {
+        "description": "编辑物流公司状态",
+        "tags": [
+          "物流公司"
+        ],
+        "summary": "编辑物流公司状态",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "物流公司编号（json数组元素为数字）",
+            "name": "id",
+            "in": "formData"
+          },
+          {
+            "type": "integer",
+            "description": "状态(1启用|2禁用)",
+            "name": "status",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
     "/carrier/index": {
       "get": {
         "description": "物流公司列表",
@@ -571,7 +603,7 @@
           },
           {
             "type": "integer",
-            "description": "分类状态（0|1）",
+            "description": "分类状态（0停止|1启用）",
             "name": "status",
             "in": "formData"
           },
@@ -715,7 +747,7 @@
           {
             "type": "string",
             "description": "分类名称",
-            "name": "name",
+            "name": "category_name",
             "in": "query"
           },
           {
@@ -738,14 +770,8 @@
           },
           {
             "type": "integer",
-            "description": "分类状态",
+            "description": "分类状态（0停止|1启用）",
             "name": "status",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "商铺ID",
-            "name": "store_id",
             "in": "query"
           }
         ],
@@ -1182,7 +1208,7 @@
           },
           {
             "type": "string",
-            "description": "商品规格值",
+            "description": "商品规格值(支持中、英、数字|多个值以,英文逗号隔开)",
             "name": "values",
             "in": "formData",
             "required": true
@@ -1280,7 +1306,7 @@
           },
           {
             "type": "string",
-            "description": "商品规格值",
+            "description": "商品规格值(支持中、英、数字|多个值以,英文逗号隔开)",
             "name": "values",
             "in": "formData",
             "required": true
@@ -1486,63 +1512,62 @@
           },
           {
             "type": "string",
-            "description": "商品简介",
+            "description": "商品简介(中、英、数字)长度1-50",
             "name": "short_description",
             "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "商品单位",
+            "description": "商品单位(中、英、数字)",
             "name": "unit",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品轮播图",
+            "description": "商品轮播图(支持多个已英文逗号隔开,英、数字)",
             "name": "images",
             "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "商品规格种类",
+            "description": "商品规格种类(1单规格|2多规格)",
             "name": "spec_type",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品规格",
+            "description": "商品规格(json 数组对象[{image:string,\"price\":double,\"old_price\":double,\"cost_price\":double,\"stock\":integer,\"sku\":string,\"weight\":double,\"volume\":double,\"spec_value_id\":[],\"product_spec_id\":integer}])",
             "name": "spec",
             "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "商品状态",
+            "description": "商品状态(1下架|2上架)",
             "name": "status",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品标签",
+            "description": "商品标签(传json数组，数组中值为数字)",
             "name": "tags",
-            "in": "formData",
-            "required": true
+            "in": "formData"
           },
           {
             "type": "string",
-            "description": "商品参数",
+            "description": "商品参数(json数组对象[{\"param_id\":integer,\"value\":string}])",
             "name": "param",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品描述",
+            "description": "商品描述(中文|英文|数字[{\"images\":\"\",\"text\":\"\"}])",
             "name": "description",
             "in": "formData",
             "required": true
@@ -1622,63 +1647,63 @@
           },
           {
             "type": "string",
-            "description": "商品简介",
+            "description": "商品简介(中、英、数字)长度1-50",
             "name": "short_description",
             "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "商品单位",
+            "description": "商品单位(中、英、数字)",
             "name": "unit",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品轮播图",
+            "description": "商品轮播图(支持多个以英文逗号隔开,英、数字)",
             "name": "images",
             "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "商品规格种类",
+            "description": "商品规格种类(1单规格|2多规格)",
             "name": "spec_type",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品规格",
+            "description": "商品规格(json 数组对象[{image:string,\"price\":double,\"old_price\":double,\"cost_price\":double,\"stock\":integer,\"sku\":string,\"weight\":double,\"volume\":double,\"spec_value_id\":[],\"product_spec_id\":integer}])",
             "name": "spec",
             "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "商品状态",
+            "description": "商品状态(1下架|2上架)",
             "name": "status",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品标签",
+            "description": "商品标签(传json数组，数组中值为数字)",
             "name": "tags",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品参数",
+            "description": "商品参数(json数组对象[{\"param_id\":integer,\"value\":string}])",
             "name": "param",
             "in": "formData",
             "required": true
           },
           {
             "type": "string",
-            "description": "商品描述",
+            "description": "商品描述(中文|英文|数字[{\"images\":\"\",\"text\":\"\"}])",
             "name": "description",
             "in": "formData",
             "required": true
@@ -1730,6 +1755,12 @@
             "type": "integer",
             "description": "商品分类",
             "name": "category_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "商品状态(1下架|2上架)",
+            "name": "status",
             "in": "query"
           }
         ],
