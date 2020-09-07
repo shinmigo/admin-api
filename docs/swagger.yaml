@@ -164,29 +164,6 @@ paths:
          schema:
            $ref: '#/definitions/resp'
  
- /carrier/edit-status:
-   post:
-     summary: 编辑物流公司状态
-     description: 编辑物流公司状态
-     tags:
-       - 物流公司
-     parameters:
-       - name: id
-         in: formData
-         description: 物流公司编号（json数组元素为数字）
-         required: false
-         type: string
-       - name: status
-         in: formData
-         description: 状态(1启用|2禁用)
-         required: true
-         type: integer
-     responses:
-       200:
-         description: 成功
-         schema:
-           $ref: '#/definitions/resp'
- 
  /carrier/delete:
    post:
      summary: 删除物流公司
@@ -204,7 +181,7 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
- 
+
  /carrier/edit-status:
    post:
      summary: 编辑物流公司状态
@@ -899,7 +876,7 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
- 
+
  /product-kind/bind-spec:
    post:
      summary: 绑定规格参数
@@ -1052,7 +1029,7 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
- 
+
  /product-param/bindable-params:
    get:
      summary: 获取可被绑定类型的参数列表
@@ -1181,7 +1158,7 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
- 
+
  /product-spec/bindable-specs:
    get:
      summary: 获取可被绑定类型的规格列表
