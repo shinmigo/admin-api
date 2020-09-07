@@ -56,11 +56,3 @@ func (m *CarrierCompany) Delete(carrier *shoppb.DelCarrierReq) error {
 
 	return err
 }
-
-func (m *CarrierCompany) EditStatus(statusParam *shoppb.EditCarrierStatusReq) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	_, err := gclient.ShopCarrier.EditCarrierStatus(ctx, statusParam)
-	cancel()
-
-	return err
-}

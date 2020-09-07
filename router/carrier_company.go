@@ -16,6 +16,5 @@ func init() {
 		g.Post("/edit")
 		g.Post("/edit-status")
 		g.Post("/delete")
-		g.Post("/edit-status", "EditStatus")
 	})
 }
