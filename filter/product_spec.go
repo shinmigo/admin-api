@@ -133,3 +133,13 @@ func (m *ProductSpec) Delete() error {
 	idNum, _ := strconv.ParseUint(id, 10, 64)
 	return service.NewProductSpec(m.Context).Delete(idNum)
 }
+
+func (m *ProductSpec) BindableSpecs() (*productpb.BindSpecAllRes, error) {
+	name := m.Query("name")
+	list, err := service.NewProductSpec(m.Context).BindableSpecs(name)
+	if err != nil {
+		return nil, err
+	}
+	
+	return list, nil
+}

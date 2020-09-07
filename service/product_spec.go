@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"goshop/admin-api/pkg/grpc/gclient"
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -50,4 +51,20 @@ func (m *ProductSpec) Delete(idParam uint64) error {
 	cancel()
 
 	return err
+}
+
+func (m *ProductSpec) BindableSpecs(name string) (*productpb.BindSpecAllRes, error) {
+	req := &productpb.BindSpecAllReq{
+		Name: name,
+	}
+	
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	resp, err := gclient.ProductSpecClient.GetBindSpecAll(ctx, req)
+	cancel()
+	
+	if err != nil {
+		return nil, fmt.Errorf("获取商品规格失败")
+	}
+	
+	return resp, nil
 }

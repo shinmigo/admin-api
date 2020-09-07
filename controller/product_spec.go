@@ -51,3 +51,14 @@ func (m *ProductSpec) Delete() {
 
 	m.SetResponse()
 }
+
+// 获取可绑定规格列表， 无分页返回全部
+func (m *ProductSpec) BindableSpecs() {
+	str, err := productSpecFilter.BindableSpecs()
+	if err != nil {
+		m.SetResponse(str, err)
+		return
+	}
+	
+	m.SetResponse(str)
+}

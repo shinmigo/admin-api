@@ -109,3 +109,21 @@
         description: 成功
         schema:
           $ref: '#/definitions/resp'
+
+/product-spec/bindable-specs:
+  get:
+    summary: 获取可被绑定类型的规格列表
+    description: 获取可被绑定类型的规格列表,无分页，支持模糊匹配名称
+    tags:
+      - 商品规格
+    parameters:
+      - name: name
+        in: query
+        description: 商品规格名称
+        required: false
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'

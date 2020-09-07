@@ -116,7 +116,8 @@
             "type": "integer",
             "description": "物流公司编号",
             "name": "id",
-            "in": "formData"
+            "in": "formData",
+            "required": true
           }
         ],
         "responses": {
@@ -169,6 +170,39 @@
             "description": "状态(1启用|2禁用)",
             "name": "status",
             "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/carrier/edit-status": {
+      "post": {
+        "description": "编辑物流公司状态",
+        "tags": [
+          "物流公司"
+        ],
+        "summary": "编辑物流公司状态",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "物流公司编号(1,2逗号分隔多个)",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "物流公司状态",
+            "name": "status",
+            "in": "query",
             "required": true
           }
         ],
@@ -955,6 +989,31 @@
         }
       }
     },
+    "/product-param/bindable-params": {
+      "get": {
+        "description": "获取可被绑定类型的参数列表,无分页，支持模糊匹配名称",
+        "tags": [
+          "商品参数"
+        ],
+        "summary": "获取可被绑定类型的参数列表",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "商品参数名称",
+            "name": "name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
     "/product-param/del": {
       "post": {
         "description": "获取商品参数",
@@ -1127,6 +1186,31 @@
             "name": "values",
             "in": "formData",
             "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/product-spec/bindable-specs": {
+      "get": {
+        "description": "获取可被绑定类型的规格列表,无分页，支持模糊匹配名称",
+        "tags": [
+          "商品规格"
+        ],
+        "summary": "获取可被绑定类型的规格列表",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "商品规格名称",
+            "name": "name",
+            "in": "query"
           }
         ],
         "responses": {

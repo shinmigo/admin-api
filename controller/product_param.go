@@ -62,3 +62,14 @@ func (m *ProductParam) Detail() {
 
 	m.SetResponse(str)
 }
+
+// 获取可绑定参数列表， 无分页返回全部
+func (m *ProductParam) BindableParams() {
+	str, err := productParamFilter.BindableParams()
+	if err != nil {
+		m.SetResponse(str, err)
+		return
+	}
+	
+	m.SetResponse(str)
+}

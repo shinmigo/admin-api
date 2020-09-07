@@ -16,5 +16,6 @@ func init() {
 		g.Post("/edit")
 		g.Post("/del")
 		g.Get("/detail")
+		g.Get("/bindable-params")
 	})
 }

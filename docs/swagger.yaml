@@ -174,7 +174,30 @@ paths:
        - name: id
          in: formData
          description: 物流公司编号
-         required: false
+         required: true
+         type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /carrier/edit-status:
+   post:
+     summary: 编辑物流公司状态
+     description: 编辑物流公司状态
+     tags:
+       - 物流公司
+     parameters:
+       - name: id
+         in: formData
+         description: 物流公司编号(1,2逗号分隔多个)
+         required: true
+         type: integer
+       - name: status
+         in: query
+         description: 物流公司状态
+         required: true
          type: integer
      responses:
        200:
@@ -1005,6 +1028,24 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
+ 
+ /product-param/bindable-params:
+   get:
+     summary: 获取可被绑定类型的参数列表
+     description: 获取可被绑定类型的参数列表,无分页，支持模糊匹配名称
+     tags:
+       - 商品参数
+     parameters:
+       - name: name
+         in: query
+         description: 商品参数名称
+         required: false
+         type: string
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
  /product-spec/index:
    get:
      summary: 商品规格列表
@@ -1111,6 +1152,24 @@ paths:
          description: 商品规格编号
          required: true
          type: integer
+     responses:
+       200:
+         description: 成功
+         schema:
+           $ref: '#/definitions/resp'
+ 
+ /product-spec/bindable-specs:
+   get:
+     summary: 获取可被绑定类型的规格列表
+     description: 获取可被绑定类型的规格列表,无分页，支持模糊匹配名称
+     tags:
+       - 商品规格
+     parameters:
+       - name: name
+         in: query
+         description: 商品规格名称
+         required: false
+         type: string
      responses:
        200:
          description: 成功

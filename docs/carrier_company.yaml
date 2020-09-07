@@ -128,7 +128,7 @@
 /carrier/edit-status:
   post:
     summary: 编辑物流公司状态
-    description： 编辑物流公司状态
+    description: 编辑物流公司状态
     tags:
       - 物流公司
     parameters:
