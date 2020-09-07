@@ -165,12 +165,8 @@ func (m *ProductParam) BindableParams(name string) (*productpb.BindParamAllRes, 
 	}
 	
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	resp, err := gclient.ProductParam.GetBindParamAll(ctx, req)
+	resp, _ := gclient.ProductParam.GetBindParamAll(ctx, req)
 	cancel()
-	
-	if err != nil {
-		return nil, fmt.Errorf("获取商品参数失败")
-	}
 	
 	return resp, nil
 }
