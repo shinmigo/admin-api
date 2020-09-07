@@ -876,6 +876,7 @@ paths:
          description: 成功
          schema:
            $ref: '#/definitions/resp'
+ 
  /product-kind/bind-spec:
    post:
      summary: 绑定规格参数
@@ -888,7 +889,7 @@ paths:
          description: 商品类型ID
          required: true
          type: integer
-       - name: param_ids
+       - name: spec_ids
          in: formData
          description: 规格ID（逗号分隔）
          required: true

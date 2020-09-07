@@ -836,7 +836,7 @@
           {
             "type": "string",
             "description": "规格ID（逗号分隔）",
-            "name": "param_ids",
+            "name": "spec_ids",
             "in": "formData",
             "required": true
           }

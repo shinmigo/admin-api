@@ -112,7 +112,7 @@ func (m *ProductKind) BindParam() error {
 
 func (m *ProductKind) BindSpec() error {
 	kindId := m.PostForm("kind_id")
-	specIds := m.PostForm("param_ids")
+	specIds := m.PostForm("spec_ids")
 
 	valid := validation.Validation{}
 	valid.Required(kindId).Message("请提交要编辑的商品类型")
@@ -125,8 +125,6 @@ func (m *ProductKind) BindSpec() error {
 	if err := service.NewProductKind(m.Context).BindSpec(); err != nil {
 		return err
 	}
-
-	return nil
 
 	return nil
 }

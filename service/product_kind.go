@@ -159,11 +159,11 @@ func (m *ProductKind) BindParam() error {
 
 func (m *ProductKind) BindSpec() error {
 	kindId := m.PostForm("kind_id")
-	paramIds := m.PostForm("spec_ids")
+	specIds := m.PostForm("spec_ids")
 
 	kindIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
 
-	specIdArr := strings.Split(paramIds, ",")
+	specIdArr := strings.Split(specIds, ",")
 
 	var specIdNums = []uint64{}
 	for _, i := range specIdArr {
