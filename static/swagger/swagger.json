@@ -192,39 +192,6 @@
         "summary": "编辑物流公司状态",
         "parameters": [
           {
-            "type": "integer",
-            "description": "物流公司编号(1,2逗号分隔多个)",
-            "name": "id",
-            "in": "formData",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "description": "物流公司状态",
-            "name": "status",
-            "in": "query",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "schema": {
-              "$ref": "#/definitions/resp"
-            }
-          }
-        }
-      }
-    },
-    "/carrier/edit-status": {
-      "post": {
-        "description": "编辑物流公司状态",
-        "tags": [
-          "物流公司"
-        ],
-        "summary": "编辑物流公司状态",
-        "parameters": [
-          {
             "type": "string",
             "description": "物流公司编号（json数组元素为数字）",
             "name": "id",
