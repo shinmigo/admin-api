@@ -221,6 +221,26 @@ paths:
          description: 页面编号
          required: false
          type: integer
+       - name: mobile
+         in: query
+         description: 手机号
+         required: false
+         type: string
+       - name: status
+         in: query
+         description: 状态(1正常|2冻结)
+         required: false
+         type: integer
+       - name: nickname
+         in: query
+         description: 昵称
+         required: false
+         type: string
+       - name: member_id
+         in: query
+         description: 用户编号
+         required: false
+         type: integer
      responses:
        200:
          description: 成功
@@ -345,12 +365,12 @@ paths:
      parameters:
        - name: member_id
          in: formData
-         description: 会员编号
+         description: 会员编号(可以传多个会员编号，用英文,号隔开)
          required: true
-         type: integer
+         type: string
        - name: status
          in: formData
-         description: 会员状态（1|2）
+         description: 会员状态（1正常|2冻结）
          required: true
          type: integer
      responses:

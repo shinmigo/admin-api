@@ -408,15 +408,15 @@
         "summary": "修改会员状态",
         "parameters": [
           {
-            "type": "integer",
-            "description": "会员编号",
+            "type": "string",
+            "description": "会员编号(可以传多个会员编号，用英文,号隔开)",
             "name": "member_id",
             "in": "formData",
             "required": true
           },
           {
             "type": "integer",
-            "description": "会员状态（1|2）",
+            "description": "会员状态（1正常|2冻结）",
             "name": "status",
             "in": "formData",
             "required": true
@@ -450,6 +450,30 @@
             "type": "integer",
             "description": "页面编号",
             "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "手机号",
+            "name": "mobile",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "状态(1正常|2冻结)",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "昵称",
+            "name": "nickname",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "用户编号",
+            "name": "member_id",
             "in": "query"
           }
         ],

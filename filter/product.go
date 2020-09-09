@@ -2,6 +2,7 @@ package filter
 
 import (
 	"encoding/json"
+	"errors"
 	"goshop/admin-api/pkg/validation"
 	"goshop/admin-api/service"
 	"regexp"
@@ -123,18 +124,18 @@ func (m *Product) Add() error {
 	if len(tags) > 0 {
 		err := json.Unmarshal([]byte(tags), &tagsList)
 		if err != nil {
-			return err
+			return errors.New("商品标签参数错误！")
 		}
 	}
 	specParam := make([]*productpb.ProductSpec, 0, 8)
 	err := json.Unmarshal([]byte(spec), &specParam)
 	if err != nil {
-		return err
+		return errors.New("商品规格参数错误！")
 	}
 	paramList := make([]*productpb.ProductParam, 0, 8)
 	err = json.Unmarshal([]byte(param), &paramList)
 	if err != nil {
-		return err
+		return errors.New("商品参数格式错误！")
 	}
 
 	var specTypeReq productpb.ProductSpecType
@@ -224,18 +225,18 @@ func (m *Product) Edit() error {
 	if len(tags) > 0 {
 		err := json.Unmarshal([]byte(tags), &tagsList)
 		if err != nil {
-			return err
+			return errors.New("商品标签参数错误！")
 		}
 	}
 	specParam := make([]*productpb.ProductSpec, 0, 8)
 	err := json.Unmarshal([]byte(spec), &specParam)
 	if err != nil {
-		return err
+		return errors.New("商品规格参数错误！")
 	}
 	paramList := make([]*productpb.ProductParam, 0, 8)
 	err = json.Unmarshal([]byte(param), &paramList)
 	if err != nil {
-		return err
+		return errors.New("商品参数格式错误！")
 	}
 
 	var specTypeReq productpb.ProductSpecType

@@ -24,26 +24,7 @@ func NewMember(c *gin.Context) *Member {
 }
 
 // 会员列表
-func (m *Member) Index(pNumber, pSize uint64) (*memberpb.ListMemberRes, error) {
-	req := &memberpb.GetMemberReq{
-		Page:     pNumber,
-		PageSize: pSize,
-	}
-
-	if len(m.Query("mobile")) > 0 {
-		req.Mobile = m.Query("mobile")
-	}
-
-	if len(m.Query("member_id")) > 0 {
-		id, _ := strconv.ParseUint(m.Query("member_id"), 10, 64)
-		req.MemberId = id
-	}
-
-	if len(m.Query("status")) > 0 {
-		status, _ := strconv.ParseInt(m.Query("status"), 10, 32)
-		req.Status = int32(status)
-	}
-
+func (m *Member) Index(req *memberpb.GetMemberReq) (*memberpb.ListMemberRes, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	resp, err := gclient.Member.GetMemberList(ctx, req)
 	cancel()
@@ -149,7 +130,7 @@ func (m *Member) Info(memberId uint64) (*memberpb.MemberDetail, error) {
 }
 
 // 更新会员状态
-func (m *Member) EditStatus(memberId, adminId uint64, status int32) error {
+func (m *Member) EditStatus(memberId []uint64, adminId uint64, status int32) error {
 	req := &basepb.EditStatusReq{
 		Id:      memberId,
 		Status:  status,
