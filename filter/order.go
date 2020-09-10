@@ -23,7 +23,7 @@ func NewOrder(ctx *gin.Context) *Order {
 }
 
 // 订单列表
-func (o *Order) Index() (*orderpb.ListOrderRes, error) {
+func (o *Order) Index() (*service.ListOrderRes, error) {
 	var (
 		id                 = o.Query("id")
 		page               = o.DefaultQuery("page", "1")
