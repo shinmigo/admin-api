@@ -121,9 +121,9 @@
     parameters:
       - name: param_id
         in: formData
-        description: 商品参数编号
+        description: 商品参数编号（json数组元素为数字）
         required: true
-        type: integer
+        type: string
     responses:
       200:
         description: 成功

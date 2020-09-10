@@ -139,9 +139,9 @@
     parameters:
       - name: id
         in: formData
-        description: 物流公司编号
+        description: 物流公司编号（json数组元素为数字）
         required: true
-        type: integer
+        type: string
     responses:
       200:
         description: 成功

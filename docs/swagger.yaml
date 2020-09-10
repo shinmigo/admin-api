@@ -196,9 +196,9 @@ paths:
      parameters:
        - name: id
          in: formData
-         description: 物流公司编号
+         description: 物流公司编号（json数组元素为数字）
          required: true
-         type: integer
+         type: string
      responses:
        200:
          description: 成功
@@ -714,9 +714,9 @@ paths:
      parameters:
        - name: id
          in: formData
-         description: 商品分类ID(传第数组ID)
+         description: 商品分类ID（json数组元素为数字）
          required: true
-         type: integer
+         type: string
      responses:
        200:
          description: 成功
@@ -843,9 +843,9 @@ paths:
      parameters:
        - name: kind_id
          in: formData
-         description: 商品类型ID
+         description: 商品类型ID（json数组元素为数字）
          required: true
-         type: integer
+         type: string
      responses:
        200:
          description: 成功
@@ -1041,9 +1041,9 @@ paths:
      parameters:
        - name: param_id
          in: formData
-         description: 商品参数编号
+         description: 商品参数编号（json数组元素为数字）
          required: true
-         type: integer
+         type: string
      responses:
        200:
          description: 成功
@@ -1170,9 +1170,9 @@ paths:
      parameters:
        - name: id
          in: formData
-         description: 商品规格编号
+         description: 商品规格编号（json数组元素为数字）
          required: true
-         type: integer
+         type: string
      responses:
        200:
          description: 成功
@@ -1269,9 +1269,9 @@ paths:
      parameters:
        - name: id
          in: formData
-         description: 编号
+         description: 编号（json数组元素为数字）
          required: true
-         type: integer
+         type: string
      responses:
        200:
          description: 成功

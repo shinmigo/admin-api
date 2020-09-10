@@ -1,6 +1,8 @@
 package service
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"goshop/admin-api/pkg/grpc/gclient"
 	"strconv"
@@ -74,10 +76,14 @@ func (m *ProductKind) Add() error {
 
 func (m *ProductKind) Delete() error {
 	kindId := m.PostForm("kind_id")
-	kingIdNumber, _ := strconv.ParseUint(kindId, 10, 64)
+	idParam := make([]uint64, 0, 16)
+	err := json.Unmarshal([]byte(kindId), &idParam)
+	if err != nil {
+		return errors.New("要删除的商品类型数据格式错误！")
+	}
 
 	req := &productpb.DelKindReq{
-		KindId: kingIdNumber,
+		KindId: idParam,
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	resp, err := gclient.ProductKind.DelKind(ctx, req)

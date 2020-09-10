@@ -101,9 +101,9 @@
     parameters:
       - name: id
         in: formData
-        description: 商品规格编号
+        description: 商品规格编号（json数组元素为数字）
         required: true
-        type: integer
+        type: string
     responses:
       200:
         description: 成功

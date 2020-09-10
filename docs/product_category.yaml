@@ -82,9 +82,9 @@
     parameters:
       - name: id
         in: formData
-        description: 商品分类ID(传第数组ID)
+        description: 商品分类ID（json数组元素为数字）
         required: true
-        type: integer
+        type: string
     responses:
       200:
         description: 成功

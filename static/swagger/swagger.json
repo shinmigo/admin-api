@@ -113,8 +113,8 @@
         "summary": "删除物流公司",
         "parameters": [
           {
-            "type": "integer",
-            "description": "物流公司编号",
+            "type": "string",
+            "description": "物流公司编号（json数组元素为数字）",
             "name": "id",
             "in": "formData",
             "required": true
@@ -624,8 +624,8 @@
         "summary": "商品分类删除",
         "parameters": [
           {
-            "type": "integer",
-            "description": "商品分类ID(传第数组ID)",
+            "type": "string",
+            "description": "商品分类ID（json数组元素为数字）",
             "name": "id",
             "in": "formData",
             "required": true
@@ -874,8 +874,8 @@
         "summary": "商品类型删除",
         "parameters": [
           {
-            "type": "integer",
-            "description": "商品类型ID",
+            "type": "string",
+            "description": "商品类型ID（json数组元素为数字）",
             "name": "kind_id",
             "in": "formData",
             "required": true
@@ -1040,8 +1040,8 @@
         "summary": "删除商品参数",
         "parameters": [
           {
-            "type": "integer",
-            "description": "商品参数编号",
+            "type": "string",
+            "description": "商品参数编号（json数组元素为数字）",
             "name": "param_id",
             "in": "formData",
             "required": true
@@ -1249,8 +1249,8 @@
         "summary": "删除商品规格",
         "parameters": [
           {
-            "type": "integer",
-            "description": "商品规格编号",
+            "type": "string",
+            "description": "商品规格编号（json数组元素为数字）",
             "name": "id",
             "in": "formData",
             "required": true
@@ -1391,8 +1391,8 @@
         "summary": "删除商品标签",
         "parameters": [
           {
-            "type": "integer",
-            "description": "编号",
+            "type": "string",
+            "description": "编号（json数组元素为数字）",
             "name": "id",
             "in": "formData",
             "required": true

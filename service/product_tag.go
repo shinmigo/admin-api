@@ -67,7 +67,7 @@ func (m *ProductTag) Edit(req *productpb.Tag) error {
 	return err
 }
 
-func (m *ProductTag) Delete(id uint64) error {
+func (m *ProductTag) Delete(id []uint64) error {
 	req := &productpb.DelTagReq{
 		TagId: id,
 	}

@@ -1,6 +1,8 @@
 package filter
 
 import (
+	"encoding/json"
+	"errors"
 	"goshop/admin-api/pkg/validation"
 	"goshop/admin-api/service"
 	"regexp"
@@ -130,8 +132,12 @@ func (m *ProductSpec) Delete() error {
 		return valid.GetError()
 	}
 
-	idNum, _ := strconv.ParseUint(id, 10, 64)
-	return service.NewProductSpec(m.Context).Delete(idNum)
+	idParam := make([]uint64, 0, 32)
+	err := json.Unmarshal([]byte(id), &idParam)
+	if err != nil {
+		return errors.New("要删除的商品规格数据格式错误！")
+	}
+	return service.NewProductSpec(m.Context).Delete(idParam)
 }
 
 func (m *ProductSpec) BindableSpecs() (*productpb.BindSpecAllRes, error) {
@@ -140,6 +146,6 @@ func (m *ProductSpec) BindableSpecs() (*productpb.BindSpecAllRes, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return list, nil
 }

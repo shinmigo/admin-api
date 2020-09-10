@@ -56,9 +56,9 @@
     parameters:
       - name: kind_id
         in: formData
-        description: 商品类型ID
+        description: 商品类型ID（json数组元素为数字）
         required: true
-        type: integer
+        type: string
     responses:
       200:
         description: 成功

@@ -39,10 +39,10 @@ func (m *CarrierCompany) Index() (*shoppb.ListCarrierRes, error) {
 		valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品规格数据不正确")
 	}
 	if len(code) > 0 {
-		valid.Match(code, regexp.MustCompile(`^[A-Za-z]{1,20}$`)).Message("物流编码格式不正确")
+		valid.Match(code, regexp.MustCompile(`^[A-Za-z0-9]{1,20}$`)).Message("物流编码格式不正确")
 	}
 	if len(name) > 0 {
-		valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("物流名称格式错误")
+		valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9_()（）]+$`)).Message("物流名称格式错误")
 	}
 	if statusLen > 0 {
 		valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("状态格式错误！")
@@ -88,7 +88,7 @@ func (m *CarrierCompany) Add() error {
 	var statusNum shoppb.CarrierStatus
 	valid := validation.Validation{}
 	valid.Required(name).Message("请填写物流公司名称！")
-	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("物流公司名称格式错误")
+	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9_()（）]+$`)).Message("物流公司名称格式错误")
 	valid.Required(code).Message("请填写物流公司编码！")
 	valid.Match(code, regexp.MustCompile(`^[A-Za-z0-9]{1,20}$`)).Message("物流编码格式不正确")
 	valid.Required(sort).Message("请填写物流公司排序！")
@@ -128,7 +128,7 @@ func (m *CarrierCompany) Edit() error {
 	valid.Required(id).Message("请选择要编辑的数据！")
 	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("物流公司数据格式错误")
 	valid.Required(name).Message("请填写物流公司名称！")
-	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("物流公司名称格式错误")
+	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9_()（）]+$`)).Message("物流公司名称格式错误")
 	valid.Required(code).Message("请填写物流公司编码！")
 	valid.Match(code, regexp.MustCompile(`^[A-Za-z0-9]{1,20}$`)).Message("物流编码格式不正确")
 	valid.Required(sort).Message("请填写物流公司排序！")
@@ -197,12 +197,15 @@ func (m *CarrierCompany) Delete() error {
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要删除的数据！")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("物流公司数据格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
 
-	idNum, _ := strconv.ParseUint(id, 10, 64)
+	idNum := make([]uint64, 0, 8)
+	err := json.Unmarshal([]byte(id), &idNum)
+	if err != nil {
+		return errors.New("物流公司数据格式错误")
+	}
 	req := &shoppb.DelCarrierReq{
 		CarrierId: idNum,
 	}

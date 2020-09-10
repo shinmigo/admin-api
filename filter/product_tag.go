@@ -1,6 +1,8 @@
 package filter
 
 import (
+	"encoding/json"
+	"errors"
 	"goshop/admin-api/pkg/validation"
 	"goshop/admin-api/service"
 	"regexp"
@@ -93,11 +95,14 @@ func (m *ProdcutTag) Delete() error {
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("标签不能为空")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("要删除的标签格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
 
-	idNum, _ := strconv.ParseUint(id, 10, 64)
-	return service.NewProductTag(m.Context).Delete(idNum)
+	idParam := make([]uint64, 0, 32)
+	err := json.Unmarshal([]byte(id), &idParam)
+	if err != nil {
+		return errors.New("要删除的标签格式错误！")
+	}
+	return service.NewProductTag(m.Context).Delete(idParam)
 }
