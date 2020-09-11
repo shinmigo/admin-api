@@ -11,7 +11,7 @@ import (
 
 func VerifyToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		token := c.Request.Header.Get("Authorization")
+		token := c.Request.Header.Get("goshop-token")
 		if len(token) == 0 {
 			c.Abort()
 			c.JSON(401, utils.ResponseList{
