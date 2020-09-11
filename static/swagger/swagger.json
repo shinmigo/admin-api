@@ -560,6 +560,23 @@
         ],
         "responses": {
           "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/order/status": {
+      "get": {
+        "description": "订单状态",
+        "tags": [
+          "订单"
+        ],
+        "summary": "订单状态",
+        "responses": {
+          "200": {
             "description": "成功"
           }
         }

@@ -12,5 +12,6 @@ func init() {
 	routerhelper.Use(func(r *gin.Engine) {
 		g := routerhelper.NewGroupRouter("order", new(controller.Order), r, middleware.VerifyToken())
 		g.Get("/index")
+		g.Get("/status")
 	})
 }

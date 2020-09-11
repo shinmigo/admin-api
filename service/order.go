@@ -3,7 +3,9 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"goshop/admin-api/pkg/grpc/gclient"
+	"goshop/admin-api/pkg/utils"
 	"time"
 
 	"github.com/shinmigo/pb/memberpb"
@@ -69,10 +71,12 @@ func (o *Order) Index(req *orderpb.ListOrderReq) (*ListOrderRes, error) {
 	}
 	cancel()
 
+	fmt.Println(orderList.Orders)
 	if jsonBytes, err = json.Marshal(orderList.Orders); err != nil {
 		return nil, err
 	}
 	json.Unmarshal(jsonBytes, &orders)
+	fmt.Println(orders)
 	for _, ord := range orders {
 		ord.Member = memberMaps[ord.MemberId]
 	}
@@ -81,4 +85,36 @@ func (o *Order) Index(req *orderpb.ListOrderReq) (*ListOrderRes, error) {
 		Total:  orderList.Total,
 		Orders: orders,
 	}, err
+}
+
+func (o *Order) Status(storeId uint64) (*orderpb.ListOrderStatusRes, error) {
+	var (
+		listOrderStatusRes *orderpb.ListOrderStatusRes
+		currentStatus      []uint64
+		statuses           = []uint64{
+			1, 3, 4, 5, 6, 7,
+		}
+		err error
+	)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	if listOrderStatusRes, err = gclient.OrderClient.GetOrderStatus(ctx, &orderpb.GetOrderStatusReq{
+		StoreId: storeId,
+	}); err != nil {
+		return nil, err
+	}
+	cancel()
+
+	for _, statistics := range listOrderStatusRes.OrderStatistics {
+		currentStatus = append(currentStatus, statistics.OrderStatus)
+	}
+	for _, status := range statuses {
+		if utils.InSliceUint64(status, currentStatus) == false {
+			listOrderStatusRes.OrderStatistics = append(listOrderStatusRes.OrderStatistics, &orderpb.ListOrderStatusRes_OrderStatistics{
+				OrderStatus: status,
+				Count:       0,
+			})
+		}
+	}
+
+	return listOrderStatusRes, nil
 }

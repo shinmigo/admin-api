@@ -82,3 +82,12 @@ func (o *Order) Index() (*service.ListOrderRes, error) {
 		OrderStatus:    orderpb.OrderStatus(orderStatusNum),
 	})
 }
+
+func (o *Order) Status() (*orderpb.ListOrderStatusRes, error) {
+	var (
+		order service.Order
+	)
+
+	storeId := 1 //todo: 需要给出当前登陆用户的store_id
+	return order.Status(uint64(storeId))
+}

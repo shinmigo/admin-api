@@ -23,3 +23,13 @@ func (o *Order) Index() {
 
 	o.SetResponse(list)
 }
+
+func (o *Order) Status() {
+	list, err := OrderFilter.Status()
+	if err != nil {
+		o.SetResponse(nil, err)
+		return
+	}
+
+	o.SetResponse(list)
+}
