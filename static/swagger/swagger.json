@@ -1828,7 +1828,7 @@
   "securityDefinitions": {
     "APIKeyHeader": {
       "type": "apiKey",
-      "name": "Authorization",
+      "name": "goshop-token",
       "in": "header"
     }
   },
