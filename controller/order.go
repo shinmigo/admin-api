@@ -4,18 +4,19 @@ import (
 	"goshop/admin-api/filter"
 )
 
-var OrderFilter *filter.Order
+//var OrderFilter *filter.Order
 
 type Order struct {
 	Base
+	OrderFilter *filter.Order
 }
 
 func (o *Order) Initialise() {
-	OrderFilter = filter.NewOrder(o.Context)
+	o.OrderFilter = filter.NewOrder(o.Context)
 }
 
 func (o *Order) Index() {
-	list, err := OrderFilter.Index()
+	list, err := o.OrderFilter.Index()
 	if err != nil {
 		o.SetResponse(nil, err)
 		return
@@ -25,7 +26,7 @@ func (o *Order) Index() {
 }
 
 func (o *Order) Status() {
-	list, err := OrderFilter.Status()
+	list, err := o.OrderFilter.Status()
 	if err != nil {
 		o.SetResponse(nil, err)
 		return
