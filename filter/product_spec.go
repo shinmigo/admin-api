@@ -127,7 +127,6 @@ func (m *ProductSpec) Delete() error {
 
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要删除的商品规格！")
-	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品规格格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}

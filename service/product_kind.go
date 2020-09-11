@@ -76,6 +76,7 @@ func (m *ProductKind) Add() error {
 
 func (m *ProductKind) Delete() error {
 	kindId := m.PostForm("kind_id")
+	kindId = strings.Trim(kindId, "")
 	idParam := make([]uint64, 0, 16)
 	err := json.Unmarshal([]byte(kindId), &idParam)
 	if err != nil {

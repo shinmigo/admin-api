@@ -83,7 +83,7 @@ func (m *ProductCategory) Add() error {
 	parentIdLen := len(parentId)
 	valid := validation.Validation{}
 	if parentIdLen > 0 {
-		valid.Match(parentId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("上级分类数据格式错误！")
+		valid.Match(parentId, regexp.MustCompile(`^[0-9]*$`)).Message("上级分类数据格式错误！")
 	}
 	valid.Required(name).Message("请填写商品分类名称！")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品分类名称格式错误")
@@ -133,7 +133,7 @@ func (m *ProductCategory) Edit() error {
 	valid.Required(categoryId).Message("请提交要编辑的商品分类！")
 	valid.Match(categoryId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("商品分类数据格式错误！")
 	if parentIdLen > 0 {
-		valid.Match(parentId, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("上级分类数据格式错误！")
+		valid.Match(parentId, regexp.MustCompile(`^[0-9]*$`)).Message("上级分类数据格式错误！")
 	}
 	valid.Required(name).Message("请填写商品分类名称！")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品分类名称格式错误")

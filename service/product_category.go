@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"goshop/admin-api/pkg/grpc/gclient"
 	"time"
 
@@ -57,7 +56,6 @@ func (m *ProductCategory) Delete(idParam []uint64) error {
 	}
 	_, err := gclient.ProductCategoryClient.DelCategory(ctx, productCategoryParam)
 	cancel()
-	fmt.Println(err.Error())
 
 	return err
 }
