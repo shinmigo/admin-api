@@ -33,7 +33,6 @@ func (o *Order) Index() (*service.ListOrderRes, error) {
 		orderStatus        = o.Query("order_status")
 		startTime, endTime utils.JSONTime
 		err                error
-		order              service.Order
 	)
 
 	valid := validation.Validation{}
@@ -73,7 +72,7 @@ func (o *Order) Index() (*service.ListOrderRes, error) {
 	pageNum, _ := strconv.ParseUint(page, 10, 64)
 	pageSizeNum, _ := strconv.ParseUint(pageSize, 10, 64)
 	idNum, _ := strconv.ParseUint(id, 10, 64)
-	return order.Index(&orderpb.ListOrderReq{
+	return service.NewOrder(o.Context).Index(&orderpb.ListOrderReq{
 		Page:           pageNum,
 		PageSize:       pageSizeNum,
 		OrderId:        idNum,
@@ -84,10 +83,6 @@ func (o *Order) Index() (*service.ListOrderRes, error) {
 }
 
 func (o *Order) Status() (*orderpb.ListOrderStatusRes, error) {
-	var (
-		order service.Order
-	)
-
 	storeId := 1 //todo: 需要给出当前登陆用户的store_id
-	return order.Status(uint64(storeId))
+	return service.NewOrder(o.Context).Status(uint64(storeId))
 }
