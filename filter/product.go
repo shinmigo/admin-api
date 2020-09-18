@@ -93,6 +93,8 @@ func (m *Product) Add() error {
 	tags := m.PostForm("tags")
 	param := m.PostForm("param")
 	description := m.PostForm("description")
+	specDescription := m.PostForm("spec_description")
+	paramDescription := m.PostForm("param_description")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
@@ -117,6 +119,10 @@ func (m *Product) Add() error {
 	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("商品上下架状态格式错误")
 	valid.Required(param).Message("请填写商品详情参数")
 	valid.Required(description).Message("请填写商品描述")
+	valid.Required(specDescription).Message("请提交商品规格描述")
+	valid.Match(specDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9"'{}\[\]:,]+$`)).Message("商品规格描述格式错误！")
+	valid.Required(paramDescription).Message("请提交商品参数描述")
+	valid.Match(paramDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9"'{}\[\]:,]+$`)).Message("商品参数描述格式错误！")
 	//valid.Match(description, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品描述格式错误")
 	if valid.HasError() {
 		return valid.GetError()
@@ -172,6 +178,8 @@ func (m *Product) Add() error {
 		Tags:             tagsList,
 		Spec:             specParam,
 		Param:            paramList,
+		SpecDescription:  specDescription,
+		ParamDescription: paramDescription,
 		Description:      description,
 		AdminId:          adminIdNum,
 	}
@@ -192,6 +200,8 @@ func (m *Product) Edit() error {
 	tags := m.PostForm("tags")
 	param := m.PostForm("param")
 	description := m.PostForm("description")
+	specDescription := m.PostForm("spec_description")
+	paramDescription := m.PostForm("param_description")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
@@ -218,6 +228,10 @@ func (m *Product) Edit() error {
 	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("商品上下架状态格式错误")
 	valid.Required(param).Message("请填写商品详情参数")
 	valid.Required(description).Message("请填写商品描述")
+	valid.Required(specDescription).Message("请提交商品规格描述")
+	valid.Match(specDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9"'{}\[\]:,]+$`)).Message("商品规格描述格式错误！")
+	valid.Required(paramDescription).Message("请提交商品参数描述")
+	valid.Match(paramDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9"'{}\[\]:,]+$`)).Message("商品参数描述格式错误！")
 	//valid.Match(description, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品描述格式错误")
 	if valid.HasError() {
 		return valid.GetError()
@@ -276,6 +290,8 @@ func (m *Product) Edit() error {
 		Spec:             specParam,
 		Param:            paramList,
 		Description:      description,
+		SpecDescription:  specDescription,
+		ParamDescription: paramDescription,
 		AdminId:          adminIdNum,
 	}
 	return service.NewProduct(m.Context).Edit(&productParam)
