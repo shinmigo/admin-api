@@ -103,7 +103,6 @@ func (m *ProductSpec) Edit() error {
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品规格名称格式错误")
 	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("商品规格排序格式错误！")
 	valid.Required(values).Message("请提交商品规格值！")
-	valid.Match(values, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9,]+$`)).Message("商品规格值数据格式错误！")
 	if valid.HasError() {
 		return valid.GetError()
 	}
