@@ -110,7 +110,7 @@ func (m *ProductSpec) Edit() error {
 
 	sortNum, _ := strconv.ParseUint(sort, 10, 64)
 	
-	valuesList := make([]*productpb.EditSpecReq_SpecValue, 0, 32)
+	valuesList := make([]*productpb.SpecValue, 0, 32)
 	if err := json.Unmarshal([]byte(values), &valuesList); err != nil {
 		return fmt.Errorf("参数值解析失败, err: %v", err)
 	}

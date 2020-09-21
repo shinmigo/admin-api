@@ -89,7 +89,7 @@ func (m *ProductParam) Edit() error {
 	paramIdNumber, _ := strconv.ParseUint(paramId, 10, 64)
 	typeNumber, _ := strconv.ParseInt(typeStr, 10, 32)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
-	contentsList := make([]*productpb.EditParamReq_ParamValue, 0, 32)
+	contentsList := make([]*productpb.ParamValue, 0, 32)
 	if err := json.Unmarshal([]byte(contents), &contentsList); err != nil {
 		return fmt.Errorf("参数值解析失败, err: %v", err)
 	}
