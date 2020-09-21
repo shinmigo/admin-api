@@ -36,7 +36,6 @@ func (m *Product) Index() (*productpb.ListProductRes, error) {
 	valid := validation.Validation{}
 	valid.Match(page, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的编号 不正确")
 	valid.Match(pageSize, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的数量 不正确")
-	valid.Required(product_id).Message("商品数据不正确, 多个用逗号分隔")
 	if len(name) > 0 {
 		valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品名称格式错误")
 	}
@@ -50,15 +49,18 @@ func (m *Product) Index() (*productpb.ListProductRes, error) {
 		return nil, valid.GetError()
 	}
 	
-	productIdStr := strings.Split(product_id, ",")
-	productIds := make([]uint64, 0, len(productIdStr))
-	if len(productIdStr) > 0 {
-		for k := range productIdStr {
-			idNum, _ := strconv.ParseUint(productIdStr[k], 10, 64)
-			productIds = append(productIds, idNum)
+	productIds := make([]uint64, 0, 32)
+	if len(product_id) > 0 {
+		productIdStr := strings.Split(product_id, ",")
+		if len(productIdStr) > 0 {
+			for k := range productIdStr {
+				idNum, _ := strconv.ParseUint(productIdStr[k], 10, 64)
+				productIds = append(productIds, idNum)
+			}
+			
 		}
-		
 	}
+	
 	if categoryIdLen > 0 {
 		categoryIdNum, _ = strconv.ParseUint(categoryId, 10, 64)
 	}

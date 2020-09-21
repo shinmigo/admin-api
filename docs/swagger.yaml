@@ -437,11 +437,11 @@ paths:
      tags:
        - 商品
      parameters:
-       - name: id
+       - name: product_id
          in: query
-         description: 商品编号
+         description: 商品编号,多个逗号分隔
          required: false
-         type: integer
+         type: string
        - name: page_size
          in: query
          description: 页面大小
