@@ -1314,7 +1314,7 @@
           },
           {
             "type": "string",
-            "description": "商品规格值(支持中、英、数字|多个值以,英文逗号隔开)",
+            "description": "商品规格值[json字符串]",
             "name": "values",
             "in": "formData",
             "required": true

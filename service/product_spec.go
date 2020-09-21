@@ -34,7 +34,7 @@ func (m *ProductSpec) Add(spec *productpb.Spec) error {
 	return err
 }
 
-func (m *ProductSpec) Edit(spec *productpb.Spec) error {
+func (m *ProductSpec) Edit(spec *productpb.EditSpecReq) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	_, err := gclient.ProductSpecClient.EditSpec(ctx, spec)
 	cancel()

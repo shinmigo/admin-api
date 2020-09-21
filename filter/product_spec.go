@@ -5,6 +5,7 @@ import (
 	"errors"
 	"goshop/admin-api/pkg/validation"
 	"goshop/admin-api/service"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -108,10 +109,14 @@ func (m *ProductSpec) Edit() error {
 	}
 
 	sortNum, _ := strconv.ParseUint(sort, 10, 64)
-	valuesList := strings.Split(values, ",")
+	
+	valuesList := make([]*productpb.EditSpecReq_SpecValue, 0, 32)
+	if err := json.Unmarshal([]byte(values), &valuesList); err != nil {
+		return fmt.Errorf("参数值解析失败, err: %v", err)
+	}
 	specIdNum, _ := strconv.ParseUint(specId, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
-	reqParam := &productpb.Spec{
+	reqParam := &productpb.EditSpecReq{
 		SpecId:   specIdNum,
 		Name:     name,
 		Sort:     sortNum,
