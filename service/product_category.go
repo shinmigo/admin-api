@@ -2,7 +2,9 @@ package service
 
 import (
 	"context"
+	"errors"
 	"goshop/admin-api/pkg/grpc/gclient"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -56,6 +58,9 @@ func (m *ProductCategory) Delete(idParam []uint64) error {
 	}
 	_, err := gclient.ProductCategoryClient.DelCategory(ctx, productCategoryParam)
 	cancel()
+	if err != nil {
+		return errors.New(strings.ReplaceAll(err.Error(), "rpc error: code = Unknown desc = ", ""))
+	}
 
-	return err
+	return nil
 }

@@ -6,10 +6,10 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	
+
 	"goshop/admin-api/pkg/validation"
 	"goshop/admin-api/service"
-	
+
 	"github.com/gin-gonic/gin"
 	"github.com/shinmigo/pb/productpb"
 )
@@ -29,7 +29,7 @@ func (m *Product) Index() (*productpb.ListProductRes, error) {
 	name := m.DefaultQuery("name", "")
 	status := m.Query("status")
 	categoryId := m.Query("category_id")
-	
+
 	var categoryIdNum uint64
 	statusLen := len(status)
 	categoryIdLen := len(categoryId)
@@ -48,7 +48,7 @@ func (m *Product) Index() (*productpb.ListProductRes, error) {
 	if valid.HasError() {
 		return nil, valid.GetError()
 	}
-	
+
 	productIds := make([]uint64, 0, 32)
 	if len(product_id) > 0 {
 		productIdStr := strings.Split(product_id, ",")
@@ -57,10 +57,10 @@ func (m *Product) Index() (*productpb.ListProductRes, error) {
 				idNum, _ := strconv.ParseUint(productIdStr[k], 10, 64)
 				productIds = append(productIds, idNum)
 			}
-			
+
 		}
 	}
-	
+
 	if categoryIdLen > 0 {
 		categoryIdNum, _ = strconv.ParseUint(categoryId, 10, 64)
 	}
@@ -73,12 +73,12 @@ func (m *Product) Index() (*productpb.ListProductRes, error) {
 		Name:       name,
 		CategoryId: categoryIdNum,
 	}
-	
+
 	statusNum, _ := strconv.ParseInt(status, 0, 32)
 	if statusLen > 0 {
 		listProductReq.Status = productpb.ProductStatus(statusNum)
 	}
-	
+
 	return service.NewProduct(m.Context).Index(listProductReq)
 }
 
@@ -97,7 +97,7 @@ func (m *Product) Add() error {
 	description := m.PostForm("description")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
-	
+
 	tagsList := make([]uint64, 0, 8)
 	valid := validation.Validation{}
 	valid.Required(categoryId).Message("请选择商品分类")
@@ -107,7 +107,7 @@ func (m *Product) Add() error {
 	valid.Required(name).Message("请填写商品名称")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品名称格式错误")
 	valid.Required(shortDescription).Message("请填写商品简介")
-	valid.Match(shortDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品简介格式错误")
+	valid.Match(shortDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9，。：；“”’‘？【】（）]+$`)).Message("商品简介格式错误")
 	valid.Required(unit).Message("请填写商品单位")
 	valid.Match(unit, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品单位格式错误")
 	valid.Required(images).Message("请上传商品轮播图")
@@ -138,7 +138,7 @@ func (m *Product) Add() error {
 	if err != nil {
 		return errors.New("商品参数格式错误！")
 	}
-	
+
 	var specTypeReq productpb.ProductSpecType
 	var statusReq productpb.ProductStatus
 	categoryIdNum, _ := strconv.ParseUint(categoryId, 10, 64)
@@ -160,7 +160,7 @@ func (m *Product) Add() error {
 	if len(tagsList) == 0 {
 		tagsList = nil
 	}
-	
+
 	productParam := productpb.Product{
 		CategoryId:       categoryIdNum,
 		KindId:           kindIdNum,
@@ -195,7 +195,7 @@ func (m *Product) Edit() error {
 	description := m.PostForm("description")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
-	
+
 	tagsList := make([]uint64, 0, 8)
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要修改的商品")
@@ -207,7 +207,7 @@ func (m *Product) Edit() error {
 	valid.Required(name).Message("请填写商品名称")
 	valid.Match(name, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品名称格式错误")
 	valid.Required(shortDescription).Message("请填写商品简介")
-	valid.Match(shortDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品简介格式错误")
+	valid.Match(shortDescription, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9，。：；“”’‘？【】（）]+$`)).Message("商品简介格式错误")
 	valid.Required(unit).Message("请填写商品单位")
 	valid.Match(unit, regexp.MustCompile(`^[\p{Han}a-zA-Z0-9]+$`)).Message("商品单位格式错误")
 	valid.Required(images).Message("请上传商品轮播图")
@@ -238,7 +238,7 @@ func (m *Product) Edit() error {
 	if err != nil {
 		return errors.New("商品参数格式错误！")
 	}
-	
+
 	var specTypeReq productpb.ProductSpecType
 	var statusReq productpb.ProductStatus
 	idNum, _ := strconv.ParseUint(id, 10, 64)
@@ -261,7 +261,7 @@ func (m *Product) Edit() error {
 	if len(tagsList) == 0 {
 		tagsList = nil
 	}
-	
+
 	productParam := productpb.Product{
 		ProductId:        idNum,
 		CategoryId:       categoryIdNum,
@@ -285,14 +285,14 @@ func (m *Product) Delete() error {
 	id := m.PostForm("id")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
-	
+
 	valid := validation.Validation{}
 	valid.Required(id).Message("请选择要删除的商品！")
 	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("要删除的商品格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
-	
+
 	idNum, _ := strconv.ParseUint(id, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	delReq := &productpb.DelProductReq{
