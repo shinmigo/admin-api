@@ -32,6 +32,7 @@ var (
 	ShopCarrier           shoppb.CarrierServiceClient
 	OrderClient           orderpb.OrderServiceClient
 	ShipmentClient        orderpb.ShipmentServiceClient
+	ImageClient           shoppb.ImageSeviceClient
 )
 
 func DialGrpcService() {
@@ -64,6 +65,7 @@ func shop() {
 	fmt.Printf("连接成功：%s, host分别为: %s \n", utils.C.Grpc.Name["shop"], strings.Join(utils.C.Etcd.Host, ","))
 	ShopUser = shoppb.NewUserServiceClient(conn)
 	ShopCarrier = shoppb.NewCarrierServiceClient(conn)
+	ImageClient = shoppb.NewImageSeviceClient(conn)
 }
 
 func crm() {
