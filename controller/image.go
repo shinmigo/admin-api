@@ -23,6 +23,7 @@ func (m *Image) GetImage() {
 	name := m.DefaultQuery("name", "")
 	if len(name) == 0 {
 		m.SetResponse(nil, fmt.Errorf("文件名不合法"))
+		return
 	}
 
 	req := shoppb.GetImageReq{
@@ -32,6 +33,7 @@ func (m *Image) GetImage() {
 	res, err := gclient.ImageClient.GetImage(context.Background(), &req)
 	if err != nil {
 		m.SetResponse(nil, err)
+		return
 	}
 
 	_, _ = io.Copy(m.Writer, bytes.NewBuffer(res.Content))
@@ -41,6 +43,7 @@ func (m *Image) Upload() {
 	f, head, err := m.Request.FormFile("my_file")
 	if err != nil {
 		m.SetResponse(nil, err)
+		return
 	}
 
 	b, _ := ioutil.ReadAll(f)
@@ -51,6 +54,7 @@ func (m *Image) Upload() {
 	res, err := gclient.ImageClient.Upload(context.Background(), &req)
 	if err != nil {
 		m.SetResponse(nil, err)
+		return
 	}
 
 	m.SetResponse(res.ImageId)
