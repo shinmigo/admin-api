@@ -64,6 +64,229 @@
         }
       }
     },
+    "/banner/add": {
+      "post": {
+        "description": "添加轮播、广告位",
+        "tags": [
+          "轮播"
+        ],
+        "summary": "添加轮播、广告位",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "类别(1轮播|2广告位)",
+            "name": "type",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "轮播、广告位图片链接",
+            "name": "image_url",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "轮播、广告位图片跳转链接",
+            "name": "redirect_url",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "轮播、广告位排序",
+            "name": "sort",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "状态",
+            "name": "status",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/banner/delete": {
+      "post": {
+        "description": "删除轮播、广告位",
+        "tags": [
+          "轮播"
+        ],
+        "summary": "删除轮播、广告位",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "轮播、广告位编号（json数组元素为数字）",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/banner/edit": {
+      "post": {
+        "description": "编辑轮播、广告位",
+        "tags": [
+          "轮播"
+        ],
+        "summary": "编辑轮播、广告位",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "轮播、广告位编号",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "类别(1轮播|2广告位)",
+            "name": "type",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "轮播、广告位图片链接",
+            "name": "image_url",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "轮播、广告位图片跳转链接",
+            "name": "redirect_url",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "轮播、广告位排序",
+            "name": "sort",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "状态",
+            "name": "status",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/banner/edit-status": {
+      "post": {
+        "description": "编辑轮播、广告位状态",
+        "tags": [
+          "轮播"
+        ],
+        "summary": "编辑轮播、广告位状态",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "轮播、广告位编号（json数组元素为数字）",
+            "name": "id",
+            "in": "formData",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "状态(1启用|2禁用)",
+            "name": "status",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
+    "/banner/index": {
+      "get": {
+        "description": "轮播、广告位列表",
+        "tags": [
+          "轮播"
+        ],
+        "summary": "轮播、广告位列表",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "轮播、广告位编号",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "类别(1轮播|2广告位)",
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "轮播、广告位状态",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面编号",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "页面大小",
+            "name": "page_size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/resp"
+            }
+          }
+        }
+      }
+    },
     "/carrier/add": {
       "post": {
         "description": "添加物流公司",

@@ -1,0 +1,159 @@
+/banner/index:
+  get:
+    summary: 轮播、广告位列表
+    description: 轮播、广告位列表
+    tags:
+      - 轮播
+    parameters:
+      - name: id
+        in: query
+        description: 轮播、广告位编号
+        required: false
+        type: integer
+      - name: type
+        in: query
+        description: 类别(1轮播|2广告位)
+        required: false
+        type: integer
+      - name: status
+        in: query
+        description: 轮播、广告位状态
+        required: false
+        type: integer
+      - name: page
+        in: query
+        description: 页面编号
+        required: false
+        type: integer
+      - name: page_size
+        in: query
+        description: 页面大小
+        required: false
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/banner/add:
+  post:
+    summary: 添加轮播、广告位
+    description: 添加轮播、广告位
+    tags:
+      - 轮播
+    parameters:
+      - name: type
+        in: formData
+        description: 类别(1轮播|2广告位)
+        required: true
+        type: integer
+      - name: image_url
+        in: formData
+        description: 轮播、广告位图片链接
+        required: true
+        type: string
+      - name: redirect_url
+        in: formData
+        description: 轮播、广告位图片跳转链接
+        required: true
+        type: string
+      - name: sort
+        in: formData
+        description: 轮播、广告位排序
+        required: true
+        type: integer
+      - name: status
+        in: formData
+        description: 状态
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/banner/edit:
+  post:
+    summary: 编辑轮播、广告位
+    description: 编辑轮播、广告位
+    tags:
+      - 轮播
+    parameters:
+      - name: id
+        in: formData
+        description: 轮播、广告位编号
+        required: true
+        type: integer
+      - name: type
+        in: formData
+        description: 类别(1轮播|2广告位)
+        required: true
+        type: integer
+      - name: image_url
+        in: formData
+        description: 轮播、广告位图片链接
+        required: true
+        type: string
+      - name: redirect_url
+        in: formData
+        description: 轮播、广告位图片跳转链接
+        required: true
+        type: string
+      - name: sort
+        in: formData
+        description: 轮播、广告位排序
+        required: true
+        type: integer
+      - name: status
+        in: formData
+        description: 状态
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/banner/edit-status:
+  post:
+    summary: 编辑轮播、广告位状态
+    description: 编辑轮播、广告位状态
+    tags:
+      - 轮播
+    parameters:
+      - name: id
+        in: formData
+        description: 轮播、广告位编号（json数组元素为数字）
+        required: true
+        type: string
+      - name: status
+        in: formData
+        description: 状态(1启用|2禁用)
+        required: true
+        type: integer
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
+
+/banner/delete:
+  post:
+    summary: 删除轮播、广告位
+    description: 删除轮播、广告位
+    tags:
+      - 轮播
+    parameters:
+      - name: id
+        in: formData
+        description: 轮播、广告位编号（json数组元素为数字）
+        required: true
+        type: string
+    responses:
+      200:
+        description: 成功
+        schema:
+          $ref: '#/definitions/resp'
