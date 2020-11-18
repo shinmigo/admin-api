@@ -24,6 +24,7 @@ func (m *BannerAd) Index() (*shoppb.ListBannerAdRes, error) {
 	id := m.Query("id")
 	eleType := m.Query("type")
 	status := m.Query("status")
+	tagName := m.Query("name")
 	page := m.DefaultQuery("page", "1")
 	pageSize := m.DefaultQuery("page_size", "10")
 
@@ -39,6 +40,9 @@ func (m *BannerAd) Index() (*shoppb.ListBannerAdRes, error) {
 	}
 	if statusLen > 0 {
 		valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("状态格式错误！")
+	}
+	if len(tagName) > 0 {
+		valid.Match(tagName, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("名称信息格式错误")
 	}
 	if valid.HasError() {
 		return nil, valid.GetError()
@@ -56,13 +60,14 @@ func (m *BannerAd) Index() (*shoppb.ListBannerAdRes, error) {
 		Id:       idNum,
 		EleType:  uint32(eleTypeNum),
 		Status:   0,
+		TagName:  tagName,
 	}
 	if statusLen > 0 {
 		var statusNum shoppb.BannerAdStatus
 		if status == "1" {
-			statusNum = shoppb.BannerAdStatus_Enabled
+			statusNum = shoppb.BannerAdStatus_BannerEnabled
 		} else {
-			statusNum = shoppb.BannerAdStatus_Disabled
+			statusNum = shoppb.BannerAdStatus_BannerDisabled
 		}
 		req.Status = statusNum
 	}
@@ -76,6 +81,7 @@ func (m *BannerAd) Add() error {
 	redirectUrl := m.PostForm("redirect_url")
 	sort := m.PostForm("sort")
 	status := m.PostForm("status")
+	tagName := m.PostForm("name")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
@@ -88,6 +94,8 @@ func (m *BannerAd) Add() error {
 	valid.Required(redirectUrl).Message("请提交轮播图跳转地址")
 	valid.Required(sort).Message("请填写排序信息！")
 	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("排序格式错误！")
+	valid.Required(tagName).Message("请填写名称信息")
+	valid.Match(tagName, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("名称信息格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
@@ -96,9 +104,9 @@ func (m *BannerAd) Add() error {
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	eleTypeNum, _ := strconv.ParseUint(eleType, 10, 64)
 	if status == "1" {
-		statusNum = shoppb.BannerAdStatus_Enabled
+		statusNum = shoppb.BannerAdStatus_BannerEnabled
 	} else {
-		statusNum = shoppb.BannerAdStatus_Disabled
+		statusNum = shoppb.BannerAdStatus_BannerDisabled
 	}
 	req := &shoppb.BannerAd{
 		EleType:     uint32(eleTypeNum),
@@ -107,6 +115,7 @@ func (m *BannerAd) Add() error {
 		Sort:        uint32(sortNum),
 		Status:      statusNum,
 		AdminId:     adminIdNum,
+		TagName:     tagName,
 	}
 
 	return service.NewBannerAd(m.Context).Add(req)
@@ -119,6 +128,7 @@ func (m *BannerAd) Edit() error {
 	redirectUrl := m.PostForm("redirect_url")
 	sort := m.PostForm("sort")
 	status := m.PostForm("status")
+	tagName := m.PostForm("name")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
@@ -132,6 +142,8 @@ func (m *BannerAd) Edit() error {
 	valid.Required(redirectUrl).Message("请提交轮播图跳转地址")
 	valid.Required(sort).Message("请填写排序信息！")
 	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("排序格式错误！")
+	valid.Required(tagName).Message("请填写名称信息")
+	valid.Match(tagName, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("名称信息格式错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
@@ -141,9 +153,9 @@ func (m *BannerAd) Edit() error {
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	eleTypeNum, _ := strconv.ParseUint(eleType, 10, 64)
 	if status == "1" {
-		statusNum = shoppb.BannerAdStatus_Enabled
+		statusNum = shoppb.BannerAdStatus_BannerEnabled
 	} else {
-		statusNum = shoppb.BannerAdStatus_Disabled
+		statusNum = shoppb.BannerAdStatus_BannerDisabled
 	}
 	req := &shoppb.BannerAd{
 		Id:          idNum,
@@ -153,6 +165,7 @@ func (m *BannerAd) Edit() error {
 		Sort:        uint32(sortNum),
 		Status:      statusNum,
 		AdminId:     adminIdNum,
+		TagName:     tagName,
 	}
 
 	return service.NewBannerAd(m.Context).Edit(req)
@@ -177,9 +190,9 @@ func (m *BannerAd) EditStatus() error {
 		return errors.New("轮播数据格式错误")
 	}
 	if status == "1" {
-		statusNum = shoppb.BannerAdStatus_Enabled
+		statusNum = shoppb.BannerAdStatus_BannerEnabled
 	} else {
-		statusNum = shoppb.BannerAdStatus_Disabled
+		statusNum = shoppb.BannerAdStatus_BannerDisabled
 	}
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	req := &shoppb.EditBannerAdStatusReq{
