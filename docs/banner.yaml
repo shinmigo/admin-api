@@ -12,8 +12,8 @@
         type: integer
       - name: type
         in: query
-        description: 类别(1轮播|2广告位)
-        required: false
+        description: 类别(0默认|1轮播|2广告位)
+        required: true
         type: integer
       - name: status
         in: query
@@ -30,6 +30,11 @@
         description: 页面大小
         required: false
         type: integer
+      - name: name
+        in: query
+        description: 名称
+        required: false
+        type: string
     responses:
       200:
         description: 成功
@@ -68,6 +73,11 @@
         description: 状态
         required: true
         type: integer
+      - name: name
+        in: formData
+        description: 名称
+        required: true
+        type: string
     responses:
       200:
         description: 成功
@@ -111,6 +121,11 @@
         description: 状态
         required: true
         type: integer
+      - name: name
+        in: formData
+        description: 名称
+        required: true
+        type: string
     responses:
       200:
         description: 成功
