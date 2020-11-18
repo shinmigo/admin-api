@@ -53,21 +53,11 @@
         description: 类别(1轮播|2广告位)
         required: true
         type: integer
-      - name: image_url
+      - name: ele_info
         in: formData
-        description: 轮播、广告位图片链接
+        description: 轮播、广告位信息（[{"image_url":"fasdfsd.jpg","redirect_url":"http://www.baidu.com","sort":0}]）
         required: true
         type: string
-      - name: redirect_url
-        in: formData
-        description: 轮播、广告位图片跳转链接
-        required: true
-        type: string
-      - name: sort
-        in: formData
-        description: 轮播、广告位排序
-        required: true
-        type: integer
       - name: status
         in: formData
         description: 状态
@@ -101,21 +91,11 @@
         description: 类别(1轮播|2广告位)
         required: true
         type: integer
-      - name: image_url
+      - name: ele_info
         in: formData
-        description: 轮播、广告位图片链接
+        description: 轮播、广告位信息（[{"image_url":"fasdfsd.jpg","redirect_url":"http://www.baidu.com","sort":0}]）
         required: true
         type: string
-      - name: redirect_url
-        in: formData
-        description: 轮播、广告位图片跳转链接
-        required: true
-        type: string
-      - name: sort
-        in: formData
-        description: 轮播、广告位排序
-        required: true
-        type: integer
       - name: status
         in: formData
         description: 状态
