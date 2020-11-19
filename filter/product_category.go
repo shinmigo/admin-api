@@ -90,7 +90,7 @@ func (m *ProductCategory) Add() error {
 	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("商品分类排序格式错误！")
 	valid.Match(status, regexp.MustCompile(`^0|1$`)).Message("商品分类状态格式错误！")
 	valid.Required(icon).Message("请上传商品分类图标！")
-	valid.Match(icon, regexp.MustCompile(`^[a-zA-z0-9]+$`)).Message("商品分类图标数据错误")
+	valid.Match(icon, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("商品分类图标数据错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
@@ -140,7 +140,7 @@ func (m *ProductCategory) Edit() error {
 	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("商品分类排序格式错误！")
 	valid.Match(status, regexp.MustCompile(`^0|1$`)).Message("商品分类状态格式错误！")
 	valid.Required(icon).Message("请上传商品分类图标！")
-	valid.Match(icon, regexp.MustCompile(`^[a-zA-z0-9]+$`)).Message("商品分类图标数据错误")
+	valid.Match(icon, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("商品分类图标数据错误")
 	if valid.HasError() {
 		return valid.GetError()
 	}
