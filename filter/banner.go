@@ -3,6 +3,7 @@ package filter
 import (
 	"encoding/json"
 	"errors"
+	"goshop/admin-api/model/banner"
 	"goshop/admin-api/pkg/validation"
 	"goshop/admin-api/service"
 	"regexp"
@@ -77,11 +78,9 @@ func (m *BannerAd) Index() (*shoppb.ListBannerAdRes, error) {
 
 func (m *BannerAd) Add() error {
 	eleType := m.PostForm("type")
-	imageUrl := m.PostForm("image_url")
-	redirectUrl := m.PostForm("redirect_url")
-	sort := m.PostForm("sort")
-	status := m.PostForm("status")
 	tagName := m.PostForm("name")
+	eleInfo := m.PostForm("ele_info")
+	status := m.PostForm("status")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
@@ -89,18 +88,18 @@ func (m *BannerAd) Add() error {
 	valid := validation.Validation{}
 	valid.Required(eleType).Message("请选择数据类型")
 	valid.Match(eleType, regexp.MustCompile(`^1|2$`)).Message("数据类型格式错误！")
-	valid.Required(imageUrl).Message("请提交轮播图地址")
-	valid.Match(imageUrl, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("轮播图格式错误")
-	valid.Required(redirectUrl).Message("请提交轮播图跳转地址")
-	valid.Required(sort).Message("请填写排序信息！")
-	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("排序格式错误！")
 	valid.Required(tagName).Message("请填写名称信息")
 	valid.Match(tagName, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("名称信息格式错误")
+	valid.Required(eleInfo).Message("请填写轮播、广告位信息")
 	if valid.HasError() {
 		return valid.GetError()
 	}
+	eleInfoList := make([]*banner.EleInfo, 0, 8)
+	err := json.Unmarshal([]byte(eleInfo), &eleInfoList)
+	if err != nil {
+		return err
+	}
 
-	sortNum, _ := strconv.ParseUint(sort, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	eleTypeNum, _ := strconv.ParseUint(eleType, 10, 64)
 	if status == "1" {
@@ -109,13 +108,11 @@ func (m *BannerAd) Add() error {
 		statusNum = shoppb.BannerAdStatus_BannerDisabled
 	}
 	req := &shoppb.BannerAd{
-		EleType:     uint32(eleTypeNum),
-		ImageUrl:    imageUrl,
-		RedirectUrl: redirectUrl,
-		Sort:        uint32(sortNum),
-		Status:      statusNum,
-		AdminId:     adminIdNum,
-		TagName:     tagName,
+		EleType: uint32(eleTypeNum),
+		EleInfo: eleInfo,
+		Status:  statusNum,
+		AdminId: adminIdNum,
+		TagName: tagName,
 	}
 
 	return service.NewBannerAd(m.Context).Add(req)
@@ -124,11 +121,9 @@ func (m *BannerAd) Add() error {
 func (m *BannerAd) Edit() error {
 	id := m.PostForm("id")
 	eleType := m.PostForm("type")
-	imageUrl := m.PostForm("image_url")
-	redirectUrl := m.PostForm("redirect_url")
-	sort := m.PostForm("sort")
-	status := m.PostForm("status")
 	tagName := m.PostForm("name")
+	eleInfo := m.PostForm("ele_info")
+	status := m.PostForm("status")
 	adminId, _ := m.Get("goshop_user_id")
 	adminIdString, _ := adminId.(string)
 
@@ -138,18 +133,21 @@ func (m *BannerAd) Edit() error {
 	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("轮播数据不正确")
 	valid.Required(eleType).Message("请选择数据类型")
 	valid.Match(eleType, regexp.MustCompile(`^1|2$`)).Message("数据类型格式错误！")
-	valid.Required(imageUrl).Message("请提交轮播图地址")
-	valid.Required(redirectUrl).Message("请提交轮播图跳转地址")
-	valid.Required(sort).Message("请填写排序信息！")
-	valid.Match(sort, regexp.MustCompile(`^[0-9]*$`)).Message("排序格式错误！")
+	valid.Required(eleType).Message("请选择数据类型")
+	valid.Match(eleType, regexp.MustCompile(`^1|2$`)).Message("数据类型格式错误！")
 	valid.Required(tagName).Message("请填写名称信息")
 	valid.Match(tagName, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("名称信息格式错误")
+	valid.Required(eleInfo).Message("请填写轮播、广告位信息")
 	if valid.HasError() {
 		return valid.GetError()
 	}
+	eleInfoList := make([]*banner.EleInfo, 0, 8)
+	err := json.Unmarshal([]byte(eleInfo), &eleInfoList)
+	if err != nil {
+		return err
+	}
 
 	idNum, _ := strconv.ParseUint(id, 10, 64)
-	sortNum, _ := strconv.ParseUint(sort, 10, 64)
 	adminIdNum, _ := strconv.ParseUint(adminIdString, 10, 64)
 	eleTypeNum, _ := strconv.ParseUint(eleType, 10, 64)
 	if status == "1" {
@@ -158,14 +156,12 @@ func (m *BannerAd) Edit() error {
 		statusNum = shoppb.BannerAdStatus_BannerDisabled
 	}
 	req := &shoppb.BannerAd{
-		Id:          idNum,
-		EleType:     uint32(eleTypeNum),
-		ImageUrl:    imageUrl,
-		RedirectUrl: redirectUrl,
-		Sort:        uint32(sortNum),
-		Status:      statusNum,
-		AdminId:     adminIdNum,
-		TagName:     tagName,
+		Id:      idNum,
+		EleType: uint32(eleTypeNum),
+		EleInfo: eleInfo,
+		Status:  statusNum,
+		AdminId: adminIdNum,
+		TagName: tagName,
 	}
 
 	return service.NewBannerAd(m.Context).Edit(req)

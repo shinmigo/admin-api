@@ -81,22 +81,8 @@
           },
           {
             "type": "string",
-            "description": "轮播、广告位图片链接",
-            "name": "image_url",
-            "in": "formData",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "轮播、广告位图片跳转链接",
-            "name": "redirect_url",
-            "in": "formData",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "description": "轮播、广告位排序",
-            "name": "sort",
+            "description": "轮播、广告位信息（[{\"image_url\":\"fasdfsd.jpg\",\"redirect_url\":\"http://www.baidu.com\",\"sort\":0}]）",
+            "name": "ele_info",
             "in": "formData",
             "required": true
           },
@@ -175,22 +161,8 @@
           },
           {
             "type": "string",
-            "description": "轮播、广告位图片链接",
-            "name": "image_url",
-            "in": "formData",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "轮播、广告位图片跳转链接",
-            "name": "redirect_url",
-            "in": "formData",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "description": "轮播、广告位排序",
-            "name": "sort",
+            "description": "轮播、广告位信息（[{\"image_url\":\"fasdfsd.jpg\",\"redirect_url\":\"http://www.baidu.com\",\"sort\":0}]）",
+            "name": "ele_info",
             "in": "formData",
             "required": true
           },
