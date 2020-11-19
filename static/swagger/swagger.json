@@ -88,7 +88,7 @@
           },
           {
             "type": "integer",
-            "description": "状态",
+            "description": "状态（1启用|2禁用）",
             "name": "status",
             "in": "formData",
             "required": true
@@ -168,7 +168,7 @@
           },
           {
             "type": "integer",
-            "description": "状态",
+            "description": "状态（1启用|2禁用）",
             "name": "status",
             "in": "formData",
             "required": true
@@ -239,15 +239,14 @@
             "in": "query"
           },
           {
-            "type": "integer",
-            "description": "类别(0默认|1轮播|2广告位)",
+            "type": "string",
+            "description": "类别(默认\"\"空字符串|1轮播|2广告位)",
             "name": "type",
-            "in": "query",
-            "required": true
+            "in": "query"
           },
           {
-            "type": "integer",
-            "description": "轮播、广告位状态",
+            "type": "string",
+            "description": "轮播、广告位状态（1启用|2禁用）",
             "name": "status",
             "in": "query"
           },

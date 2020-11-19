@@ -30,14 +30,18 @@ func (m *BannerAd) Index() (*shoppb.ListBannerAdRes, error) {
 	pageSize := m.DefaultQuery("page_size", "10")
 
 	var idNum uint64
+	var eleTypeNum uint32
 	idLen := len(id)
+	eleTypeLen := len(eleType)
 	statusLen := len(status)
 	valid := validation.Validation{}
-	valid.Match(eleType, regexp.MustCompile(`^0|1|2$`)).Message("数据类型格式错误！")
 	valid.Match(page, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的编号 不正确")
 	valid.Match(pageSize, regexp.MustCompile(`^[0-9]{1,3}$`)).Message("页面的数量 不正确")
 	if idLen > 0 {
 		valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("轮播数据不正确")
+	}
+	if eleTypeLen > 0 {
+		valid.Match(eleType, regexp.MustCompile(`^1|2$`)).Message("数据类型格式错误！")
 	}
 	if statusLen > 0 {
 		valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("状态格式错误！")
@@ -52,14 +56,17 @@ func (m *BannerAd) Index() (*shoppb.ListBannerAdRes, error) {
 	if idLen > 0 {
 		idNum, _ = strconv.ParseUint(id, 10, 64)
 	}
+	if eleTypeLen > 0 {
+		eleTypeUint, _ := strconv.ParseUint(eleType, 10, 64)
+		eleTypeNum = uint32(eleTypeUint)
+	}
 	pageNum, _ := strconv.ParseUint(page, 10, 64)
 	pageSizeNum, _ := strconv.ParseUint(pageSize, 10, 64)
-	eleTypeNum, _ := strconv.ParseUint(eleType, 10, 64)
 	req := &shoppb.ListBannerAdReq{
 		Page:     pageNum,
 		PageSize: pageSizeNum,
 		Id:       idNum,
-		EleType:  uint32(eleTypeNum),
+		EleType:  eleTypeNum,
 		Status:   0,
 		TagName:  tagName,
 	}
@@ -91,6 +98,8 @@ func (m *BannerAd) Add() error {
 	valid.Required(tagName).Message("请填写名称信息")
 	valid.Match(tagName, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("名称信息格式错误")
 	valid.Required(eleInfo).Message("请填写轮播、广告位信息")
+	valid.Required(status).Message("请选择数据状态")
+	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("数据状态格式错误！")
 	if valid.HasError() {
 		return valid.GetError()
 	}
@@ -133,11 +142,11 @@ func (m *BannerAd) Edit() error {
 	valid.Match(id, regexp.MustCompile(`^[1-9][0-9]*$`)).Message("轮播数据不正确")
 	valid.Required(eleType).Message("请选择数据类型")
 	valid.Match(eleType, regexp.MustCompile(`^1|2$`)).Message("数据类型格式错误！")
-	valid.Required(eleType).Message("请选择数据类型")
-	valid.Match(eleType, regexp.MustCompile(`^1|2$`)).Message("数据类型格式错误！")
 	valid.Required(tagName).Message("请填写名称信息")
 	valid.Match(tagName, regexp.MustCompile(`^[a-zA-z0-9,\-\.]+$`)).Message("名称信息格式错误")
 	valid.Required(eleInfo).Message("请填写轮播、广告位信息")
+	valid.Required(status).Message("请选择数据状态")
+	valid.Match(status, regexp.MustCompile(`^1|2$`)).Message("数据状态格式错误！")
 	if valid.HasError() {
 		return valid.GetError()
 	}

@@ -12,14 +12,14 @@
         type: integer
       - name: type
         in: query
-        description: 类别(0默认|1轮播|2广告位)
-        required: true
-        type: integer
+        description: 类别(默认""空字符串|1轮播|2广告位)
+        required: false
+        type: string
       - name: status
         in: query
-        description: 轮播、广告位状态
+        description: 轮播、广告位状态（1启用|2禁用）
         required: false
-        type: integer
+        type: string
       - name: page
         in: query
         description: 页面编号
@@ -60,7 +60,7 @@
         type: string
       - name: status
         in: formData
-        description: 状态
+        description: 状态（1启用|2禁用）
         required: true
         type: integer
       - name: name
@@ -98,7 +98,7 @@
         type: string
       - name: status
         in: formData
-        description: 状态
+        description: 状态（1启用|2禁用）
         required: true
         type: integer
       - name: name
