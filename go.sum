@@ -447,6 +447,8 @@ github.com/shinmigo/pb v0.0.0-20201116090313-abdba29b0719 h1:16IocHDVGyN8bYP2QV3
 github.com/shinmigo/pb v0.0.0-20201116090313-abdba29b0719/go.mod h1:sE6q+pYXPmwYntosms0U/zV12SDdDiOhJTFyJRl4bTE=
 github.com/shinmigo/pb v0.0.0-20201117065517-222f5a3ffb28 h1:2BHykGMHmVhE+sj+G44i6nwp6Vr+bvwje4634MLob7k=
 github.com/shinmigo/pb v0.0.0-20201117065517-222f5a3ffb28/go.mod h1:sE6q+pYXPmwYntosms0U/zV12SDdDiOhJTFyJRl4bTE=
+github.com/shinmigo/pb v0.0.0-20201118085358-ffd3b6ea57e1 h1:gfBJsGfPFPnPKahS+auZWKLSXd/ln1H6BBEmpsmR1HI=
+github.com/shinmigo/pb v0.0.0-20201118085358-ffd3b6ea57e1/go.mod h1:sE6q+pYXPmwYntosms0U/zV12SDdDiOhJTFyJRl4bTE=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/sirupsen/logrus v1.4.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/sirupsen/logrus v1.4.1/go.mod h1:ni0Sbl8bgC9z8RoU9G6nDWqqs/fq4eDPysMBDgk/93Q=
