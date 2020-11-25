@@ -97,27 +97,26 @@ func (r *Router) Options(url string, method ...string) {
 }
 
 func (r *Router) bindMethod(methodName string) gin.HandlerFunc {
-	typ := reflect.TypeOf(r.Ctl)
-	if typ.Kind() != reflect.Ptr {
+	if reflect.TypeOf(r.Ctl).Kind() != reflect.Ptr {
 		panic("controller is not ptr type")
 	}
 
 	reflectValue := reflect.ValueOf(r.Ctl)
-	reflectValue = reflect.New(reflectValue.Elem().Type())
-	execController, ok := reflectValue.Interface().(ctl.ControllerInterface)
-	if !ok {
-		panic("controller is not ControllerInterface")
-	}
-
 	method := reflectValue.MethodByName(methodName)
 	if !method.IsValid() {
 		log.Panicf("method name does not exist，controller: %s, method: %s", reflectValue.String(), methodName)
 	}
 
 	return func(c *gin.Context) {
+		reflectValue = reflect.New(reflect.ValueOf(r.Ctl).Elem().Type())
+		execController, ok := reflectValue.Interface().(ctl.ControllerInterface)
+		if !ok {
+			panic("controller is not ControllerInterface")
+		}
+
 		execController.Init(execController, c)
 		execController.Prepare()
-		method.Call(nil)
+		reflectValue.MethodByName(methodName).Call(nil)
 		execController.Finish()
 	}
 }
