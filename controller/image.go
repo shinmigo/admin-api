@@ -57,9 +57,5 @@ func (m *Image) Upload() {
 		return
 	}
 
-	resList := map[string]interface{}{
-		"image_id":   res.ImageId,
-		"image_path": "/image/get-image?name=" + res.ImageId,
-	}
-	m.SetResponse(resList)
+	m.SetResponse(res.ImageId)
 }
