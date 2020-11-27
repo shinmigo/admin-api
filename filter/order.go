@@ -78,7 +78,7 @@ func (o *Order) Index() (*service.ListOrderRes, error) {
 		OrderId:        idNum,
 		StartCreatedAt: startCreatedAt,
 		EndCreatedAt:   endCreatedAt,
-		OrderStatus:    orderpb.OrderStatus(orderStatusNum),
+		OrderStatus:    []orderpb.OrderStatus{orderpb.OrderStatus(orderStatusNum)},
 	})
 }
 
