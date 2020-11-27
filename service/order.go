@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
+	
 	"goshop/admin-api/pkg/grpc/gclient"
 	"goshop/admin-api/pkg/utils"
-	"time"
-
+	
 	"github.com/shinmigo/pb/memberpb"
-
+	
 	"github.com/gin-gonic/gin"
 	"github.com/shinmigo/pb/orderpb"
 )
@@ -48,14 +49,14 @@ func (o *Order) Index(req *orderpb.ListOrderReq) (*ListOrderRes, error) {
 		return nil, err
 	}
 	cancel()
-
+	
 	if orderList.Total == 0 {
 		return &ListOrderRes{
 			Total:  0,
 			Orders: nil,
 		}, nil
 	}
-
+	
 	for _, ord := range orderList.Orders {
 		memberIds = append(memberIds, ord.MemberId)
 	}
@@ -70,7 +71,7 @@ func (o *Order) Index(req *orderpb.ListOrderReq) (*ListOrderRes, error) {
 		}
 	}
 	cancel()
-
+	
 	fmt.Println(orderList.Orders)
 	if jsonBytes, err = json.Marshal(orderList.Orders); err != nil {
 		return nil, err
@@ -80,7 +81,7 @@ func (o *Order) Index(req *orderpb.ListOrderReq) (*ListOrderRes, error) {
 	for _, ord := range orders {
 		ord.Member = memberMaps[ord.MemberId]
 	}
-
+	
 	return &ListOrderRes{
 		Total:  orderList.Total,
 		Orders: orders,
@@ -92,7 +93,7 @@ func (o *Order) Status(storeId uint64) (*orderpb.ListOrderStatusRes, error) {
 		listOrderStatusRes *orderpb.ListOrderStatusRes
 		currentStatus      []uint64
 		statuses           = []uint64{
-			1, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6, 7,
 		}
 		err error
 	)
@@ -103,10 +104,13 @@ func (o *Order) Status(storeId uint64) (*orderpb.ListOrderStatusRes, error) {
 		return nil, err
 	}
 	cancel()
-
+	
+	var total uint64
 	for _, statistics := range listOrderStatusRes.OrderStatistics {
 		currentStatus = append(currentStatus, statistics.OrderStatus)
+		total = total + statistics.Count
 	}
+	
 	for _, status := range statuses {
 		if utils.InSliceUint64(status, currentStatus) == false {
 			listOrderStatusRes.OrderStatistics = append(listOrderStatusRes.OrderStatistics, &orderpb.ListOrderStatusRes_OrderStatistics{
@@ -115,6 +119,12 @@ func (o *Order) Status(storeId uint64) (*orderpb.ListOrderStatusRes, error) {
 			})
 		}
 	}
-
+	
+	// 加个全部
+	listOrderStatusRes.OrderStatistics = append(listOrderStatusRes.OrderStatistics, &orderpb.ListOrderStatusRes_OrderStatistics{
+		OrderStatus: 0,
+		Count:       total,
+	})
+	
 	return listOrderStatusRes, nil
 }
